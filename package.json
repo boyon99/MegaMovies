@@ -1,0 +1,38 @@
+{
+  "name": "kdt4-m4",
+  "version": "1.0.0",
+  "description": "주어진 API를 분석해 어떤 프로젝트를 진행/완성할 것인지 팀 단위로 자유롭게 결정하고 만들어보세요.",
+  "source": "index.html",
+  "scripts": {
+    "dev": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KDT4-MegaMovies/KDT4-M4.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KDT4-MegaMovies/KDT4-M4/issues"
+  },
+  "homepage": "https://github.com/KDT4-MegaMovies/KDT4-M4#readme",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.8.3",
+    "autoprefixer": "^10.4.13",
+    "parcel": "^2.8.3",
+    "parcel-plugin-static-files-copy": "^2.6.0",
+    "postcss": "^8.4.21"
+  },
+  "dependencies": {
+    "navigo": "^8.11.1"
+  },
+  "staticFiles": {
+    "staticPath": "static"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
+}
