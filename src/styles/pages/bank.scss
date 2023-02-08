@@ -1,0 +1,11 @@
+@use "../constants/colors" as colors;
+
+.bank {
+  color: colors.$color--font;
+  .content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: colors.$color--highlight;
+  }
+}
