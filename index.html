@@ -11,14 +11,65 @@
   <script type="module" defer src="./src/index.js"></script>
 </head>
 <body>
-  <header>
+  <header class="gnb">
     <div class="inner">
-      <a href="/" data-navigo>홈</a>
-      <a href="/ranking" data-navigo>랭킹</a>
-      <a href="/genre" data-navigo>장르</a>
-      <a href="/new" data-navigo>신작</a>
+      <div class="logo">
+        <img src="./static/logo.png" alt="MEGA MOVIES" />
+      </div>
+  
+      <!-- 로그인 -->
+      <div class="button-group">
+        <a class="btn-signup" href="/signup"  type="button" data-navigo>회원가입</a>
+        <a class="btn-login" href="/login"  type="button" data-navigo>로그인</a>
+      </div>
+
+      <!-- 비로그인 -->
+      <div class="user-auth">
+        <a class="profile" href="/ranking">
+          <img src="./static/logo.png" alt="" />
+        </a>
+
+        <div class="my-menu">
+          <button class="my-menu-button" type="button">님</button>
+  
+          <div class="my-menu-content">
+            <ul class="my-menu-list">
+              <li class="my-menu-item"><a href="">장바구니</a></li>
+              <li class="my-menu-item"><a href="">사용자 정보 수정</a></li>
+              <li class="my-menu-item"><a href="">계좌 페이지</a></li>
+              <li class="my-menu-item"><a href="">구매내역</a></li>
+              <li class="my-menu-item"><a href="">로그아웃</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </header>
+
+  <nav class="lnb">
+    <div class="inner">
+      <ul class="lnb-list">
+        <li class="lnb-item">
+          <a href="/" data-navigo>홈</a>
+        </li>
+  
+        <li class="lnb-item">
+          <a href="/ranking" data-navigo>랭킹</a>
+        </li>
+  
+        <li class="lnb-item">
+          <a href="/genre" data-navigo>장르</a>
+        </li>
+  
+        <li class="lnb-item">
+          <a href="/new" data-navigo>신작</a>
+        </li>
+      </ul>
+
+      <input type="text" placeholder="작품, 배우, 감독명을 입력하세요" />
+    </div>
+  </nav>
+
   <div id="app"></div>
 </body>
 </html>
