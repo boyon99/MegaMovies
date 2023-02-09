@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 @import "./constants/colors";
 @import "./modules/buttons";
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css");
@@ -12,9 +13,178 @@
 body {
   font-family: "Pretendard", sans-serif;
   background-color: #000;
+=======
+@import './constants/colors';
+@import './modules/buttons';
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css');
+@import url('./pages/ranking.scss');
+@import url('./pages/genre.scss');
+@import url('./pages/new.scss');
+@import url('./pages/home.scss');
+@import url('./pages/new.scss');
+@import url('./pages/login.scss');
+
+body {
+  font-family: 'Pretendard', sans-serif;
+  background-color: $color--bg;
+>>>>>>> 2a5ea6b1c24ea0ec3167f0d9d0c6591cf835ad44
 }
 
 .inner {
   width: 800px;
   margin: 0 auto;
+}
+
+.gnb {
+  border-bottom: 1px solid rgba(128, 128, 128, 0.527);
+
+  .inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 64px;
+  }
+
+  img {
+    display: block;
+    width: auto;
+    height: 20px;
+  }
+
+  .button-group {
+    a {
+      padding: 6px 12px;
+      color: #fff;
+      border-radius: 4px;
+
+      &.btn-signup {
+        margin-right: 12px;
+        background-color: #ccc;
+      }
+
+      &.btn-login {
+        background-color: $color--highlight;
+      }
+    }
+  }
+
+  .user-auth {
+    position: relative;
+    display: flex;
+    align-items: center;
+    display: none;
+
+    .profile {
+      flex-grow: 0;
+      flex-shrink: 0;
+      display: block;
+      width: 24px;
+      height: 24px;
+      margin-right: 4px;
+      border-radius: 50%;
+      overflow: hidden;
+
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .my-menu {
+      width: 100px;
+
+      &-button {
+        color: #fff;
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      &-content {
+        position: absolute;
+        top: 30px;
+        left: 50%;
+        width: 100%;
+        border-radius: 4px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        transform: translateX(-50%);
+      }
+
+      &-item {
+        a {
+          display: flex;
+          align-items: center;
+          height: 40px;
+          padding: 0 12px;
+          color: #000;
+          font-size: 14px;
+          transition: all 150ms ease-in-out;
+        }
+
+        &:hover {
+          background-color: #eee;
+
+          a {
+            color: #fff;
+            font-weight: 700;
+            background-color: $color--highlight;
+          }
+        }
+      }
+    }
+  }
+}
+
+.lnb {
+  $lnb-link-padding: 20px;
+
+  border-bottom: 1px solid rgba(128, 128, 128, 0.527);
+
+  .inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+  }
+
+  &-list {
+    display: flex;
+    margin-left: -#{$lnb-link-padding};
+  }
+
+  &-item {
+    a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 $lnb-link-padding;
+      height: 50px;
+      color: #fff;
+      font-weight: 700;
+
+      &.current-page {
+        color: $color--highlight;
+      }
+    }
+
+    &:not(:last-child) {
+      margin-right: 12px;
+    }
+  }
+
+  input {
+    width: 270px;
+    padding: 6px 12px;
+    border-radius: 4px;
+
+    &::placeholder {
+      font-size: 12px;
+    }
+
+    &:focus {
+      border-color: $color--highlight;
+    }
+  }
 }

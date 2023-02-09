@@ -2,10 +2,29 @@
 
 .bank {
   color: colors.$color--font;
-  .content {
+  .bank-content {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: colors.$color--highlight;
+    margin-top: 70px;
+    box-sizing: border-box;
+    border: 2px solid #fff;
+    border-radius: 8px;
+    // background-color: colors.$color--highlight;
+    .content__info {
+      width: 100%;
+      .title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        box-sizing: border-box;
+        padding: 8px;
+      }
+    }
+    .content__control {
+    }
+    .content__form {
+    }
   }
 }
