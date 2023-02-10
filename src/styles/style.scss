@@ -1,15 +1,16 @@
-@import './constants/colors';
-@import './modules/buttons';
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css');
-@import url('./pages/ranking.scss');
-@import url('./pages/genre.scss');
-@import url('./pages/new.scss');
-@import url('./pages/home.scss');
-@import url('./pages/new.scss');
-@import url('./pages/login.scss');
+@import "./constants/colors";
+@import "./modules/buttons";
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css");
+@import url("./pages/ranking.scss");
+@import url("./pages/genre.scss");
+@import url("./pages/new.scss");
+@import url("./pages/home.scss");
+@import url("./pages/new.scss");
+@import url("./pages/login.scss");
+@import url("./pages/bank.scss");
 
 body {
-  font-family: 'Pretendard', sans-serif;
+  font-family: "Pretendard", sans-serif;
   background-color: $color--bg;
 }
 
@@ -18,55 +19,81 @@ body {
   margin: 0 auto;
 }
 
+#app {
+  margin-top: 118px;
+}
+
+:not(header) {
+  #app {
+    margin-top: 0;
+  }
+}
+
 .gnb {
-  border-bottom: 1px solid rgba(128, 128, 128, 0.527);
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  background-color: $color--bg;
+  transition: transform 0.3s;
+  &.login,
+  &.sign-up {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.527);
+  }
+  &.scroll {
+    transform: translateY(-50%);
+  }
 
   .inner {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 64px;
-  }
-
-  img {
-    display: block;
-    width: auto;
-    height: 20px;
-  }
-
-  .button-group {
-    a {
-      padding: 6px 12px;
-      color: #fff;
-      border-radius: 4px;
-
-      &.btn-signup {
-        margin-right: 12px;
-        background-color: #ccc;
-      }
-
-      &.btn-login {
-        background-color: $color--highlight;
+    .logo {
+      display: block;
+      width: 200px;
+      img {
+        display: block;
+        width: 100%;
       }
     }
   }
 
-  .user-auth {
+  .button-group {
+    display: flex;
+    align-items: center;
+    a {
+      &.btn-signup {
+        margin-right: 12px;
+        border: 1px solid #ccc;
+        background-color: #ccc;
+        &:hover {
+          background-color: darken(#ccc, 30%);
+        }
+      }
+
+      &.btn-login {
+      }
+    }
+  }
+
+  .user {
     position: relative;
     display: flex;
     align-items: center;
-    display: none;
-
+    gap: 12px;
+    width: max-content;
+    padding-bottom: 20px;
+    margin-bottom: -20px;
     .profile {
       flex-grow: 0;
       flex-shrink: 0;
       display: block;
-      width: 24px;
-      height: 24px;
+      width: 30px;
+      height: 30px;
       margin-right: 4px;
       border-radius: 50%;
       overflow: hidden;
-
       img {
         display: block;
         width: 100%;
@@ -74,26 +101,32 @@ body {
         object-fit: cover;
       }
     }
-
-    .my-menu {
-      width: 100px;
-
-      &-button {
-        color: #fff;
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: $color--font;
+      .user-name {
+        display: inline-block;
+        vertical-align: top;
+        min-width: 4em;
+        max-width: 8em;
         font-size: 14px;
-        font-weight: 700;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
-
-      &-content {
-        position: absolute;
-        top: 30px;
-        left: 50%;
-        width: 100%;
-        border-radius: 4px;
-        background-color: #fff;
-        border: 1px solid #ccc;
-        transform: translateX(-50%);
-      }
+    }
+    .my-menu {
+      width: 100%;
+      display: none;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      border-radius: 4px;
+      background-color: #fff;
+      transform: translateY(100%);
+      overflow: hidden;
 
       &-item {
         a {
@@ -107,8 +140,6 @@ body {
         }
 
         &:hover {
-          background-color: #eee;
-
           a {
             color: #fff;
             font-weight: 700;
@@ -117,12 +148,18 @@ body {
         }
       }
     }
+    &:hover {
+      .my-menu {
+        display: block;
+      }
+    }
   }
 }
 
 .lnb {
   $lnb-link-padding: 20px;
 
+  border-top: 1px solid rgba(128, 128, 128, 0.527);
   border-bottom: 1px solid rgba(128, 128, 128, 0.527);
 
   .inner {
