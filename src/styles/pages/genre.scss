@@ -1,8 +1,19 @@
-.genre-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border-radius: 12px;
-  height: 500px;
+body {
+  height: 200vh;
+  .container {
+    display: flex;
+    width: 800px;
+    margin: 0 auto;
+    height: 30vh;
+    background-color: yellow;
+    margin-bottom: 50px;
+    .title {
+      width: 200px;
+      height: 50px;
+      background-color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 }
