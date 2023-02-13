@@ -1,3 +1,6 @@
+import Swiper from 'swiper/swiper-bundle.min.js'
+import 'swiper/swiper-bundle.min.css'
+
 import Navigo from 'navigo'
 import home from './pages/home'
 import rankingPage from './pages/ranking'
@@ -24,6 +27,13 @@ router
         .find((linkEl) => linkEl.getAttribute('href') === '/')
         .classList.add('current-page')
       renderPage(home)
+      new Swiper('.swiper', {
+        loop: true,
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+      })
     },
     '/ranking': () => {
       const linkEls = document.querySelectorAll('.lnb a')
