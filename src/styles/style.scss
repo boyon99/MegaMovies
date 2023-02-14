@@ -12,6 +12,7 @@
 body {
   font-family: "Pretendard", sans-serif;
   background-color: $color--bg;
+  color: $color--font;
 }
 
 .inner {
@@ -21,11 +22,9 @@ body {
 
 #app {
   margin-top: 118px;
-}
-
-:not(header) {
-  #app {
-    margin-top: 0;
+  &:not(:has(header)),
+  &.--not-has-header {
+    margin: 0;
   }
 }
 
@@ -36,8 +35,9 @@ body {
   width: 100%;
   background-color: $color--bg;
   transition: transform 0.3s;
-  &.login,
-  &.sign-up {
+  z-index: 9; //
+  &:not(:has(nav)),
+  &.--not-has-nav {
     border-bottom: 1px solid rgba(128, 128, 128, 0.527);
   }
   &.scroll {
@@ -127,7 +127,6 @@ body {
       background-color: #fff;
       transform: translateY(100%);
       overflow: hidden;
-
       &-item {
         a {
           display: flex;
@@ -158,7 +157,6 @@ body {
 
 .lnb {
   $lnb-link-padding: 20px;
-
   border-top: 1px solid rgba(128, 128, 128, 0.527);
   border-bottom: 1px solid rgba(128, 128, 128, 0.527);
 
