@@ -1,67 +1,201 @@
-// 영화 가져오기
-
 const genrePage = document.createElement("div");
+genrePage.classList.add("genre-page");
+(async () => {
+  await renderPage();
+})();
 
-genrePage.textContent = "장르 페이지";
-export default genrePage;
+import { readItem } from "../api/movieRequest";
+async function getGenreList() {
+  const genreSet = new Set();
+  const movieList = await readItem();
 
-const inputEl = document.querySelector("input");
-let searchText = "";
-let listCount = 1;
-inputEl.addEventListener("input", () => {
-  searchText = inputEl.value;
-});
-inputEl.addEventListener("keydown", function (e) {
-  if (e.key === "Enter" && !e.isComposing) {
-    getMovies();
-  }
-});
+  Array.from(movieList)
+    .map((movie) => movie.tags)
+    .forEach((tags) => {
+      tags.forEach((tag) => genreSet.add(tag));
 
-const chosenContainer = document.createElement("div");
-const chosenTitle = document.createElement("div");
-genrePage.appendChild(chosenContainer);
-chosenContainer.appendChild(chosenTitle);
-chosenTitle.classList.add("title");
-chosenTitle.textContent = "당신을 위해 골랐어요";
-chosenContainer.classList.add("container");
-
-const actionContainer = document.createElement("div");
-const actionTitle = document.createElement("div");
-genrePage.appendChild(actionContainer);
-actionContainer.appendChild(actionTitle);
-actionTitle.classList.add("title");
-actionTitle.textContent = "액션하면 이 영화죠!";
-actionContainer.classList.add("container");
-
-const comedyContainer = document.createElement("div");
-const comedyTitle = document.createElement("div");
-genrePage.appendChild(comedyContainer);
-comedyContainer.appendChild(comedyTitle);
-comedyTitle.classList.add("title");
-comedyTitle.textContent = "웃고 싶은 날엔 코미디";
-comedyContainer.classList.add("container");
-
-const genreThemeContainer = document.createElement("div");
-const genreContainer = document.createElement("div");
-genrePage.appendChild(genreThemeContainer);
-genreThemeContainer.classList.add("container");
-
-// 무슨 API를 써야 되는지..?
-//curl https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/:productId
-
-async function getMovies() {
-  const res = await fetch(
-    `https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/search`
-  );
-  const json = await res.json();
-  console.log(json);
-  const title = json.title;
+      //genreSet.add(...tags);
+    });
+  return Array.from(genreSet.values());
 }
-async function renderMovies() {
-  movies.forEach((movie) => {
-    const liEl = document.createElement("li");
-    const titleEl = document.createElement("h4");
-    const postEl = document.createElement("img");
-    titleEl.textContent = "";
+
+async function renderPage() {
+  genrePage.textContent = "장르 페이지";
+
+  const actionMovieList = await getGenreMovies(["액션"]);
+  const actionContainer = createContainer({
+    title: "액션하면 이 영화죠",
+    movieList: actionMovieList,
   });
+
+  const comedyMovieList = await getGenreMovies(["코미디"]);
+  const comedyContainer = createContainer({
+    title: "웃고싶은 날엔 코미디",
+    movieList: comedyMovieList,
+  });
+
+  const sadMovieList = await getGenreMovies(["드라마"]);
+  const sadContainer = createContainer({
+    title: "눈물나는 감동스토리",
+    movieList: sadMovieList,
+  });
+
+  const renderGenreList = {
+    genre: ["판타지", "사극", "느와르", "공포", "스포츠", "가족", "범죄"],
+    theme: ["워너브라더스", "마블", "디즈니", "지브리"],
+  };
+
+  // const genreList = await getGenreList();
+  // console.log(genreList);
+  const moreContainer = createMoreContainer(renderGenreList);
+  function createMoreContainer(genreList) {
+    const container = document.createElement("div");
+    container.classList.add("container");
+
+    const titleEl = document.createElement("div");
+    titleEl.textContent = "더 많은 장르/테마";
+    titleEl.classList.add("title");
+
+    const genreWrapper = document.createElement("div");
+    genreWrapper.classList.add("genre-theme-wrap");
+
+    const genreListArr = genreList.genre.map((genre) => {
+      const linkEl = document.createElement("a");
+      linkEl.href = `/genre/${genre}`;
+      linkEl.dataset.navigo = "";
+      linkEl.innerHTML = `
+   <div class="genre-list">
+   <div class="genre">
+     <span>${genre}</span>
+    </div>
+    </div>`;
+      genreWrapper.append(linkEl);
+    });
+
+    const themeListArr = genreList.theme.map((theme) => {
+      const linkEl = document.createElement("a");
+      linkEl.href = `/theme/${theme}`;
+      linkEl.dataset.navigo = "";
+      linkEl.innerHTML = `
+   <div class="theme-list">
+   <div class="theme">
+     <span>${theme}</span>
+    </div>
+    </div>`;
+      genreWrapper.append(linkEl);
+    });
+
+    // [5] => void
+    // genreList.forEach((genre) => {
+    //   genreWrapper.textContent += " " + genre;
+    //   genreWrapper.append(genreList);
+    // });
+
+    container.append(titleEl, genreWrapper);
+    return container;
+  }
+
+  genrePage.append(
+    actionContainer,
+    comedyContainer,
+    sadContainer,
+    moreContainer
+  );
 }
+
+function createContainer({ title, movieList }) {
+  const container = document.createElement("div");
+  container.className = "container";
+
+  const titleEl = document.createElement("div");
+  titleEl.className = "title";
+  titleEl.textContent = title;
+
+  const movieItemList = createMovieItemList(movieList);
+
+  container.append(titleEl, movieItemList);
+
+  return container;
+}
+
+// <div>title</div>
+// <ul>list</ul>
+
+function createMovieItemList(movieList) {
+  const movieListEl = document.createElement("ul");
+  movieListEl.classList.add("movie-list");
+  const movieItemList = Array.from(movieList)
+    .slice(0, 4)
+    .map((movie) =>
+      createMovieItem({
+        imgSrc: movie.thumbnail,
+        title: movie.title,
+        id: movie.id,
+      })
+    );
+
+  movieListEl.append(...movieItemList);
+
+  return movieListEl;
+}
+
+function createMovieItem({ imgSrc, title, id }) {
+  const movieItem = document.createElement("li");
+  movieItem.className = "list-item";
+
+  const linkEl = document.createElement("a");
+  linkEl.href = `/movie/${id}`;
+  linkEl.dataset.navigo = "";
+  linkEl.innerHTML = `
+   <div class="wrapper">
+      <span>${title}</span>
+      <img src=${imgSrc} />
+    </div>
+  `;
+
+  movieItem.append(linkEl);
+
+  return movieItem;
+}
+
+/*
+  <li class="list-item">
+    <a href="/movie/123" data-navigo="">
+      <div clas="wrapper">
+        <span>명량</span>
+        <img src="src" />
+      </div>
+    </a>
+  </li>
+*/
+
+/*
+
+
+*/
+
+async function getGenreMovies(genreList) {
+  const requestHeaders = {
+    "Content-type": "application/json",
+    apikey: process.env.apikey,
+    username: "KDT4_Team1",
+  };
+  const requestMethod = "POST";
+
+  const response = await fetch(
+    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/search",
+    {
+      headers: {
+        ...requestHeaders,
+      },
+      method: requestMethod,
+      body: JSON.stringify({
+        searchTags: [...genreList],
+      }),
+    }
+  );
+  const movies = await response.json();
+  return movies;
+}
+
+export default genrePage;
