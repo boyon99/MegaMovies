@@ -1,12 +1,17 @@
 import logo from "../../../static/logo.png";
 import { userArea } from "./user_area";
 import { nav } from "./nav";
+import { AppStorage } from "../../util";
 
 // 이벤트 제거를 위한 map
-const headerEventMap = new Map([]);
+export const headerEventMap = new Map([]);
 
 // header 요소
-const header = ({ user, isContainNav = true, type } = {}) => {
+const header = ({
+  user = AppStorage.getCurrentUser(),
+  isContainNav = true,
+  isContainProfileArea = true,
+} = {}) => {
   const headerEl = document.createElement("header");
   headerEl.className = "gnb";
   headerEl.innerHTML = `
@@ -16,15 +21,12 @@ const header = ({ user, isContainNav = true, type } = {}) => {
     </a>
   </div>
   `;
-  if (type === "login") {
-    headerEl.classList.add("login");
-    return headerEl;
+  if (!isContainNav) {
+    headerEl.classList.add("--not-has-nav");
   }
-  if (type === "signup") {
-    headerEl.classList.add("sign-up");
-    return headerEl;
+  if (isContainProfileArea) {
+    headerEl.querySelector(".inner").append(userArea(user));
   }
-  headerEl.querySelector(".inner").append(userArea(user));
   if (isContainNav) {
     headerEl.appendChild(nav);
 
