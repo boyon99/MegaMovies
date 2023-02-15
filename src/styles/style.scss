@@ -8,6 +8,7 @@
 @import url("./pages/new.scss");
 @import url("./pages/login.scss");
 @import url("./pages/bank.scss");
+@import url('./pages/movie.scss');
 
 body {
   font-family: "Pretendard", sans-serif;
@@ -33,6 +34,7 @@ body {
   left: 0;
   top: 0;
   width: 100%;
+  z-index: 1;
   background-color: $color--bg;
   transition: transform 0.3s;
   z-index: 9; //

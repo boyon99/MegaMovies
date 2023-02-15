@@ -5,6 +5,7 @@ import genrePage from "./pages/genre";
 import newPage from "./pages/new";
 import bankPage from "./pages/bank";
 import header, { headerEventMap, removeHeaderEvents } from "./pages/header";
+import moviePage from './pages/movie'
 import { me } from "./api/auth";
 import { AppStorage } from "./util";
 
@@ -114,13 +115,11 @@ router
 
       history.back();
     },
-    "/movie/:id": (match) => {
-      // 영화 상세페이지
-      /*
-        임시 요소인 document.createTextNode를 지우시고, 해당 페이지 요소로 렌더링 되도록 구현해주세요
-      */
-      renderPage([header(), document.createTextNode("영화상세페이지")]);
-    },
+    '/movie/:id': ({ data, match }) => {
+      const movieId = data?.id;
+      renderPage([header({ user: match?.user }), moviePage(movieId)]);
+    }
+    ,
     "/user-info": (match) => {
       renderPage([
         header({ isContainNav: false }),
@@ -215,8 +214,8 @@ function renderPage(page) {
   const headerEl = Array.isArray(page)
     ? page.find((pageComponent) => pageComponent?.tagName === "HEADER")
     : page?.tagName === "HEADER"
-    ? page
-    : null;
+      ? page
+      : null;
 
   app.classList.toggle("--not-has-header", !headerEl);
 

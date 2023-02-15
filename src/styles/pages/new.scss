@@ -11,11 +11,67 @@
   margin: 20px auto;
   width: 800px;
   height: 180px;
-  border-bottom: 2px solid #fff;
+  border-bottom: 0.1px solid #515c77;
+  &:first-child{
+    margin-top: 120px;
+  }
+  a{
+    color: #fff;
+    position: relative;
+    cursor: pointer;
+  }
   img{
-    width: 110px;
+    width: 100px;
     height: auto;
     max-height: 160px;
+    position: absolute;
+    left: -15px;
+    top: 0;
+    border-radius: 5px;
+  }
+  .title{
+    position: absolute;
+    top: 0;
+    width: 500px;
+    left: 130px;
+    top: 10px;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .star{
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    top: 35px;
+    left: 118px;
+  }
+  .rate{
+    position: absolute;
+    top: 42px;
+    left: 148px;
+    font-size: 15px;
+  }
+  .description{
+    position: absolute;
+    width: 650px;
+    top: 75px;
+    left: 130px;
+    font-size: 14px;
+    color: #eeebeb;
+  }
+  .price{
+    position: absolute;
+    width: 200px;
+    top: 133px;
+    left: 130px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .priceImg{
+    position: absolute;
+    width: 14px;
+    top: 128px;
+    left: 174px;
   }
 }
 
