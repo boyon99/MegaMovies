@@ -1,8 +1,58 @@
-.ranking-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border-radius: 12px;
-  height: 500px;
+.ranking-images {
+  margin: 20px 0 70px;
+
+  .images-list {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .images-item {
+    position: relative;
+
+    a {
+      display: block;
+      width: 150px;
+      height: 300px;
+
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      strong {
+        position: absolute;
+        bottom: -10px;
+        left: 10px;
+        color: #fb4f93;
+        font-size: 70px;
+        text-shadow: 5px -5px 1px #7f7d7d;
+      }
+    }
+  }
+}
+
+.ranking-videos {
+  .videos-item {
+    width: 800px;
+    height: 304px;
+    margin-bottom: 16px;
+
+    video {
+      display: block;
+
+      &[poster] {
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+      }
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }
