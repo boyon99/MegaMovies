@@ -36,7 +36,7 @@ function loginedUser(user) {
 
   const menuMap = new Map([
     [{ path: "/", title: "장바구니" }, createMenuLi],
-    [{ path: "/", title: "사용자 정보 수정" }, createMenuLi],
+    [{ path: "/user-info", title: "사용자 정보 수정" }, createMenuLi],
     [{ path: "/bank", title: "계좌 페이지" }, createMenuLi],
     [{ path: "/", title: "구매내역" }, createMenuLi],
     [{ path: "/logout", title: "로그아웃" }, createMenuLi],

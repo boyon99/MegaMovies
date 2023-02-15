@@ -8,6 +8,7 @@ import header, { headerEventMap, removeHeaderEvents } from "./pages/header";
 import moviePage from './pages/movie'
 import { me } from "./api/auth";
 import { AppStorage } from "./util";
+import userInfoPage from "./pages/userInfo";
 
 const app = document.querySelector("#app");
 
