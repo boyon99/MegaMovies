@@ -1,7 +1,7 @@
 import { readItem } from '../api/movieRequest'
 
-const homeFragment = document.createDocumentFragment()
-export default homeFragment
+const homeContainer = document.createElement('div')
+export default homeContainer
 ;(async () => {
   const items = await readItem()
   renderItems(items)
@@ -13,16 +13,16 @@ homeRankingSlider.innerHTML = /* html */ `
     <div class="inner">
       <div class="swiper">
         <div class="swiper-wrapper">
-          <a href="" class="swiper-slide"></a>
-          <a href="" class="swiper-slide"></a>
-          <a href="" class="swiper-slide"></a>
-          <a href="" class="swiper-slide"></a>
-          <a href="" class="swiper-slide"></a>
-          <a href="" class="swiper-slide"></a>
-          <a href="" class="swiper-slide"></a>
-          <a href="" class="swiper-slide"></a>
-          <a href="" class="swiper-slide"></a>
-          <a href="" class="swiper-slide"></a>
+          <div class="swiper-slide"></div>
+          <div class="swiper-slide"></div>
+          <div class="swiper-slide"></div>
+          <div class="swiper-slide"></div>
+          <div class="swiper-slide"></div>
+          <div class="swiper-slide"></div>
+          <div class="swiper-slide"></div>
+          <div class="swiper-slide"></div>
+          <div class="swiper-slide"></div>
+          <div class="swiper-slide"></div>
         </div>
 
         <div class="swiper-button-prev"></div>
@@ -37,7 +37,7 @@ homeGenre.innerHTML = /* html */ `
   <div class="inner">
     <header class="genre-header">
       <h2>장르/테마 영화 추천</h2>
-      <a href="">더보기</a>
+      <a href="/genre">더보기</a>
     </header>
 
     <div class="genre-content">
@@ -52,7 +52,7 @@ homeNew.innerHTML = /* html */ `
   <div class="inner">
     <header class="new-header">
       <h2>신작</h2>
-      <a href="">더보기</a>
+      <a href="/new">더보기</a>
     </header>
 
     <div class="new-content">
@@ -61,15 +61,15 @@ homeNew.innerHTML = /* html */ `
   </div>
 `
 
-homeFragment.append(homeRankingSlider)
-homeFragment.append(homeGenre)
-homeFragment.append(homeNew)
+homeContainer.append(homeRankingSlider)
+homeContainer.append(homeGenre)
+homeContainer.append(homeNew)
 
 function renderItems(items) {
   // DOM 탐색
-  const swiperWrapper = document.querySelector('.swiper-wrapper')
-  const genreList = document.querySelector('.genre-list')
-  const newList = document.querySelector('.new-list')
+  const swiperWrapper = homeRankingSlider.querySelector('.swiper-wrapper')
+  const genreList = homeGenre.querySelector('.genre-list')
+  const newList = homeNew.querySelector('.new-list')
 
   // 태그별로 필터링
   const filterNewItems = items.filter((item) => item.tags.includes('신작'))
@@ -77,8 +77,8 @@ function renderItems(items) {
   const rankingItems = items
     .map((item, index) => {
       return /* html */ `
-      <a class="swiper-slide" href="">
-        <img src="${item.thumbnail}" />
+      <a class="swiper-slide" href="/movie/${item.id}" data-navigo>
+        <div class="image-wrapper"><img src="${item.thumbnail}" /></div>
         <strong>${index}</strong>
       </a>
     `
@@ -91,8 +91,8 @@ function renderItems(items) {
       if (index > 4) return
       return /* html */ `
     <li class="genre-item">
-      <a class="genre-image" href="">
-        <img src=${item.thumbnail} alt="" />
+      <a class="genre-image" href="/movie/${item.id}" data-navigo>
+        <img src=${item.thumbnail} alt="${item.title}" />
       </a>
     </li>
   `
@@ -105,8 +105,8 @@ function renderItems(items) {
       if (index > 4) return
       return /* html */ `
         <li class="new-item">
-          <a href="" class="new-image">
-            <img src=${item.thumbnail} alt="" />
+          <a class="new-image" href="/movie/${item.id}" data-navigo>
+            <img src=${item.thumbnail} alt="${item.title}" />
           </a>
         </li>
       `
