@@ -22,7 +22,6 @@ homeRankingSlider.innerHTML = /* html */ `
           <div class="swiper-slide"></div>
           <div class="swiper-slide"></div>
           <div class="swiper-slide"></div>
-          <div class="swiper-slide"></div>
         </div>
 
         <div class="swiper-button-prev"></div>
@@ -76,6 +75,8 @@ function renderItems(items) {
 
   const rankingItems = items
     .map((item, index) => {
+      index++
+      if (index > 9) return
       return /* html */ `
       <a class="swiper-slide" href="/movie/${item.id}" data-navigo>
         <div class="image-wrapper"><img src="${item.thumbnail}" /></div>
