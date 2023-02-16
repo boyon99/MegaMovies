@@ -4,7 +4,7 @@
   .images-list {
     display: flex;
     gap: 10px;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-wrap: wrap;
   }
 
@@ -13,7 +13,7 @@
 
     a {
       display: block;
-      width: 150px;
+      width: 130px;
       height: 300px;
 
       img {
