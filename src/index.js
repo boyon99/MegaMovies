@@ -70,17 +70,7 @@ router.hooks({
 router
   .on({
     '/': () => {
-      const linkEls = document.querySelectorAll('.lnb a')
-      const activedEl = Array.from(linkEls).find((linkEl) =>
-        linkEl.classList.contains('current-page')
-      )
-      if (activedEl) {
-        activedEl.classList.remove('current-page')
-      }
-      Array.from(linkEls)
-        .find((linkEl) => linkEl.getAttribute('href') === '/')
-        .classList.add('current-page')
-      renderPage(home)
+      renderPage([header(), home])
       new Swiper('.swiper', {
         loop: true,
         navigation: {
