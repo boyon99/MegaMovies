@@ -8,7 +8,7 @@ export default videoMap = new Map([
     'http://h.vod.cgv.co.kr/vodCGVa/80090/80090_150972_1200_128_960_540.mp4',
   ],
   [
-    '장화 신은 고양이: 끝내주는 모험',
+    '장화신은 고양이: 끝내주는 모험',
     'http://h.vod.cgv.co.kr/vodCGVa/86689/86689_210424_1200_128_960_540.mp4',
   ],
   [
@@ -64,7 +64,7 @@ export default videoMap = new Map([
     'http://h.vod.cgv.co.kr/vodCGVa/4830/4830_195082_1200_128_960_540.mp4',
   ],
 
-  ['메갈로매니악:연쇄살인마의 아이들', ''],
+  ['메갈로매니악:연쇄살인마의 아이들', 'https://blogattach.naver.com/e376ff455a6869dcf61775457498e19d3e6c902f/20230216_204_blog[…]A7%88%EC%9D%98%20%EC%95%84%EC%9D%B4%EB%93%A4%20%281%29.mp4'],
   [
     '정직한 후보 2',
     'http://h.vod.cgv.co.kr/vodCGVa/86191/86191_206451_1200_128_960_540.mp4',
@@ -106,10 +106,6 @@ export default videoMap = new Map([
     'http://h.vod.cgv.co.kr/vodCGVa/38970/38970_164204_1200_128_960_540.mp4',
   ],
   [
-    '장화신은고양이',
-    'http://h.vod.cgv.co.kr/vodCGVa/76126/76126_87906_200_96_480_320.mp4',
-  ],
-  [
     '외계+인',
     'http://h.vod.cgv.co.kr/vodCGVa/85997/85997_203944_1200_128_960_540.mp4',
   ],
@@ -137,9 +133,13 @@ export default videoMap = new Map([
     '스위치',
     'http://h.vod.cgv.co.kr/vodCGVa/86676/86676_210816_1200_128_960_540.mp4',
   ],
-  ['머니 몬스터', ''],
+  ['머니 몬스터', 'http://mp4.cine21.com/cine21.com/movie/trailer/2016/08/Money_mtr.mp4'],
   [
     '해리 포터와 죽음의 성물 - 2부',
     'http://h.vod.cgv.co.kr/vodCGVa/39375/39375_113289_1200_128_960_540.mp4',
+  ],
+  [
+    '크루엘라',
+    'http://h.vod.cgv.co.kr/vodCGVa/84643/84643_191053_1200_128_960_540.mp4',
   ],
 ])
