@@ -30,7 +30,6 @@ rankingContainer.append(rankingVideos)
 function renderItems(items) {
   const images = rankingImages.querySelector('.images-list')
   const videos = rankingVideos.querySelector('.videos-list')
-  console.log(images, videos)
 
   const imagesItems = items
     .map((item, index) => {
@@ -50,7 +49,6 @@ function renderItems(items) {
   const videosItems = items
     .map((item, index) => {
       index++
-      console.log(item)
       if (index > 10) return
       return /* html */ `
         <li class="videos-item">
