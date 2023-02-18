@@ -13,8 +13,6 @@ async function getGenreList() {
     .map((movie) => movie.tags)
     .forEach((tags) => {
       tags.forEach((tag) => genreSet.add(tag));
-
-      //genreSet.add(...tags);
     });
   return Array.from(genreSet.values());
 }
@@ -45,8 +43,6 @@ async function renderPage() {
     theme: ["워너브라더스", "마블", "디즈니", "지브리"],
   };
 
-  // const genreList = await getGenreList();
-  // console.log(genreList);
   const moreContainer = createMoreContainer(renderGenreList);
   function createMoreContainer(genreList) {
     const container = document.createElement("div");
@@ -85,12 +81,6 @@ async function renderPage() {
       genreWrapper.append(linkEl);
     });
 
-    // [5] => void
-    // genreList.forEach((genre) => {
-    //   genreWrapper.textContent += " " + genre;
-    //   genreWrapper.append(genreList);
-    // });
-
     container.append(titleEl, genreWrapper);
     return container;
   }
@@ -117,9 +107,6 @@ function createContainer({ title, movieList }) {
 
   return container;
 }
-
-// <div>title</div>
-// <ul>list</ul>
 
 function createMovieItemList(movieList) {
   const movieListEl = document.createElement("ul");
@@ -157,22 +144,6 @@ function createMovieItem({ imgSrc, title, id }) {
 
   return movieItem;
 }
-
-/*
-  <li class="list-item">
-    <a href="/movie/123" data-navigo="">
-      <div clas="wrapper">
-        <span>명량</span>
-        <img src="src" />
-      </div>
-    </a>
-  </li>
-*/
-
-/*
-
-
-*/
 
 export async function getGenreMovies(genreList) {
   const requestHeaders = {

@@ -11,12 +11,11 @@ export const genreDetailPage = (category) => {
   return detailPage;
 };
 
-//render
 async function render(childeren) {
   const detailPage = document.querySelector(".detail-page");
   detailPage.append(childeren);
 }
-//
+
 function createMovieItemList(movieItems) {
   const movieListEl = document.createElement("ul");
   movieListEl.classList.add("movie-list");
