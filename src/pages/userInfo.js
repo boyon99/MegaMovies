@@ -54,22 +54,56 @@ changePasswordBtn.classList.add("btn-secondary");
 changePasswordBtn.textContent= "비밀번호 수정하기";
 btnWrapper.appendChild(changePasswordBtn);
 
-// const saveBtn = document.createElement("div");
-// saveBtn.classList.add("btn-primary");
-// saveBtn.classList.add("large");
-// saveBtn.classList.add("save-btn");
-// saveBtn.textContent= "저장하기";
-// body.appendChild(saveBtn);
+export default userInfoPage;
 
-renderUserInfo();
+// const toDataURL = url => fetch(url)
+//   .then(response => response.blob())
+//   .then(blob => new Promise((resolve, reject) => {
+//     const reader = new FileReader()
+//     reader.onloadend = () => resolve(reader.result)
+//     reader.onerror = reject
+//     reader.readAsDataURL(blob)
+//   }))
+
+async function changeUserInfo (accessToken, {displayName, profileImgBase64, oldPassword, newPassword}) {
+  const headers = {
+    "Content-type": "application/json",
+    apikey: process.env.apikey,
+    username: "KDT4_Team1",
+    Authorization: `Bearer ${accessToken}`
+  }
+
+  const data = {
+    ...(displayName && {displayName}),
+    ...(profileImgBase64 && {profileImgBase64}),
+    ...(oldPassword && {oldPassword}),
+    ...(newPassword && {newPassword}),
+  }
+  
+  const res = await fetch('https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/user', {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({
+      ...data
+    }),
+  });
+  
+  return;
+}
+
+function getAccessToken() {
+  return window?.localStorage.getItem('accessToken');
+}
+  
+// renderUserInfo();
 
 // Modal
 
-// async function renderUserInfo () {
-//   const user = await me(AppStorage.getAccessToken());
-//   profileName.textContent = user.displayName;
-//   profilePic.src = user.profileImg || 'https://cdn-icons-png.flaticon.com/512/6522/6522516.png';
-// }
+async function renderUserInfo () {
+  const user = await me(AppStorage.getAccessToken());
+  profileName.textContent = user.displayName;
+  profilePic.src = user.profileImg || 'https://cdn-icons-png.flaticon.com/512/6522/6522516.png';
+}
 
 
 // ProfilePicBtn Modal
@@ -84,17 +118,39 @@ function displayPicModalWindow(){
     <div class="modal-close">X</div>
     <div class="innerElement-title">프로필 이미지 변경</div>
     <span class="innerElement-span">1MB 미만의 파일만 업로드 가능합니다.</span>
-    <input id="modal-file-upload" type="file" 
-    accept="image/jpg, image/jpeg, image/web, image/png, image/gif, image/svg"/>
+    <button onclick="openTextFile()" class="open btn-secondary medium">업로드 이미지 선택</button>
     <button class="btn-primary medium">확인</button>
     `;
   modalOverlay.appendChild(innerElement); 
   body.appendChild(modalOverlay); 
+  
   const closeBtn = innerElement.querySelector(".modal-close")
   closeBtn.addEventListener("click", (e)=> {
     innerElement.style.display = "none";
     modalOverlay.style.display = "none";
   })
+
+  async function openTextFile(){
+    var input = document.createElement("input");
+    input.type="file";
+    input.accept="image/jpg, image/jpeg, image/web, image/png, image/gif, image/svg";
+    input.id="uploadInput";
+
+    await input.click();
+    input.onchange = function(e){
+      processFile(e.target.files[0]);
+    };
+  }
+  document.querySelector('.open').addEventListener("click", openTextFile());
+  function processFile(file){
+    var reader = new FileReader();
+    reader.onload = function(){
+      var result = reader.result;
+    document.getElementById(profilePic).setAttribute('src', result);
+    };
+    reader.readAsDataURL(file);
+  }
+
   const confirmBtn = innerElement.querySelector(".btn-primary")
   confirmBtn.addEventListener("click", async (e)=> {
     const value = innerElement.querySelector('input').src;
@@ -103,6 +159,7 @@ function displayPicModalWindow(){
     modalOverlay.style.display = "none";
   })
 }
+
 
 
 // changeNameBtn Modal
@@ -178,11 +235,12 @@ function displayPWModalWindow(){
   })
 }
 
+
+
 profilePicBtn.addEventListener('click', displayPicModalWindow);
 changeNameBtn.addEventListener('click', displayNameModalWindow);
 changePasswordBtn.addEventListener('click', displayPWModalWindow);
 
-export default userInfoPage;
 
 
 /*
@@ -260,39 +318,4 @@ window.addEventListener('load', function() {
   - 완료시 '저장되었습니다!' 띄워주기
 */
 
-async function renderUserInfo () {
-  const user = await me(AppStorage.getAccessToken());
-  profileName.textContent = user.displayName;
-  profilePic.src = user.profileImg || 'https://cdn-icons-png.flaticon.com/512/6522/6522516.png';
-}
-
-async function changeUserInfo (accessToken, {displayName, profileImgBase64, oldPassword, newPassword}) {
-  const headers = {
-    "Content-type": "application/json",
-    apikey: process.env.apikey,
-    username: "KDT4_Team1",
-    Authorization: `Bearer ${accessToken}`
-  }
-
-  const data = {
-    ...(displayName && {displayName}),
-    ...(profileImgBase64 && {profileImgBase64}),
-    ...(oldPassword && {oldPassword}),
-    ...(newPassword && {newPassword}),
-  }
-
-  const res = await fetch('https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/user', {
-    method: "PUT",
-    headers,
-    body: JSON.stringify({
-      ...data
-    }),
-  });
-
-  return;
-}
-
-function getAccessToken() {
-  return window?.localStorage.getItem('accessToken');
-}
 

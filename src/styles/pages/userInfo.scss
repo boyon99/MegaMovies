@@ -76,14 +76,18 @@
   cursor: pointer;
 }
 
-.save-btn{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 80px;
-  cursor: pointer;
-  background-color: #fb4f93;
-  margin: 12px;
+// .save-btn{
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 80px;
+//   cursor: pointer;
+//   background-color: #fb4f93;
+//   margin: 12px;
+// }
+
+.small, .medium, .large {
+  cursor: pointer; 
 }
 
 .modal-overlay{

@@ -124,7 +124,7 @@ router
     "/user-info": (match) => {
       renderPage([
         header({ isContainNav: false }),
-        document.createTextNode("유저 정보 페이지"),
+        userInfoPage
       ]);
     },
     "/genre/:category": (match) => {
