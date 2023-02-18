@@ -38,7 +38,7 @@ function createMovieItem(thumbnail, title, id, price, description, rate) {
   movieItem.classList.add("movie-item");
   const linkEl = document.createElement("a");
 
-  linkEl.href = `/genre/${id}`;
+  linkEl.href = `/movie/${id}`;
   linkEl.dataset.navigo = "";
   linkEl.innerHTML = `
   <div class="img-wrapper">
