@@ -1,3 +1,5 @@
+import Swiper from "swiper/swiper-bundle.min.js";
+import "swiper/swiper-bundle.min.css";
 import Navigo from "navigo";
 import home from "./pages/home";
 import rankingPage from "./pages/ranking";
@@ -68,9 +70,14 @@ router.hooks({
 
 router
   .on({
-    "/": (match) => {
-      // 홈 메인 페이지
+    "/": () => {
       renderPage([header(), home]);
+      new Swiper(".swiper", {
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
     },
     "/ranking": (match) => {
       // 랭킹 페이지
