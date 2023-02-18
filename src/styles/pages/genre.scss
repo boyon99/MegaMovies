@@ -1,8 +1,93 @@
+@use "../constants/colors" as colors;
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css");
+
 .genre-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border-radius: 12px;
-  height: 500px;
+  color: #fff;
+  width: 800px;
+  margin: 0 auto;
+  font-size: 32px;
+  text-align: center;
+  .container {
+    background-color: #20293f;
+    height: 300px;
+    margin: 30px 0;
+    padding: 10px;
+    border-radius: 20px;
+    .title {
+      margin: 10px 10px 0;
+      font-size: 20px;
+      font-weight: 700;
+      border-radius: 10%;
+      text-align: start;
+    }
+    .movie-list {
+      display: flex;
+      .list-item {
+        width: 200px;
+        margin: 10px;
+        font-size: 18px;
+        a {
+          display: block;
+          color: #fff;
+          .wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            span {
+              margin-bottom: 12px;
+              display: block;
+              height: 20px;
+              width: 100%;
+              text-align: center;
+              padding-bottom: 7px;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+            img {
+              display: block;
+              width: 150px;
+              height: 200px;
+              border-radius: 5%;
+            }
+          }
+        }
+      }
+    }
+    .genre-theme-wrap {
+      display: grid;
+      grid-template-rows: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
+      height: 80%;
+      a {
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &:nth-child(7) ~ a {
+          grid-row: 3/4;
+        }
+        & .genre-list {
+          .genre {
+            font-size: 16px;
+            &:hover {
+              color: colors.$color--highlight;
+            }
+            span {
+            }
+          }
+        }
+      }
+    }
+    .theme-list {
+      .theme {
+        font-size: 16px;
+        &:hover {
+          color: #fb4f93;
+        }
+        span {
+        }
+      }
+    }
+  }
 }

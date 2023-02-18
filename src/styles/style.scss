@@ -3,12 +3,13 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css");
 @import url("./pages/ranking.scss");
 @import url("./pages/genre.scss");
+@import url("./pages/genre_detail.scss");
 @import url("./pages/new.scss");
 @import url("./pages/home.scss");
 @import url("./pages/new.scss");
 @import url("./pages/login.scss");
 @import url("./pages/bank.scss");
-@import url('./pages/movie.scss');
+@import url("./pages/movie.scss");
 
 body {
   font-family: "Pretendard", sans-serif;
@@ -23,10 +24,6 @@ body {
 
 #app {
   margin-top: 118px;
-  &:not(:has(header)),
-  &.--not-has-header {
-    margin: 0;
-  }
 }
 
 .gnb {
