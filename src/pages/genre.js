@@ -22,19 +22,19 @@ async function getGenreList() {
 async function renderPage() {
   genrePage.textContent = "장르 페이지";
 
-  const actionMovieList = await getGenreMovies(["액션"]);
+  const actionMovieList = await getGenreMovies("액션");
   const actionContainer = createContainer({
     title: "액션하면 이 영화죠",
     movieList: actionMovieList,
   });
 
-  const comedyMovieList = await getGenreMovies(["코미디"]);
+  const comedyMovieList = await getGenreMovies("코미디");
   const comedyContainer = createContainer({
     title: "웃고싶은 날엔 코미디",
     movieList: comedyMovieList,
   });
 
-  const sadMovieList = await getGenreMovies(["드라마"]);
+  const sadMovieList = await getGenreMovies("드라마");
   const sadContainer = createContainer({
     title: "눈물나는 감동스토리",
     movieList: sadMovieList,
@@ -74,7 +74,7 @@ async function renderPage() {
 
     const themeListArr = genreList.theme.map((theme) => {
       const linkEl = document.createElement("a");
-      linkEl.href = `/theme/${theme}`;
+      linkEl.href = `/genre/${theme}`;
       linkEl.dataset.navigo = "";
       linkEl.innerHTML = `
    <div class="theme-list">
@@ -174,7 +174,7 @@ function createMovieItem({ imgSrc, title, id }) {
 
 */
 
-async function getGenreMovies(genreList) {
+export async function getGenreMovies(genreList) {
   const requestHeaders = {
     "Content-type": "application/json",
     apikey: process.env.apikey,
@@ -190,7 +190,7 @@ async function getGenreMovies(genreList) {
       },
       method: requestMethod,
       body: JSON.stringify({
-        searchTags: [...genreList],
+        searchTags: [genreList],
       }),
     }
   );

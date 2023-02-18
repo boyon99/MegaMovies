@@ -1,5 +1,5 @@
+@use "../constants/colors" as colors;
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css");
-// @import "./constants/colors";
 
 .genre-page {
   color: #fff;
@@ -21,20 +21,20 @@
       text-align: start;
     }
     .movie-list {
-      height: 100%;
       display: flex;
       .list-item {
         width: 200px;
-        height: 100px;
         margin: 10px;
         font-size: 18px;
         a {
+          display: block;
           color: #fff;
           .wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
             span {
+              margin-bottom: 12px;
               display: block;
               height: 20px;
               width: 100%;
@@ -45,6 +45,7 @@
               text-overflow: ellipsis;
             }
             img {
+              display: block;
               width: 150px;
               height: 200px;
               border-radius: 5%;
@@ -70,7 +71,7 @@
           .genre {
             font-size: 16px;
             &:hover {
-              color: #fb4f93;
+              color: colors.$color--highlight;
             }
             span {
             }

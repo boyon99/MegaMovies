@@ -5,9 +5,10 @@ import genrePage from "./pages/genre";
 import newPage from "./pages/new";
 import bankPage from "./pages/bank";
 import header, { headerEventMap, removeHeaderEvents } from "./pages/header";
-import moviePage from './pages/movie'
+import moviePage from "./pages/movie";
 import { me } from "./api/auth";
 import { AppStorage } from "./util";
+import { genreDetailPage } from "./pages/genre_detail";
 
 const app = document.querySelector("#app");
 
@@ -115,11 +116,10 @@ router
 
       history.back();
     },
-    '/movie/:id': ({ data, match }) => {
+    "/movie/:id": ({ data, match }) => {
       const movieId = data?.id;
       renderPage([header({ user: match?.user }), moviePage(movieId)]);
-    }
-    ,
+    },
     "/user-info": (match) => {
       renderPage([
         header({ isContainNav: false }),
@@ -137,7 +137,7 @@ router
         "스포츠",
         "가족",
         "범죄",
-        "위너브라더스",
+        "워너브라더스",
         "마블",
         "디즈니",
         "지브리",
@@ -150,7 +150,7 @@ router
         - 임시 요소인 document.createTextNode를 지우시고, 해당 페이지 요소로 렌더링 되도록 구현해주세요
       */
       allowedCategory.includes(category)
-        ? renderPage([header(), document.createTextNode(category)])
+        ? renderPage([header(), genreDetailPage(category)])
         : router.navigate("notfound");
     },
     "/cart": (match) => {
@@ -214,8 +214,8 @@ function renderPage(page) {
   const headerEl = Array.isArray(page)
     ? page.find((pageComponent) => pageComponent?.tagName === "HEADER")
     : page?.tagName === "HEADER"
-      ? page
-      : null;
+    ? page
+    : null;
 
   app.classList.toggle("--not-has-header", !headerEl);
 
