@@ -2,8 +2,7 @@ import { me } from "../api/auth";
 import { AppStorage } from "../util";
 import logo from '../../static/logo.png';
 
-// 기본 HTML
-
+// HTML 뼈대
 const userInfoPage = document.createElement("div");
 userInfoPage.classList.add("user-info-page");
 
@@ -25,8 +24,9 @@ profilePic.classList.add("profile-pic");
 profileArea.appendChild(profilePic);
 
 const profileName = document.createElement("div");
-profileName.textContent = "사용자 이름";
 profileName.classList.add("profile-name");
+let UserUsername = document.getElementsByClassName(".user-name").textContent;
+profileName.textContent = UserUsername;
 profileArea.appendChild(profileName);
 
 const btnWrapper = document.createElement("div");
@@ -56,29 +56,33 @@ btnWrapper.appendChild(changePasswordBtn);
 
 export default userInfoPage;
 
-// const toDataURL = url => fetch(url)
-//   .then(response => response.blob())
-//   .then(blob => new Promise((resolve, reject) => {
-//     const reader = new FileReader()
-//     reader.onloadend = () => resolve(reader.result)
-//     reader.onerror = reject
-//     reader.readAsDataURL(blob)
-//   }))
+
+//functions
+
+function getAccessToken() {
+  return window?.localStorage.getItem('accessToken');
+}
+
+async function renderUserInfo () {
+  const user = await me(AppStorage.getAccessToken());
+  profileName.textContent = user.displayName;
+  profilePic.src = user.profileImgBase64 || 'https://cdn-icons-png.flaticon.com/512/6522/6522516.png';
+}
 
 async function changeUserInfo (accessToken, {displayName, profileImgBase64, oldPassword, newPassword}) {
   const headers = {
     "Content-type": "application/json",
     apikey: process.env.apikey,
     username: "KDT4_Team1",
-    Authorization: `Bearer ${accessToken}`
-  }
+    Authorization: `Bearer ${accessToken}`,
+  };
 
   const data = {
     ...(displayName && {displayName}),
     ...(profileImgBase64 && {profileImgBase64}),
     ...(oldPassword && {oldPassword}),
     ...(newPassword && {newPassword}),
-  }
+  };
   
   const res = await fetch('https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/user', {
     method: "PUT",
@@ -91,22 +95,9 @@ async function changeUserInfo (accessToken, {displayName, profileImgBase64, oldP
   return;
 }
 
-function getAccessToken() {
-  return window?.localStorage.getItem('accessToken');
-}
-  
-// renderUserInfo();
-
 // Modal
 
-async function renderUserInfo () {
-  const user = await me(AppStorage.getAccessToken());
-  profileName.textContent = user.displayName;
-  profilePic.src = user.profileImg || 'https://cdn-icons-png.flaticon.com/512/6522/6522516.png';
-}
-
-
-// ProfilePicBtn Modal
+// 1. ProfilePicBtn Modal
 function displayPicModalWindow(){
   const accessToken = AppStorage.getAccessToken();
   const modalOverlay = document.createElement("div");
@@ -118,51 +109,81 @@ function displayPicModalWindow(){
     <div class="modal-close">X</div>
     <div class="innerElement-title">프로필 이미지 변경</div>
     <span class="innerElement-span">1MB 미만의 파일만 업로드 가능합니다.</span>
-    <button onclick="openTextFile()" class="open btn-secondary medium">업로드 이미지 선택</button>
+    <input type="file" class="open"></input>
     <button class="btn-primary medium">확인</button>
     `;
   modalOverlay.appendChild(innerElement); 
   body.appendChild(modalOverlay); 
-  
   const closeBtn = innerElement.querySelector(".modal-close")
   closeBtn.addEventListener("click", (e)=> {
     innerElement.style.display = "none";
     modalOverlay.style.display = "none";
   })
 
-  async function openTextFile(){
-    var input = document.createElement("input");
-    input.type="file";
-    input.accept="image/jpg, image/jpeg, image/web, image/png, image/gif, image/svg";
-    input.id="uploadInput";
-
-    await input.click();
-    input.onchange = function(e){
-      processFile(e.target.files[0]);
-    };
-  }
-  document.querySelector('.open').addEventListener("click", openTextFile());
-  function processFile(file){
-    var reader = new FileReader();
-    reader.onload = function(){
-      var result = reader.result;
-    document.getElementById(profilePic).setAttribute('src', result);
-    };
-    reader.readAsDataURL(file);
-  }
-
+  //test 2 (success!!)
+  const inputFile = document.querySelector("input[class='open']");
   const confirmBtn = innerElement.querySelector(".btn-primary")
   confirmBtn.addEventListener("click", async (e)=> {
-    const value = innerElement.querySelector('input').src;
-    await changeUserInfo(accessToken, {profileImgBase64: value});
-    innerElement.style.display = "none";
-    modalOverlay.style.display = "none";
+    const file = inputFile.files[0]
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.addEventListener("load", e => {
+    profilePic.src = e.target.result ?? 'https://cdn-icons-png.flaticon.com/512/6522/6522516.png';
+    profilePic.alt = "프로필 이미지";
   })
+  inputFile.addEventListener("change", async(event) => {
+    const value = innerElement.querySelector("input").src;
+    console.log(value);
+    await changeUserInfo(accessToken, {profileImgBase64: value});
+    renderUserInfo();
+  })
+  innerElement.style.display = "none";
+  modalOverlay.style.display = "none";
+})
+
+  //test 1  
+  // const confirmBtn = innerElement.querySelector(".btn-primary");
+  // confirmBtn.addEventListener("click", async (e)=> {
+  //   const value = innerElement.querySelector('input').value;
+  //   await changeUserInfo(accessToken, {profileImgBase64: value});
+  //   renderUserInfo();
+  //   innerElement.style.display = "none";
+  //   modalOverlay.style.display = "none";
+  // })
+  // const inputFile = document.querySelector('input[class="open"]').value;
+  // inputFile.addEventListener('click', async(event) => {
+  //   const file = inputFile.files[0]
+  //   const reader = new FileReader()
+  //   reader.readAsDataURL(file)  
+  //   reader.addEventListener('load', e => {
+  //     profilePic.src = e.target.result ?? 'https://cdn-icons-png.flaticon.com/512/6522/6522516.png';
+  //     profilePic.alt = "프로필 이미지";
+  //     profilePic.append(inputFile)
+  //   })
+  // })
+
+  //original
+  // const confirmBtn = innerElement.querySelector(".btn-primary")
+  // confirmBtn.addEventListener("click", async (e)=> {
+  //   const value = innerElement.querySelector('input').src;
+  //   await changeUserInfo(accessToken, {profileImgBase64: value});
+  //   renderUserInfo();
+  //   innerElement.style.display = "none";
+  //   modalOverlay.style.display = "none";
+  // })
+  // const inputFile = document.querySelector('input[class="open"]');
+  // inputFile.addEventListener('change', async(event) => {
+  //   const file = inputFile.files[0]
+  //   const reader = new FileReader()
+  //   reader.readAsDataURL(file)  
+  //   reader.addEventListener('load', e => {
+  //     profilePic.src = e.target.result ?? 'https://cdn-icons-png.flaticon.com/512/6522/6522516.png';
+  //     profilePic.alt = "프로필 이미지";
+    
+
 }
 
-
-
-// changeNameBtn Modal
+// 2. changeNameBtn Modal
 function displayNameModalWindow(){
   const accessToken = AppStorage.getAccessToken();
   const modalOverlay = document.createElement("div");
@@ -174,16 +195,11 @@ function displayNameModalWindow(){
     <div class="modal-close">X</div>
     <div class="innerElement-title">이름 변경하기</div>
     <span class="innerElement-span">새로운 이름을 작성해주세요.</span>
-    <input type="text" required />
+    <input type="text"/>
     <button class="btn-primary medium">확인</button>
   `;
   modalOverlay.appendChild(innerElement); 
   body.appendChild(modalOverlay); 
-  // innerElement.addEventListener("click", async ()=> {
-  //   const value = innerElement.querySelector('input').value;
-  //   await changeUserInfo(accessToken, {displayName: value});
-  //   closeModalWindow(modalOverlay);
-  // })
   const closeBtn = innerElement.querySelector(".modal-close")
   closeBtn.addEventListener("click", (e)=> {
     innerElement.style.display = "none";
@@ -194,17 +210,13 @@ function displayNameModalWindow(){
     const value = innerElement.querySelector('input').value;
     await changeUserInfo(accessToken, {displayName: value});
     renderUserInfo();
-    // return renderUserInfo;
     innerElement.style.display = "none";
     modalOverlay.style.display = "none";
+    // window.location.reload();
   })
 }
 
-// function closeModalWindow(modalOverlay){
-//   body.removeChild(modalOverlay);
-// }
-
-//changePasswordBtn Modal
+// 3. changePasswordBtn Modal
 function displayPWModalWindow(){
   const accessToken = AppStorage.getAccessToken();
   const modalOverlay = document.createElement("div");
@@ -236,13 +248,15 @@ function displayPWModalWindow(){
 }
 
 
-
+// event listeners
 profilePicBtn.addEventListener('click', displayPicModalWindow);
 changeNameBtn.addEventListener('click', displayNameModalWindow);
 changePasswordBtn.addEventListener('click', displayPWModalWindow);
 
 
 
+
+// miscs
 /*
 const uploadField = document.getElementById("modal-file-upload");
 uploadField.onchange = function(){
