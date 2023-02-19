@@ -56,6 +56,7 @@ btnWrapper.appendChild(changePasswordBtn);
 
 export default userInfoPage;
 
+renderUserInfo();
 
 //functions
 
@@ -66,7 +67,7 @@ function getAccessToken() {
 async function renderUserInfo () {
   const user = await me(AppStorage.getAccessToken());
   profileName.textContent = user.displayName;
-  profilePic.src = user.profileImgBase64 || 'https://cdn-icons-png.flaticon.com/512/6522/6522516.png';
+  profilePic.src = user.profileImg || 'https://cdn-icons-png.flaticon.com/512/6522/6522516.png';
 }
 
 async function changeUserInfo (accessToken, {displayName, profileImgBase64, oldPassword, newPassword}) {
@@ -91,8 +92,12 @@ async function changeUserInfo (accessToken, {displayName, profileImgBase64, oldP
       ...data
     }),
   });
+
+  if(res.status !== 200) return false;
+
+  const payload = await res.json();
   
-  return;
+  return payload;
 }
 
 // Modal
@@ -124,21 +129,21 @@ function displayPicModalWindow(){
   const inputFile = document.querySelector("input[class='open']");
   const confirmBtn = innerElement.querySelector(".btn-primary")
   confirmBtn.addEventListener("click", async (e)=> {
+    
     const file = inputFile.files[0]
     const reader = new FileReader()
     reader.readAsDataURL(file)
-    reader.addEventListener("load", e => {
-    profilePic.src = e.target.result ?? 'https://cdn-icons-png.flaticon.com/512/6522/6522516.png';
-    profilePic.alt = "프로필 이미지";
+    reader.addEventListener("load", async (e) => {
+      const profileImgBase64 = e.target.result;
+      const changedUserInfo = await changeUserInfo(accessToken, {profileImgBase64});
+      console.log({changedUserInfo});   
+      innerElement.style.display = "none";
+      modalOverlay.style.display = "none";
+      renderUserInfo();
+    // profilePic.src = e.target.result ?? 'https://cdn-icons-png.flaticon.com/512/6522/6522516.png';
+    // profilePic.alt = "프로필 이미지";
   })
-  inputFile.addEventListener("change", async(event) => {
-    const value = innerElement.querySelector("input").src;
-    console.log(value);
-    await changeUserInfo(accessToken, {profileImgBase64: value});
-    renderUserInfo();
-  })
-  innerElement.style.display = "none";
-  modalOverlay.style.display = "none";
+
 })
 
   //test 1  
