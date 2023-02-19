@@ -1,4 +1,4 @@
-import BankAPI from "../../api/bank.js";
+import BankAPI from "../../api/bank";
 
 const bankAPI = new BankAPI();
 

@@ -1,3 +1,5 @@
+import Swiper from "swiper/swiper-bundle.min.js";
+import "swiper/swiper-bundle.min.css";
 import Navigo from "navigo";
 import home from "./pages/home";
 import rankingPage from "./pages/ranking";
@@ -5,9 +7,10 @@ import genrePage from "./pages/genre";
 import newPage from "./pages/new";
 import bankPage from "./pages/bank";
 import header, { headerEventMap, removeHeaderEvents } from "./pages/header";
-import moviePage from './pages/movie'
+import moviePage from "./pages/movie";
 import { me } from "./api/auth";
 import { AppStorage } from "./util";
+import { genreDetailPage } from "./pages/genre_detail";
 import userInfoPage from "./pages/userInfo";
 
 const app = document.querySelector("#app");
@@ -68,9 +71,14 @@ router.hooks({
 
 router
   .on({
-    "/": (match) => {
-      // 홈 메인 페이지
+    "/": () => {
       renderPage([header(), home]);
+      new Swiper(".swiper", {
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
     },
     "/ranking": (match) => {
       // 랭킹 페이지
@@ -116,11 +124,10 @@ router
 
       history.back();
     },
-    '/movie/:id': ({ data, match }) => {
+    "/movie/:id": ({ data, match }) => {
       const movieId = data?.id;
       renderPage([header({ user: match?.user }), moviePage(movieId)]);
-    }
-    ,
+    },
     "/user-info": (match) => {
       renderPage([
         header({ isContainNav: false }),
@@ -138,7 +145,7 @@ router
         "스포츠",
         "가족",
         "범죄",
-        "위너브라더스",
+        "워너브라더스",
         "마블",
         "디즈니",
         "지브리",
@@ -151,7 +158,7 @@ router
         - 임시 요소인 document.createTextNode를 지우시고, 해당 페이지 요소로 렌더링 되도록 구현해주세요
       */
       allowedCategory.includes(category)
-        ? renderPage([header(), document.createTextNode(category)])
+        ? renderPage([header(), genreDetailPage(category)])
         : router.navigate("notfound");
     },
     "/cart": (match) => {
@@ -215,8 +222,8 @@ function renderPage(page) {
   const headerEl = Array.isArray(page)
     ? page.find((pageComponent) => pageComponent?.tagName === "HEADER")
     : page?.tagName === "HEADER"
-      ? page
-      : null;
+    ? page
+    : null;
 
   app.classList.toggle("--not-has-header", !headerEl);
 
