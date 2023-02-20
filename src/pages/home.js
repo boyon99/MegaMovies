@@ -1,5 +1,5 @@
 import { readItem } from '../api/movieRequest'
-import posterMap from '../trailer/posterList'
+import posterMap from '../movieInfoList/posterList'
 
 const homeContainer = document.createElement('div')
 export default homeContainer
