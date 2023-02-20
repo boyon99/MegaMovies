@@ -1,4 +1,5 @@
 import { readItem } from '../api/movieRequest'
+import { AppStorage } from '../util'
 
 // random buy
 function getRandomBuy() {
@@ -81,11 +82,16 @@ const moviePage = (movieId) => {
       const buyBtnEl = document.createElement('button')
       buyBtnEl.classList.add('btn-outlined', 'buy', 'medium')
       buyBtnEl.innerText = "구매하기"
-
+      // cart info storage
+      buyBtnEl.addEventListener('click', ()=>{
+        if(AppStorage.accessTokenKey){
+          AppStorage.setCartItem(item[0])
+          location.href = '/cart';  
+        }else{
+        }
+      })
       page.append(newImgEl, titleEl, starEl, rateEl, descriptionEl, tagsEl, priceEl, priceImgEl, buyBtnEl)
-      console.log(item)
     })()
-
   // chart
   page.innerHTML = `
   <div class="canvas">
@@ -177,7 +183,6 @@ const moviePage = (movieId) => {
   viewPoint.innerText = "감상포인트"
 
   page.append(listcontainer, monthBuy, viewPoint)
-
   return page;
 }
 

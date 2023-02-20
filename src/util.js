@@ -37,4 +37,25 @@ export class AppStorage {
     window?.localStorage.getItem(this.accessTokenKey) &&
       window?.localStorage.removeItem(this.accessTokenKey);
   }
+
+  /**
+   * 장바구니에 아이템을 추가하는 함수
+   */
+  static setCartItem(item){
+    let length = localStorage.length
+    while(localStorage.getItem(`cart-${length}`)){
+      console.log(length)
+      length++
+    }
+    window?.localStorage.setItem(`cart-${length}`, [`${item.id}`,`${item.title}`, `${item.price}`, `${item.thumbnail}`])
+  }
+
+  /**
+   * 장바구니에 있는 아이템을 조회하는 함수
+   */
+  static getCartItem(){
+    for(let i = 0; i < localStorage.length + 1; i++){
+    console.log(localStorage.getItem(`cart-${i}`).split(','))
+    }
+  }
 }
