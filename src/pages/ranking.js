@@ -1,5 +1,7 @@
 import { readItem } from '../api/movieRequest'
 import trailerList from '../trailer/trailerList'
+import imageList from '../trailer/imageList'
+
 
 const rankingContainer = document.createElement('div')
 export default rankingContainer
@@ -52,9 +54,7 @@ function renderItems(items) {
       if (index > 10) return
       return /* html */ `
         <li class="videos-item">
-          <video src=${trailerList.get(item.title)} poster=${
-        item.thumbnail
-      } controls></video>
+          <video src=${trailerList.get(item.title)} poster=${imageList.get(item.title)} controls></video>
         </li>
         `
     })

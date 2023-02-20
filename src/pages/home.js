@@ -1,4 +1,6 @@
 import { readItem } from '../api/movieRequest'
+import imageList from '../trailer/imageList'
+
 
 const homeContainer = document.createElement('div')
 export default homeContainer
@@ -79,8 +81,10 @@ function renderItems(items) {
       if (index > 9) return
       return /* html */ `
       <a class="swiper-slide" href="/movie/${item.id}" data-navigo>
-        <div class="image-wrapper"><img src="${item.thumbnail}" /></div>
+        <div class="image-wrapper"><img src="${imageList.get(item.title)}" /></div>
+        
         <strong>${index}</strong>
+        <p>${item.title}</p>
       </a>
     `
     })
