@@ -1,30 +1,672 @@
 @use "../constants/colors" as colors;
 
+@keyframes hide {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0.6;
+  }
+}
+
+@keyframes bank-skeleton-small {
+  from {
+    // background-position: 500px 0;
+    opacity: 0;
+  }
+  50% {
+    background-position: 120px 0;
+    opacity: 1;
+  }
+  to {
+    background-position: 240px 0;
+    opacity: 1;
+  }
+}
+
+@keyframes bank-skeleton {
+  from {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  to {
+    background-position: 1200px 0;
+    opacity: 0;
+  }
+}
+
+$bank-skeleton-bg: linear-gradient(
+  to right bottom,
+  #081229,
+  #091834,
+  #0a1c3f,
+  #0c214b,
+  #0f2657,
+  #0f265c,
+  #102761,
+  #122766,
+  #112365,
+  #121e64,
+  #131962,
+  #151360
+);
+
+$bank-skeleton-pg: linear-gradient(
+  to right,
+  transparent,
+  #053c86,
+  #0f459b,
+  #1c4db1,
+  #2a56c7,
+  #395edd,
+  #3a60e0,
+  #3c63e4,
+  #3d65e7,
+  #3161d8,
+  #275dc9,
+  #1f59ba,
+  #1a54ab
+);
+
 .bank {
+  $height--account-item: 56px;
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-outlined {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
   color: colors.$color--font;
-  .bank-content {
+  .block-format {
+    display: inline-block;
+    vertical-align: top;
+    padding: 4px 8px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: colors.$color--highlight;
+    font-weight: bold;
+    margin-right: 8px;
+    box-sizing: border-box;
+  }
+  .inner {
+    .title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2em;
+    }
+    .accounts-info {
+      margin-top: 12px;
+      display: flex;
+      gap: 12px;
+      .accounts--total {
+        position: relative;
+        display: flex;
+        width: 60px;
+        align-items: center;
+        border-radius: 8px;
+        box-sizing: border-box;
+        &:empty {
+          background-image: $bank-skeleton-bg;
+          &::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            opacity: 1;
+            background-image: $bank-skeleton-pg;
+            background-repeat: no-repeat;
+            animation: bank-skeleton-small 2s infinite forwards;
+          }
+        }
+      }
+    }
+    .account-list {
+      $padding--account-list: 20px;
+      $gap--account-list: 30px;
+      $per-item: 4;
+
+      box-sizing: border-box;
+      position: relative;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      gap: 30px;
+      margin-top: 30px;
+      padding: $padding--account-list;
+      border-radius: 8px;
+      overflow: auto;
+      height: calc(
+        (
+            $height--account-item * $per-item + $gap--account-list *
+              ($per-item - 1)
+          ) + $padding--account-list * 2
+      );
+      background-color: #061940;
+      &--has-not-bank-accounts {
+        justify-content: center;
+        gap: 12px;
+      }
+      &:empty {
+        background-image: $bank-skeleton-bg;
+        &::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          opacity: 1;
+          background-image: $bank-skeleton-pg;
+          background-repeat: no-repeat;
+          animation: bank-skeleton 2s infinite;
+        }
+      }
+      .account-item {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 8px 16px;
+        display: flex;
+        gap: 40px;
+        color: #000;
+        background-color: #eee;
+        border-radius: 8px;
+        &.--hide {
+          animation: hide 0.3s forwards;
+        }
+        input[type="checkbox"] {
+          // 체크박스
+          flex-shrink: 0;
+          width: 20px;
+          height: 20px;
+          align-self: center;
+          appearance: none;
+          background-color: #fff;
+          border: 1px solid colors.$color--highlight;
+          transition: background-color 0.3s, border-radius 0.3s;
+          &:checked {
+            border-radius: 50%;
+            background-color: colors.$color--highlight;
+            position: relative;
+            &::after {
+              position: absolute;
+              content: "-";
+              color: #fff;
+              left: 50%;
+              top: 50%;
+              transform: translate(-50%, -50%);
+            }
+          }
+        }
+        .account {
+          flex-shrink: 0;
+          flex-grow: 1;
+          display: flex;
+          align-items: center;
+          gap: 30px;
+          .bank-logo {
+            display: flex;
+            width: 120px;
+            height: 40px;
+            align-items: center;
+            img {
+              // 은행 로고 이미지
+              display: block;
+              width: 100%;
+              object-fit: cover;
+            }
+          }
+          .bank--info {
+            display: flex;
+            gap: 30px;
+            //transform: translateY(30px);
+            // align-items: center;
+            .account-number {
+              // 계좌번호
+              display: flex;
+              align-items: center;
+            }
+            .account-balance {
+              // 잔액
+              display: flex;
+              align-items: center;
+            }
+          }
+        }
+      }
+    }
+    .control {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      margin-top: 14px;
+      padding: 8px;
+      box-sizing: border-box;
+      .btn-secondary {
+        color: #a0bda8;
+      }
+    }
+  }
+}
+
+.bank-modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 10;
+  .btn-primary,
+  .btn-secondary,
+  .btn-outlined {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &__wrapper {
+    width: 420px;
+    height: 500px;
+    padding: 20px;
+    position: relative;
     display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #000;
+    overflow: hidden;
+    .header {
+      position: absolute;
+      left: 0;
+      top: -20px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding: 8px 16px;
+      margin-top: 20px;
+      background-color: lighten(colors.$color--bg, 20%);
+      box-sizing: border-box;
+      .title {
+        color: colors.$color--font;
+        font-weight: bold;
+      }
+      .btn-close {
+        min-width: unset;
+        width: 20px;
+        height: 20px;
+        font-size: 8px;
+        border-radius: 100%;
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        background-color: rgba(255, 255, 255, 0.5);
+        border-color: transparent;
+        color: #000;
+        // display: none;
+        &:hover {
+          color: colors.$color--font;
+          background-color: colors.$color--highlight;
+        }
+      }
+    }
+    .content {
+      flex-grow: 1;
+      padding-top: 30px;
+      box-sizing: border-box;
+      overflow: auto;
+    }
+    .control {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      .btn--submit {
+        transition: background-color 0.3s;
+      }
+    }
+  }
+  &.bank-modal--loading,
+  &.bank-modal--success {
+    pointer-events: none;
+  }
+  &.bank-modal--loading {
+    .bank-modal__wrapper {
+      .control {
+        .btn--submit {
+          animation: pulse 0.5s infinite alternate;
+          &:hover {
+            background-color: unset;
+          }
+        }
+      }
+    }
+  }
+  &.bank-modal--success {
+    .bank-modal__wrapper {
+      .control {
+        .btn--submit {
+          background-color: #32cd32;
+          animation: none;
+        }
+      }
+    }
+  }
+}
+
+.bank-modal__confirm {
+  $width--logo: 100px;
+  $gap--logo: 20px;
+  color: #000;
+  &--close-account {
+    // 선택 계좌 해지 모달 렌더링 요소
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 70px;
+    height: 100%;
+    // padding-top: 30px;
+    gap: 20px;
+    .selected-list {
+      // 선택된 계좌 목록
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      .bank-logo {
+        // img wrapper
+        display: flex;
+        width: 100px;
+        height: 40px;
+        align-items: center;
+        img {
+          display: block;
+          width: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+    .confirm-text {
+      // text 요소
+      display: block;
+    }
+  }
+}
+
+.bank-modal__form--connect-account {
+  height: 100%;
+  .connect-account-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
     box-sizing: border-box;
-    border: 2px solid #fff;
-    border-radius: 8px;
-    // background-color: colors.$color--highlight;
-    .content__info {
-      width: 100%;
-      .title {
+    height: 100%;
+    .select-bank-box {
+      // 은행 선택 wrapper
+      display: flex;
+      justify-content: center;
+      flex-shrink: 0;
+      .bank-list {
+        --width-bank-item: 116px;
+        --height-bank-item: 40px;
+        --gap-bank-list: 12px;
+        --per-row-item: 3;
+        --max-expect-column: 3;
+
+        // 은행 리스트
+        width: calc(
+          var(--width-bank-item) * var(--per-row-item) +
+            ((var(--per-row-item) - 1) * var(--gap-bank-list))
+        );
+        // height: calc(
+        //   var(--height-bank-item) * var(--max-expect-column) +
+        //     ((var(--max-expect-column) - 1) * var(--gap-bank-list))
+        // );
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--gap-bank-list);
+        .bank-input-wrapper {
+          input {
+            appearance: none;
+            display: none;
+            &:checked + .bank-item {
+              background-color: rgba(251, 79, 147, 0.1);
+              .bank-logo {
+                border: 2px solid colors.$color--highlight;
+              }
+            }
+          }
+          .bank-item {
+            // 은행 리스트 아이템
+            display: block;
+            border-radius: 8px;
+            transition: background-color 0.2s, border 0.1s;
+            box-sizing: border-box;
+            .bank-logo {
+              // 은행 로고
+              display: flex;
+              width: var(--width-bank-item);
+              height: var(--height-bank-item);
+              justify-content: center;
+              align-items: center;
+              padding: 8px 16px;
+              border: 1px solid colors.$color--bg;
+              border-radius: 8px;
+              transition: border 0.3s;
+              box-sizing: border-box;
+              &:hover {
+                cursor: pointer;
+                border: 2px solid colors.$color--highlight;
+              }
+              img {
+                display: block;
+                width: 100%;
+                object-fit: cover;
+              }
+            }
+          }
+        }
+      }
+    }
+    .bank-template {
+      width: 80%;
+      aspect-ratio: 16 / 10;
+      border-radius: 8px;
+      color: rgb(197, 182, 21);
+      text-shadow: 1px 1px 1px 8px rgb(119, 107, 18);
+      background-image: linear-gradient(
+        to right top,
+        #997684,
+        #7e6173,
+        #634c62,
+        #483a51,
+        #2d2840,
+        #2f2847,
+        #30284d,
+        #322854,
+        #5e3570,
+        #903e85,
+        #c64691,
+        #fb4f93
+      );
+      box-shadow: 1px 1px 4px #000;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 10px;
+      margin: 20px 0;
+      box-sizing: border-box;
+      .bank-logo {
+        width: 80px;
+        height: 30px;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 24px;
-        box-sizing: border-box;
         padding: 8px;
+        background-color: #fffffff2;
+        border-radius: 8px;
+        &:empty {
+          background-image: url("../../../static/logo.png");
+          background-repeat: no-repeat;
+          background-size: contain;
+          background-position: center;
+          background-color: transparent;
+        }
+        img {
+          display: block;
+          width: 100%;
+          object-fit: cover;
+        }
+      }
+      .account-input-title {
+        font-size: 14px;
+        color: rgb(197, 182, 21);
+      }
+      .account-input-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #808080;
+        input,
+        input[data-digit] {
+          display: inline-flex;
+          vertical-align: top;
+          appearance: none;
+          justify-content: center;
+          align-items: center;
+          background-color: transparent;
+          border: none;
+          padding: 0.2em;
+          // box-sizing: border-box;
+        }
+        input[data-digit] {
+          transition: border 0.2s;
+          color: #808080;
+          backdrop-filter: blur(60px);
+          border-bottom: 2px solid rgb(197, 182, 21);
+          &::placeholder {
+            letter-spacing: 3px;
+          }
+        }
+      }
+      .account-input-phone {
+        appearance: none;
+        border: 2px solid transparent;
+        outline: none;
+        box-sizing: border-box;
+        padding: 4px 8px;
+        background-color: transparent;
+        color: #dedede;
+        backdrop-filter: blur(10px);
+        box-shadow: 1px 1px 2px #000;
+        transition: border 0.2s;
+        &::placeholder {
+          color: #9d9d9d;
+        }
       }
     }
-    .content__control {
+  }
+}
+
+@keyframes slide-down {
+  from {
+    transform: translateY(calc(-100%));
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes timer {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.app__toast {
+  &,
+  &.toast--success,
+  &.toast--error {
+    // 공통
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    z-index: 11;
+    &.timeout {
+      .content {
+        padding: 14px 16px 8px;
+        &::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 6px;
+          background-color: colors.$color--highlight;
+        }
+      }
     }
-    .content__form {
+    .content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 400px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      background-color: #6babe3;
+      color: #fff;
+      font-weight: bold;
+      box-sizing: border-box;
+      animation: slide-down 0.3s forwards;
+      box-shadow: 1px 1px 8px #000;
+      word-break: keep-all;
+      overflow: hidden;
+
+      button {
+        margin-left: 12px;
+      }
+    }
+  }
+  &.toast--success {
+    .content {
+      background-color: #65caa2;
+    }
+  }
+  &.toast--error {
+    .content {
+      background-color: #fb9664;
     }
   }
 }

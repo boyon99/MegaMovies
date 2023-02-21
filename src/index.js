@@ -6,9 +6,9 @@ import rankingPage from "./pages/ranking";
 import genrePage from "./pages/genre";
 import newPage from "./pages/new";
 import bankPage from "./pages/bank";
-import header, { headerEventMap, removeHeaderEvents } from "./pages/header";
+import header from "./pages/header";
 import moviePage from "./pages/movie";
-import { me } from "./api/auth";
+import { logout, me } from "./api/auth";
 import { AppStorage } from "./util";
 import { genreDetailPage } from "./pages/genre_detail";
 
@@ -49,21 +49,52 @@ router.hooks({
     const navPaths = ["", "ranking", "genre", "new"];
 
     if (navPaths.includes(match.url)) {
-      const linkEls = document.querySelectorAll(".lnb-item a");
-      if (!linkEls.length) return;
-      const activedEl = Array.from(linkEls).find((linkEl) =>
+      attachActiveStyle("active");
+      return;
+    }
+
+    attachActiveStyle("reset");
+
+    function attachActiveStyle(mode) {
+      const activedNavElement = findActiveNavElement();
+      const activeClassName = "current-page";
+
+      switch (mode) {
+        case "active":
+          const target = findMatchedNavElement();
+
+          activedNavElement?.classList.remove(activeClassName);
+          target.classList.add(activeClassName);
+
+          break;
+        case "reset":
+          activedNavElement?.classList.remove(activeClassName);
+
+          break;
+        default:
+          break;
+      }
+    }
+
+    // helper function
+    function getNavLinks() {
+      return document.querySelectorAll(".lnb-item a");
+    }
+
+    function findActiveNavElement() {
+      const linkEls = getNavLinks();
+
+      return Array.from(linkEls).find((linkEl) =>
         linkEl.classList.contains("current-page")
       );
-      if (activedEl) {
-        activedEl.classList.remove("current-page");
-      }
+    }
 
-      const target = Array.from(linkEls).find((linkEl) => {
-        const hrefRegExp = new RegExp(`/${match.url}$`);
-        return hrefRegExp.test(linkEl.href);
-      });
+    function findMatchedNavElement() {
+      const hrefRegExp = new RegExp(`/${match.url}$`);
 
-      target.classList.add("current-page");
+      return Array.from(getNavLinks()).find((navLinkElement) =>
+        hrefRegExp.test(navLinkElement.href)
+      );
     }
   },
 });
@@ -114,8 +145,12 @@ router
       */
       renderPage(document.createTextNode("회원가입 페이지"));
     },
-    "/logout": (match) => {
+    "/logout": async (match) => {
       // 로그아웃
+      const logoutResponse = await logout(AppStorage.getAccessToken());
+
+      if (!logoutResponse) return;
+
       if (match?.user || AppStorage.getCurrentUser()) {
         AppStorage.deleteAccessToken();
         AppStorage.setCurrentUser(null);
@@ -187,6 +222,10 @@ router
         임시 요소인 document.createTextNode를 지우시고, 해당 페이지 요소로 렌더링 되도록 구현해주세요
       */
       renderPage([header(), document.createTextNode("단일 제품 상세 거래")]);
+    },
+    "/search": (match) => {
+      //검색 페이지
+      renderPage([header(), document.createTextNode("검색 페이지")]);
     },
   })
   .notFound((match) => {
