@@ -7,6 +7,7 @@
     img {
       width: 60px;
       margin-top: 10px;
+      margin-left: 20px;
     }
     .title {
       font-size: 24px;
@@ -16,19 +17,29 @@
       top: 5px;
       left: 100px;
     }
-    .price{
+    .pricebox{
       position: absolute;
       top: 50px;
-      left: 100px;
-    }
-    .priceImg{
-      width: 20px;
-      position: absolute;
-      top: 43px;
-      left: 150px;
+      left: 105px;
+      align-items: center;
+      display: flex;
+      vertical-align: top;
+
+      .price{
+
+      }
+      .priceImg{
+        width: 20px;
+        margin-left: 5px;
+        transform: translateY(-5px);
+      }
     }
 
     .checkbox{
+      position: absolute;
+      top: 10px;
+      left: 0px;
+
     }
   }
 }
