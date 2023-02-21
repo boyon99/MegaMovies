@@ -35,3 +35,30 @@ export async function me(accessToken) {
 
   return user;
 }
+
+export async function logout(accessToken) {
+  if (!accessToken) return false;
+
+  const requestHeaders = {
+    "Content-type": "application/json",
+    apikey: process.env.apikey,
+    username: "KDT4_Team1",
+    Authorization: `Bearer ${accessToken}`,
+  };
+  const requestMethod = "POST";
+
+  const logoutResponse = await fetch(
+    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/logout",
+    {
+      headers: { ...requestHeaders },
+      method: requestMethod,
+    }
+  );
+
+  if (logoutResponse.status !== 200) return false;
+
+  // true
+  const result = await logoutResponse.json();
+
+  return result;
+}

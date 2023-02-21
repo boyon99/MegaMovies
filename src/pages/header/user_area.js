@@ -1,5 +1,3 @@
-import logo from "../../../static/logo.png";
-
 export const userArea = (user) => {
   return user ? loginedUser(user) : logoutedArea();
 };
@@ -16,6 +14,7 @@ function logoutedArea() {
 
 function loginedUser(user) {
   const { displayName, profileImg } = user;
+  const defaultImg = "https://cdn-icons-png.flaticon.com/512/6522/6522516.png";
 
   const logedInArea = document.createElement("div");
   logedInArea.className = "user";
@@ -23,7 +22,7 @@ function loginedUser(user) {
   const userProfile = document.createElement("div");
   userProfile.className = "profile";
   const userImg = document.createElement("img");
-  userImg.src = profileImg ?? logo;
+  userImg.src = profileImg ?? defaultImg;
   userImg.alt = "profile image";
   userProfile.appendChild(userImg);
 
@@ -34,11 +33,12 @@ function loginedUser(user) {
   userName.textContent = displayName;
   userInfo.append(userName, document.createTextNode(" 님"));
 
+  // 라우팅 주소 매핑
   const menuMap = new Map([
-    [{ path: "/", title: "장바구니" }, createMenuLi],
-    [{ path: "/", title: "사용자 정보 수정" }, createMenuLi],
+    [{ path: "/cart", title: "장바구니" }, createMenuLi],
+    [{ path: "/user-info", title: "사용자 정보 수정" }, createMenuLi],
     [{ path: "/bank", title: "계좌 페이지" }, createMenuLi],
-    [{ path: "/", title: "구매내역" }, createMenuLi],
+    [{ path: "/order-history", title: "구매내역" }, createMenuLi],
     [{ path: "/logout", title: "로그아웃" }, createMenuLi],
   ]);
   const menu = document.createElement("div");
