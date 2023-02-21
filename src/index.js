@@ -1,12 +1,16 @@
+import Swiper from "swiper/swiper-bundle.min.js";
+import "swiper/swiper-bundle.min.css";
 import Navigo from "navigo";
 import home from "./pages/home";
 import rankingPage from "./pages/ranking";
 import genrePage from "./pages/genre";
 import newPage from "./pages/new";
 import bankPage from "./pages/bank";
-import header from "./pages/header"; // 사용하지 않는 헤더 모듈 제거
+import header from "./pages/header";
+import moviePage from "./pages/movie";
 import { logout, me } from "./api/auth";
 import { AppStorage } from "./util";
+import { genreDetailPage } from "./pages/genre_detail";
 
 const app = document.querySelector("#app");
 
@@ -97,9 +101,14 @@ router.hooks({
 
 router
   .on({
-    "/": (match) => {
-      // 홈 메인 페이지
+    "/": () => {
       renderPage([header(), home]);
+      new Swiper(".swiper", {
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
     },
     "/ranking": (match) => {
       // 랭킹 페이지
@@ -149,12 +158,9 @@ router
 
       history.back();
     },
-    "/movie/:id": (match) => {
-      // 영화 상세페이지
-      /*
-        임시 요소인 document.createTextNode를 지우시고, 해당 페이지 요소로 렌더링 되도록 구현해주세요
-      */
-      renderPage([header(), document.createTextNode("영화상세페이지")]);
+    "/movie/:id": ({ data, match }) => {
+      const movieId = data?.id;
+      renderPage([header({ user: match?.user }), moviePage(movieId)]);
     },
     "/user-info": (match) => {
       renderPage([
@@ -173,7 +179,7 @@ router
         "스포츠",
         "가족",
         "범죄",
-        "위너브라더스",
+        "워너브라더스",
         "마블",
         "디즈니",
         "지브리",
@@ -186,7 +192,7 @@ router
         - 임시 요소인 document.createTextNode를 지우시고, 해당 페이지 요소로 렌더링 되도록 구현해주세요
       */
       allowedCategory.includes(category)
-        ? renderPage([header(), document.createTextNode(category)])
+        ? renderPage([header(), genreDetailPage(category)])
         : router.navigate("notfound");
     },
     "/cart": (match) => {
