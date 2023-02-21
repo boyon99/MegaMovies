@@ -85,7 +85,6 @@ const moviePage = (movieId) => {
       buyBtnEl.addEventListener('click', ()=>{
         if(AppStorage.accessTokenKey){
           AppStorage.setCartItem(item[0])
-          location.href = '/cart';  
         }else{
         }
       })
