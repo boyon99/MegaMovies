@@ -70,8 +70,7 @@ const moviePage = (movieId) => {
 
       // price
       const priceEl = document.createElement('p')
-      let price = item[0].price / 1000
-      priceEl.innerText = `${price},000`
+      priceEl.innerText = `${item[0].price}`
       priceEl.classList.add('price')
 
       // price Img
