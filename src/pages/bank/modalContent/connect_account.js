@@ -307,6 +307,13 @@ function createAccountNumberInput({ digits }) {
     );
     const endStep = Array.from(digitInputElements).length - 1;
 
+    if (e.inputType === "deleteContentBackward") {
+      e.target.value = e.target.value.padEnd(
+        Number(e.target.dataset.digit),
+        "*"
+      );
+      return;
+    }
     if (!numberRegExp.test(e.data)) {
       renderToast({
         container: bankModal,
