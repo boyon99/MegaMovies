@@ -1,5 +1,5 @@
 import { readItem } from '../api/movieRequest'
-import trailerList from '../trailer/trailerList'
+import trailerList from '../movieInfoList/trailerList'
 
 const rankingContainer = document.createElement('div')
 export default rankingContainer
