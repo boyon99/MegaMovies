@@ -78,17 +78,27 @@ const moviePage = (movieId) => {
       priceImgEl.classList.add('priceImg')
 
       // buy btn
-      const buyBtnEl = document.createElement('button')
-      buyBtnEl.classList.add('btn-outlined', 'buy', 'medium')
-      buyBtnEl.innerText = "구매하기"
+      const cartBtnEl = document.createElement('button')
+      cartBtnEl.classList.add('btn-ghost', 'cart', 'medium')
+      cartBtnEl.innerText = "장바구니 담기"
       // cart info storage
-      buyBtnEl.addEventListener('click', ()=>{
+      cartBtnEl.addEventListener('click', ()=>{
         if(AppStorage.accessTokenKey){
           AppStorage.setCartItem(item[0])
         }else{
         }
       })
-      page.append(newImgEl, titleEl, starEl, rateEl, descriptionEl, tagsEl, priceEl, priceImgEl, buyBtnEl)
+
+      const buyBtnEl = document.createElement('button')
+      buyBtnEl.classList.add('btn-outlined', 'buy', 'medium')
+      buyBtnEl.innerText = "구매하기"
+      // cart info storage
+      buyBtnEl.addEventListener('click', ()=>{
+        location.href = '/order'
+      })
+      
+
+      page.append(newImgEl, titleEl, starEl, rateEl, descriptionEl, tagsEl, priceEl, priceImgEl, buyBtnEl, cartBtnEl)
     })()
   // chart
   page.innerHTML = `

@@ -16,8 +16,27 @@ navItemList.append(...createNavItems());
 
 const searchInput = document.createElement("input");
 searchInput.placeholder = "작품, 배우, 감독명을 입력하세요";
+let value = "";
+searchInput.addEventListener('input',(e)=>{
+  value = searchInput.value
+  console.log(value)
+})
 
-inner.append(navItemList, searchInput);
+searchInput.addEventListener('keydown', event => {
+  if (event.key === 'Enter' && !event.isComposing) {
+    searchBtn.click()
+  }
+})
+
+const searchBtn = document.createElement("button")
+searchBtn.classList.add('search', 'btn-primary')
+searchBtn.innerText = "검색"
+searchBtn.addEventListener('click',()=>{
+  location.href='/search'+`/${value}`
+})
+
+
+inner.append(navItemList, searchInput, searchBtn);
 nav.appendChild(inner);
 
 export { nav };

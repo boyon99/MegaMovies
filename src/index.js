@@ -12,6 +12,7 @@ import { logout, me } from "./api/auth";
 import { AppStorage } from "./util";
 import { genreDetailPage } from "./pages/genre_detail";
 import cartPage from "./pages/cart";
+import searchPage from "./pages/search"
 
 const app = document.querySelector("#app");
 
@@ -224,9 +225,10 @@ router
       */
       renderPage([header(), document.createTextNode("단일 제품 상세 거래")]);
     },
-    "/search": (match) => {
+    "/search/:id": ({ data, match }) => {
       //검색 페이지
-      renderPage([header(), document.createTextNode("검색 페이지")]);
+        const movieId = data?.id;
+        renderPage([header({ user: match?.user }), searchPage(movieId)]);
     },
   })
   .notFound((match) => {
