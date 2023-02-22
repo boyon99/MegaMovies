@@ -3,6 +3,7 @@ let sum = 0
 
 // cartpage
 const cartPage = document.createElement('div')
+cartPage.classList.add('cart-page')
 export default cartPage
 
 // inner div
@@ -123,7 +124,17 @@ for (let i = 0; i < inner.children.length; i++) {
 buyBtn = document.createElement('button')
 buyBtn.classList.add('buy', 'btn-secondary', 'small')
 buyBtn.innerHTML = `총 주문하기`
+buyBtn.addEventListener('click',()=>{
+  for (let j = 0; j < localStorage.length -1; j++) {
+    if (inner.children[j].children[0].checked) {
+      let local = ""+localStorage.getItem(`cart-${inner.children[j].children[0].id}`)
+      localStorage.removeItem(`cart-${inner.children[j].children[0].id}`);
+      localStorage.setItem(`cart-${inner.children[j].children[0].id}`, local.replace('false', 'true'));
+      //  orderPage()
+    }
+  }
 
+})
 
 console.log(itemsFilter)
 
