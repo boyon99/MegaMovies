@@ -88,9 +88,11 @@ deleteBtn.addEventListener('click', () => {
       let select = inner.children[j]
       inner.removeChild(select)
       allselectEl.innerText = `총 ${localStorage.length -1}개`
+      // 아이템이 0개인 경우 bottom div 숨김처리
       if(localStorage.length -1 === 0){
         bottom.style.display = 'none'
       }
+      j--
     }
   }
   console.log(localStorage.length)
