@@ -209,6 +209,7 @@ router
       /*
         임시 요소인 document.createTextNode를 지우시고, 해당 페이지 요소로 렌더링 되도록 구현해주세요
       */
+     console.log(match)
       renderPage([header(), document.createTextNode("결제")]);
     },
     "/order-history": (match) => {

@@ -1,5 +1,6 @@
 import { readItem } from '../api/movieRequest'
 import { AppStorage } from '../util'
+import { router } from '../'
 
 // random buy
 function getRandomBuy() {
@@ -94,7 +95,9 @@ const moviePage = (movieId) => {
       buyBtnEl.innerText = "구매하기"
       // cart info storage
       buyBtnEl.addEventListener('click', ()=>{
-        location.href = '/order'
+        // ?id='...' => 해당 아이디로 결제
+        // ?from=cart => 장바구니에서 결제로 
+        router.navigate(`order?from=movie&id=${movieId}`);
       })
       
 
