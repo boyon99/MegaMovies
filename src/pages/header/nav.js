@@ -15,11 +15,10 @@ navItemList.className = "lnb-list";
 navItemList.append(...createNavItems());
 
 const searchInput = document.createElement("input");
-searchInput.placeholder = "작품, 배우, 감독명을 입력하세요";
+searchInput.placeholder = "작품 또는 태그를 입력하세요";
 let value = "";
 searchInput.addEventListener('input',(e)=>{
   value = searchInput.value
-  console.log(value)
 })
 
 searchInput.addEventListener('keydown', event => {
@@ -28,12 +27,15 @@ searchInput.addEventListener('keydown', event => {
   }
 })
 
+
+
 const searchBtn = document.createElement("button")
 searchBtn.classList.add('search', 'btn-primary')
 searchBtn.innerText = "검색"
 searchBtn.addEventListener('click',()=>{
   location.href='/search'+`/${value}`
 })
+
 
 
 inner.append(navItemList, searchInput, searchBtn);

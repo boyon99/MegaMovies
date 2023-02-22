@@ -18,6 +18,12 @@ const searchPage = (movieId) => {
         let title = i.title
         return tags.includes(movieTitle) || title.includes(movieTitle)
       })
+      if(item.length === 0){
+        const noItemEl = document.createElement('p')
+        noItemEl.classList.add('no-item')
+        noItemEl.innerText = "검색한 내용과 일치하는 영화가 없습니다."
+        page.append(noItemEl)
+      }
 
       item.map((i,a,b)=>{
             // a

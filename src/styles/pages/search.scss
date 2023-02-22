@@ -4,6 +4,14 @@
   height: 700px;
   overflow-x: hidden;
   position: relative;
+  .no-item{
+    position: absolute;
+    font-size: 18px;
+    font-weight: 400;
+    color: #fff;
+    top:10px;
+
+  }
   a{
     color: #fff;
     position: relative;
