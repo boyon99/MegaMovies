@@ -1,4 +1,5 @@
 import { AppStorage } from '../util'
+let sum = 0
 
 // cartpage
 const cartPage = document.createElement('div')
@@ -65,6 +66,13 @@ let allselectBtn = document.createElement('button')
 allselectBtn.classList.add('select', 'btn-outlined', 'small')
 allselectBtn.innerHTML = `전체 선택`
 
+allselectBtn.addEventListener('click',()=>{
+  for(let i=0; i < inner.children.length -2; i++){
+    inner.children[i].children[0].checked = true
+    sum += +items[inner.children[i].children[0].id][2]
+    allPriceEl.innerText = `${sum}` + "원"
+  }
+})
 
 // delete btn
 let deleteBtn = document.createElement('button')
@@ -81,7 +89,6 @@ let allPriceEl = document.createElement('p')
 allPriceEl.classList.add('allprice')
 let allPriceText = document.createElement('p')
 allPriceText.classList.add('allPriceText')
-let sum = 0
 allPriceText.innerText = "총 결제 금액"
 allPriceEl.innerText = `${sum}` + "원"
 
