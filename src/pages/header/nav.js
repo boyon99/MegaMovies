@@ -33,7 +33,11 @@ const searchBtn = document.createElement("button")
 searchBtn.classList.add('search', 'btn-primary')
 searchBtn.innerText = "검색"
 searchBtn.addEventListener('click',()=>{
-  location.href='/search'+`/${value}`
+  if(value.length === 0){
+    
+  }else{
+    location.href='/search'+`/${value}`
+  }
 })
 
 
