@@ -1,6 +1,8 @@
 .cart-page {
   .inner {
     position: relative;
+    display: flex;
+    flex-direction: column;
     .top{
       width: 100%;
       height: 55px;

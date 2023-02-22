@@ -59,7 +59,7 @@ top.classList.add('top')
 
 // all select
 let allselectEl = document.createElement('p')
-allselectEl.innerText = `총 ${itemsFilter.length}개`
+allselectEl.innerText = `총 ${localStorage.length -1}개`
 
 
 // select btn
@@ -87,14 +87,23 @@ deleteBtn.addEventListener('click', () => {
       localStorage.removeItem(`cart-${inner.children[j].children[0].id}`);
       let select = inner.children[j]
       inner.removeChild(select)
-      continue
+      allselectEl.innerText = `총 ${localStorage.length -1}개`
+      if(localStorage.length -1 === 0){
+        bottom.style.display = 'none'
+      }
     }
   }
+  console.log(localStorage.length)
 })
 
 // bottom div
 let bottom = document.createElement('div')
 bottom.classList.add('bottom')
+console.log(localStorage.length)
+if(localStorage.length === 1){
+  bottom.style.display = 'none'
+}
+
 
 // all price
 let allPriceEl = document.createElement('p')
