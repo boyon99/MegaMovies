@@ -26,7 +26,7 @@ itemsFilter.map((i, a, b) => {
 
   let checkboxEl = document.createElement('input')
   checkboxEl.type = 'checkbox'
-  checkboxEl.classList.add('checkbox')
+  checkboxEl.classList.add('checkbox', `checkbox-${index}`)
   checkboxEl.id = `${index}`
 
   let imgEl = document.createElement('img')
@@ -66,8 +66,8 @@ let allselectBtn = document.createElement('button')
 allselectBtn.classList.add('select', 'btn-outlined', 'small')
 allselectBtn.innerHTML = `전체 선택`
 
-allselectBtn.addEventListener('click',()=>{
-  for(let i=0; i < inner.children.length -2; i++){
+allselectBtn.addEventListener('click', () => {
+  for (let i = 0; i < inner.children.length - 2; i++) {
     inner.children[i].children[0].checked = true
     sum += +items[inner.children[i].children[0].id][2]
     allPriceEl.innerText = `${sum}` + "원"
@@ -78,7 +78,18 @@ allselectBtn.addEventListener('click',()=>{
 let deleteBtn = document.createElement('button')
 deleteBtn.classList.add('delete', 'btn-outlined', 'small')
 deleteBtn.innerHTML = `선택 삭제`
-
+deleteBtn.addEventListener('click', () => {
+  for (let j = 0; j < 30; j++) {
+    if (inner.children[j].children[0].checked) {
+      sum -= +items[inner.children[j].children[0].id][2]
+      allPriceEl.innerText = `${sum}` + "원"
+      localStorage.removeItem(`cart-${inner.children[j].children[0].id}`);
+      let select = inner.children[j]
+      inner.removeChild(select)
+      continue
+    }
+  }
+})
 
 // bottom div
 let bottom = document.createElement('div')
