@@ -95,13 +95,11 @@ deleteBtn.addEventListener('click', () => {
       j--
     }
   }
-  console.log(localStorage.length)
 })
 
 // bottom div
 let bottom = document.createElement('div')
 bottom.classList.add('bottom')
-console.log(localStorage.length)
 if(localStorage.length === 1){
   bottom.style.display = 'none'
 }
@@ -147,7 +145,6 @@ buyBtn.addEventListener('click',()=>{
 
 })
 
-console.log(itemsFilter)
 
 
 

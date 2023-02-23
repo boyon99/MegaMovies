@@ -27,7 +27,6 @@ function getDate(i) {
 const moviePage = (movieId) => {
   const page = document.createElement('div');
   page.classList.add('page')
-  console.log(movieId)
 
   // movie content
     ; (async () => {
