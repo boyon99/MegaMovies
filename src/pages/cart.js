@@ -57,21 +57,23 @@ let top = document.createElement('div')
 top.classList.add('top')
 
 
-// all select
+// all select btn
 let allselectEl = document.createElement('p')
 allselectEl.innerText = `총 ${localStorage.length -1}개`
 
-
-// select btn
 let allselectBtn = document.createElement('button')
 allselectBtn.classList.add('select', 'btn-outlined', 'small')
 allselectBtn.innerHTML = `전체 선택`
 
 allselectBtn.addEventListener('click', () => {
   for (let i = 0; i < inner.children.length - 2; i++) {
-    inner.children[i].children[0].checked = true
-    sum += +items[inner.children[i].children[0].id][2]
-    allPriceEl.innerText = `${sum}` + "원"
+    if(inner.children[i].children[0].checked){
+      continue
+    }else{
+      inner.children[i].children[0].checked = true
+      sum += +items[inner.children[i].children[0].id][2]
+      allPriceEl.innerText = `${sum}` + "원"  
+    }
   }
 })
 
