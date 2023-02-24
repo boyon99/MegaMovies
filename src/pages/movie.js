@@ -77,7 +77,7 @@ const moviePage = (movieId) => {
       const priceImgEl = document.createElement('img')
       priceImgEl.classList.add('priceImg')
 
-      // buy btn
+      // cart btn
       const cartBtnEl = document.createElement('button')
       cartBtnEl.classList.add('btn-ghost', 'cart', 'medium')
       cartBtnEl.innerText = "장바구니 담기"
@@ -89,6 +89,7 @@ const moviePage = (movieId) => {
         }
       })
 
+      // buy btn
       const buyBtnEl = document.createElement('button')
       buyBtnEl.classList.add('btn-outlined', 'buy', 'medium')
       buyBtnEl.innerText = "구매하기"

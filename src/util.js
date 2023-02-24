@@ -48,7 +48,7 @@ export class AppStorage {
     }
     let isCart = true
     // 장바구니에 있는 아이템인지 여부 확인 
-    for(let i=0; i < Storage.length + 1; i++){
+    for(let i=0; i < 30; i++){
       if(localStorage.getItem(`cart-${i}`)){
         if(localStorage.getItem(`cart-${i}`).split(',').includes(`${item.id}`)){
           isCart = false;
