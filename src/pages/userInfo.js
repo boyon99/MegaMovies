@@ -1,23 +1,23 @@
 import { me } from "../api/auth";
 import { AppStorage } from "../util";
-import logo from '../../static/logo.png';
+import logo from "../../static/logo.png";
 
 // HTML 뼈대
 const userInfoPage = document.createElement("div");
 userInfoPage.classList.add("user-info-page");
 
-const body = document.createElement("div");
-body.classList.add("body");
-userInfoPage.appendChild(body);
+const mainCtn = document.createElement("div");
+mainCtn.classList.add("main");
+userInfoPage.appendChild(mainCtn);
 
 const title = document.createElement("div");
 title.classList.add("title");
 title.textContent = "나의 정보";
-body.appendChild(title);
+mainCtn.appendChild(title);
 
 const profileArea = document.createElement("div");
 profileArea.classList.add("profile-area");
-body.appendChild(profileArea);
+mainCtn.appendChild(profileArea);
 
 const profilePic = document.createElement("img");
 profilePic.classList.add("profile-pic");
@@ -31,46 +31,56 @@ profileArea.appendChild(profileName);
 
 const btnWrapper = document.createElement("div");
 btnWrapper.classList.add("btn-wrapper");
-body.appendChild(btnWrapper);
+mainCtn.appendChild(btnWrapper);
 
 const profilePicBtn = document.createElement("div");
 profilePicBtn.classList.add("profile-pic-btn");
 profilePicBtn.classList.add("medium");
 profilePicBtn.classList.add("btn-secondary");
-profilePicBtn.textContent= "프로필 이미지 변경";
+profilePicBtn.textContent = "프로필 이미지 변경";
 btnWrapper.appendChild(profilePicBtn);
 
 const changeNameBtn = document.createElement("div");
 changeNameBtn.classList.add("change-name-btn");
 changeNameBtn.classList.add("medium");
 changeNameBtn.classList.add("btn-secondary");
-changeNameBtn.textContent= "이름 수정하기";
+changeNameBtn.textContent = "이름 수정하기";
 btnWrapper.appendChild(changeNameBtn);
 
 const changePasswordBtn = document.createElement("div");
 changePasswordBtn.classList.add("change-password-btn");
 changePasswordBtn.classList.add("medium");
 changePasswordBtn.classList.add("btn-secondary");
-changePasswordBtn.textContent= "비밀번호 수정하기";
+changePasswordBtn.textContent = "비밀번호 수정하기";
 btnWrapper.appendChild(changePasswordBtn);
 
 export default userInfoPage;
 
 renderUserInfo();
 
+// event listeners
+profilePicBtn.addEventListener("click", displayPicModalWindow);
+changeNameBtn.addEventListener("click", displayNameModalWindow);
+changePasswordBtn.addEventListener("click", displayPWModalWindow);
+
 //functions
 
 function getAccessToken() {
-  return window?.localStorage.getItem('accessToken');
+  return window?.localStorage.getItem("accessToken");
 }
 
-async function renderUserInfo () {
+async function renderUserInfo() {
   const user = await me(AppStorage.getAccessToken());
   profileName.textContent = user.displayName;
-  profilePic.src = user.profileImg || 'https://cdn-icons-png.flaticon.com/512/6522/6522516.png';
+  profilePic.src =
+    user.profileImg ||
+    "https://cdn-icons-png.flaticon.com/512/6522/6522516.png";
 }
 
-async function changeUserInfo (accessToken, {displayName, profileImgBase64, oldPassword, newPassword}) {
+async function changeUserInfo(
+  accessToken,
+  { displayName, profileImgBase64, oldPassword, newPassword }
+) {
   const headers = {
     "Content-type": "application/json",
     apikey: process.env.apikey,
@@ -79,31 +89,34 @@ async function changeUserInfo (accessToken, {displayName, profileImgBase64, oldP
   };
 
   const data = {
-    ...(displayName && {displayName}),
-    ...(profileImgBase64 && {profileImgBase64}),
-    ...(oldPassword && {oldPassword}),
-    ...(newPassword && {newPassword}),
+    ...(displayName && { displayName }),
+    ...(profileImgBase64 && { profileImgBase64 }),
+    ...(oldPassword && { oldPassword }),
+    ...(newPassword && { newPassword }),
   };
-  
-  const res = await fetch('https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/user', {
-    method: "PUT",
-    headers,
-    body: JSON.stringify({
-      ...data
-    }),
-  });
 
-  if(res.status !== 200) return false;
+  const res = await fetch(
+    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/auth/user",
+    {
+      method: "PUT",
+      headers,
+      body: JSON.stringify({
+        ...data,
+      }),
+    }
+  );
+
+  if (res.status !== 200) return false;
 
   const payload = await res.json();
-  
+
   return payload;
 }
 
 // Modal
 
 // 1. ProfilePicBtn Modal
-function displayPicModalWindow(){
+function displayPicModalWindow() {
   const accessToken = AppStorage.getAccessToken();
   const modalOverlay = document.createElement("div");
   modalOverlay.classList.add("modal");
@@ -114,82 +127,48 @@ function displayPicModalWindow(){
     <div class="modal-close">X</div>
     <div class="innerElement-title">프로필 이미지 변경</div>
     <span class="innerElement-span">1MB 미만의 파일만 업로드 가능합니다.</span>
-    <input type="file" class="open"></input>
+    <input type="file" onchange="fileInputEl" class="open"></input>
     <button class="btn-primary medium">확인</button>
     `;
-  modalOverlay.appendChild(innerElement); 
-  body.appendChild(modalOverlay); 
-  const closeBtn = innerElement.querySelector(".modal-close")
-  closeBtn.addEventListener("click", (e)=> {
+  modalOverlay.appendChild(innerElement);
+  body.appendChild(modalOverlay);
+  const closeBtn = innerElement.querySelector(".modal-close");
+  closeBtn.addEventListener("click", (e) => {
     innerElement.style.display = "none";
     modalOverlay.style.display = "none";
-  })
+  });
 
   //test 2 (success!!)
   const inputFile = document.querySelector("input[class='open']");
-  const confirmBtn = innerElement.querySelector(".btn-primary")
-  confirmBtn.addEventListener("click", async (e)=> {
-    
-    const file = inputFile.files[0]
-    const reader = new FileReader()
-    reader.readAsDataURL(file)
+  const confirmBtn = innerElement.querySelector(".btn-primary");
+
+  inputFile.addEventListener("change", async (e) => {
+    if (inputFile.files[0].size > 1048575) {
+      alert("1MB 미만의 파일만 업로드 가능합니다.");
+      inputFile.value = "";
+    }
+  });
+
+  confirmBtn.addEventListener("click", async (e) => {
+    const file = inputFile.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
     reader.addEventListener("load", async (e) => {
       const profileImgBase64 = e.target.result;
-      const changedUserInfo = await changeUserInfo(accessToken, {profileImgBase64});
-      console.log({changedUserInfo});   
+      const changedUserInfo = await changeUserInfo(accessToken, {
+        profileImgBase64,
+      });
+      console.log({ changedUserInfo });
       innerElement.style.display = "none";
       modalOverlay.style.display = "none";
       renderUserInfo();
-    // profilePic.src = e.target.result ?? 'https://cdn-icons-png.flaticon.com/512/6522/6522516.png';
-    // profilePic.alt = "프로필 이미지";
-  })
-
-})
-
-  //test 1  
-  // const confirmBtn = innerElement.querySelector(".btn-primary");
-  // confirmBtn.addEventListener("click", async (e)=> {
-  //   const value = innerElement.querySelector('input').value;
-  //   await changeUserInfo(accessToken, {profileImgBase64: value});
-  //   renderUserInfo();
-  //   innerElement.style.display = "none";
-  //   modalOverlay.style.display = "none";
-  // })
-  // const inputFile = document.querySelector('input[class="open"]').value;
-  // inputFile.addEventListener('click', async(event) => {
-  //   const file = inputFile.files[0]
-  //   const reader = new FileReader()
-  //   reader.readAsDataURL(file)  
-  //   reader.addEventListener('load', e => {
-  //     profilePic.src = e.target.result ?? 'https://cdn-icons-png.flaticon.com/512/6522/6522516.png';
-  //     profilePic.alt = "프로필 이미지";
-  //     profilePic.append(inputFile)
-  //   })
-  // })
-
-  //original
-  // const confirmBtn = innerElement.querySelector(".btn-primary")
-  // confirmBtn.addEventListener("click", async (e)=> {
-  //   const value = innerElement.querySelector('input').src;
-  //   await changeUserInfo(accessToken, {profileImgBase64: value});
-  //   renderUserInfo();
-  //   innerElement.style.display = "none";
-  //   modalOverlay.style.display = "none";
-  // })
-  // const inputFile = document.querySelector('input[class="open"]');
-  // inputFile.addEventListener('change', async(event) => {
-  //   const file = inputFile.files[0]
-  //   const reader = new FileReader()
-  //   reader.readAsDataURL(file)  
-  //   reader.addEventListener('load', e => {
-  //     profilePic.src = e.target.result ?? 'https://cdn-icons-png.flaticon.com/512/6522/6522516.png';
-  //     profilePic.alt = "프로필 이미지";
-    
-
+      location.reload();
+    });
+  });
 }
 
 // 2. changeNameBtn Modal
-function displayNameModalWindow(){
+function displayNameModalWindow() {
   const accessToken = AppStorage.getAccessToken();
   const modalOverlay = document.createElement("div");
   modalOverlay.classList.add("modal");
@@ -203,26 +182,26 @@ function displayNameModalWindow(){
     <input type="text"/>
     <button class="btn-primary medium">확인</button>
   `;
-  modalOverlay.appendChild(innerElement); 
-  body.appendChild(modalOverlay); 
-  const closeBtn = innerElement.querySelector(".modal-close")
-  closeBtn.addEventListener("click", (e)=> {
+  modalOverlay.appendChild(innerElement);
+  body.appendChild(modalOverlay);
+  const closeBtn = innerElement.querySelector(".modal-close");
+  closeBtn.addEventListener("click", (e) => {
     innerElement.style.display = "none";
     modalOverlay.style.display = "none";
-  })
-  const confirmBtn = innerElement.querySelector(".btn-primary")
-  confirmBtn.addEventListener("click", async(e)=> {
-    const value = innerElement.querySelector('input').value;
-    await changeUserInfo(accessToken, {displayName: value});
+  });
+  const confirmBtn = innerElement.querySelector(".btn-primary");
+  confirmBtn.addEventListener("click", async (e) => {
+    const value = innerElement.querySelector("input").value;
+    await changeUserInfo(accessToken, { displayName: value });
     renderUserInfo();
+    location.reload();
     innerElement.style.display = "none";
     modalOverlay.style.display = "none";
-    // window.location.reload();
-  })
+  });
 }
 
 // 3. changePasswordBtn Modal
-function displayPWModalWindow(){
+function displayPWModalWindow() {
   const accessToken = AppStorage.getAccessToken();
   const modalOverlay = document.createElement("div");
   modalOverlay.classList.add("modal");
@@ -233,108 +212,31 @@ function displayPWModalWindow(){
     <div class="modal-close">X</div>
     <div class="innerElement-title">비밀번호 수정하기</div>
     <span class="innerElement-span">현재 비밀번호</span>
-    <input required id="current-password" type="form"/>
+    <input required id="current-password" type="password"/>
     <span class="innerElement-span">새로운 비밀번호</span>
-    <input required id="new-password" type="form"/>
+    <input required id="new-password-1" type="password"/>
+    <span class="innerElement-span">비밀번호 확인</span>
+    <input required id="new-password-2 type="password"/>
     <button class="btn-primary medium">확인</button>
   `;
-  modalOverlay.appendChild(innerElement); 
-  body.appendChild(modalOverlay); 
-  const closeBtn = innerElement.querySelector(".modal-close")
-  closeBtn.addEventListener("click", (e)=> {
+  modalOverlay.appendChild(innerElement);
+  body.appendChild(modalOverlay);
+  const closeBtn = innerElement.querySelector(".modal-close");
+  closeBtn.addEventListener("click", (e) => {
     innerElement.style.display = "none";
     modalOverlay.style.display = "none";
-  })
-  const confirmBtn = innerElement.querySelector(".btn-primary")
-  confirmBtn.addEventListener("click", (e)=> {
-    innerElement.style.display = "none";
-    modalOverlay.style.display = "none";
-  })
-}
-
-
-// event listeners
-profilePicBtn.addEventListener('click', displayPicModalWindow);
-changeNameBtn.addEventListener('click', displayNameModalWindow);
-changePasswordBtn.addEventListener('click', displayPWModalWindow);
-
-
-
-
-// miscs
-/*
-const uploadField = document.getElementById("modal-file-upload");
-uploadField.onchange = function(){
-  if(this.files[0].size > 1048576){
-    alert("1MB 미만의 파일만 업로드 가능합니다.");
-    this.value ="";
-  }
-}
-*/
-
-/* 프로필 이미지 수정하기
-- V 사용자가 '프로필 이미지 변경' 버튼을 클릭 (class="profile-pic-btn")
-- V 프로필 이미지 창modal 띄우기(가능한 이미지 파일 종류 및 크기 명시)
-  
-- V 취소 누를 시 창 끔.
-- V 사용자가 창에 새 파일을 올리고 '변경' 버튼을 누름
-  - 이미지 파일 종류 및 크기가 허용 범위내인지 확인하기
-    - 아닐 경우, '허용된 이미지 종류와 크기를 확인해주세요.'
-    - 맞을 경우, 사용자 선택창modal 닫기
-- 4번째 버튼 '저장하기' 누를 경우, 사용자의 변경 사항 서버에 저장하기
-  - 기존 내용 삭제
-  - 새 내용 저장
-  - 서버 내 저장 내용 바꾸는 동안, 동그라미 기다리는 모션 띄우기
-  - 완료시 '저장되었습니다!' 띄워주기
-*/
-
-
-//https://stackoverflow.com/questions/22087076/how-to-make-a-simple-image-upload-using-javascript-html
-
-
-/*아래는 어디에?
-window.addEventListener('load', function() {
-  document.querySelector('input[type="file"]').addEventListener('change', function() {
-      if (this.files && this.files[0]) {
-          var img = document.querySelector('img');
-          img.onload = () => {
-              URL.revokeObjectURL(img.src);  // no longer needed, free memory
-          }
-
-          img.src = URL.createObjectURL(this.files[0]); // set src to blob url
-      }
   });
-});*/
-
-
-/* 이름 수정하기
-- 사용자가 '이름 수정하기' 버튼을 클릭 (버튼 4개중 2번째)
-- 사용자 입력창modal 띄우기(새로운 이름칸과 변경, 취소 있음)
-  - 취소 누를 시 창 끔.
-- 사용자가 창에 수정 내용을 입력하고 '변경' 버튼을 누름
-  - 이름에 특수기호, 숫자, 공백 안들어갔는지 확인하기
-    - 들어갔을 경우, '특수기호, 숫자, 공백을 제외하고 입력해주세요' 띄우기.
-    - 안들어갔을 경우, 사용자 입력창modal 닫기
-- 4번째 버튼 '저장하기' 누를 경우, 사용자의 변경 사항 서버에 저장하기
-  - 기존 내용 삭제
-  - 새 내용 저장
-  - 서버 내 저장 내용 바꾸는 동안, 동그라미 기다리는 모션 띄우기
-  - 완료시 '저장되었습니다!' 띄워주기
-*/
-
-/* 비밀번호 수정하기
-- 사용자가 '비밀번호 수정하기' 버튼을 클릭 (버튼 4개중 3번째)
-  - 사용자 입력창modal 띄우기(새로운 비밀번호 칸과 변경, 취소 있음)
-    - 취소 누를 시 창 끔.
-  - 사용자가 창에 수정 내용을 입력하고 '변경' 버튼을 누름
-    - 비밀번호 글자연속중복 있을지 확인하기
-    - 들어갔을 경우, '똑같은 글자는 연속하여 사용할 수 없습니다' 띄우기.
-    - 안들어갔을 경우, 사용자 입력창modal 닫기
-- 4번째 버튼 '저장하기' 누를 경우, 사용자의 변경 사항 서버에 저장하기
-  - 기존 내용 삭제
-  - 새 내용 저장
-  - 서버 내 저장 내용 바꾸는 동안, 동그라미 기다리는 모션 띄우기
-  - 완료시 '저장되었습니다!' 띄워주기
-*/
-
-
+  const confirmBtn = innerElement.querySelector(".btn-primary");
+  confirmBtn.addEventListener("click", async (e) => {
+    const oldPW = innerElement.querySelector("#current-password").value;
+    const newPW = innerElement.querySelector("#new-password-1").value;
+    await changeUserInfo(
+      accessToken,
+      { oldPassword: oldPW },
+      { newPassword: newPW }
+    );
+    renderUserInfo();
+    innerElement.style.display = "none";
+    modalOverlay.style.display = "none";
+  });
+}

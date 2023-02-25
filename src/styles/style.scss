@@ -11,6 +11,7 @@
 @import url("./pages/bank.scss");
 @import url("./pages/movie.scss");
 @import url("./pages/userInfo.scss");
+@import url("./pages/not_found.scss");
 
 body {
   font-family: "Pretendard", sans-serif;
@@ -205,4 +206,33 @@ body {
       border-color: $color--highlight;
     }
   }
+}
+
+#footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  margin: 40px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.logo-area {
+  height: 20.92px;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-area {
+  height: 60px;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
