@@ -1,3 +1,4 @@
+import { router } from '..'
 import { AppStorage } from '../util'
 let sum = 0
 
@@ -149,16 +150,20 @@ for (let i = 0; i < inner.children.length; i++) {
 buyBtn = document.createElement('button')
 buyBtn.classList.add('buy', 'btn-secondary', 'small')
 buyBtn.innerHTML = `총 주문하기`
+// let orderHref = `/order`
+
 buyBtn.addEventListener('click',()=>{
   for (let j = 0; j < localStorage.length -1; j++) {
     if (inner.children[j].children[0].checked) {
       let local = ""+localStorage.getItem(`cart-${inner.children[j].children[0].id}`)
       localStorage.removeItem(`cart-${inner.children[j].children[0].id}`);
       localStorage.setItem(`cart-${inner.children[j].children[0].id}`, local.replace('false', 'true'));
+
+      // orderHref += `=${items[inner.children[j].children[0].id][0]}`
       //  orderPage()
     }
   }
-
+  router.navigate(`/orders`)
 })
 
 

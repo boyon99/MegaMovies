@@ -97,7 +97,7 @@ const moviePage = (movieId) => {
       buyBtnEl.addEventListener('click', ()=>{
         // ?id='...' => 해당 아이디로 결제
         // ?from=cart => 장바구니에서 결제로 
-        router.navigate(`order?from=movie&id=${movieId}`);
+        router.navigate(`order?id=${movieId}`);
       })
       
 
