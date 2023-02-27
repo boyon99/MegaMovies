@@ -1,3 +1,5 @@
+import { router } from "../..";
+
 const nav = document.createElement("nav");
 nav.className = "lnb";
 
@@ -36,7 +38,7 @@ searchBtn.addEventListener('click',()=>{
   if(value.length === 0){
     
   }else{
-    location.href='/search'+`/${value}`
+    router.navigate(`/search/${value}`)
   }
 })
 
