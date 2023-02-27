@@ -81,6 +81,8 @@ allselectBtn.addEventListener('click', () => {
 let deleteBtn = document.createElement('button')
 deleteBtn.classList.add('delete', 'btn-outlined', 'small')
 deleteBtn.innerHTML = `선택 삭제`
+
+
 deleteBtn.addEventListener('click', () => {
   for (let j = 0; j < 30; j++) {
     if (inner.children[j].children[0].checked) {
@@ -93,11 +95,23 @@ deleteBtn.addEventListener('click', () => {
       // 아이템이 0개인 경우 bottom div 숨김처리
       if(localStorage.length -1 === 0){
         bottom.style.display = 'none'
+        noItemEl.style.display = 'block'
       }
       j--
     }
   }
 })
+
+// if(cart.length === 0)
+let noItemEl = document.createElement('p')
+noItemEl.innerText = `장바구니에 아이템이 없습니다. 아이템을 추가해주세요.`
+noItemEl.classList.add('noItem')
+noItemEl.style.display = 'none'
+if(localStorage.length -1 === 0){
+  noItemEl.style.display = 'block'
+} else{
+  noItemEl.style.display = 'none'
+}
 
 // bottom div
 let bottom = document.createElement('div')
@@ -152,5 +166,5 @@ buyBtn.addEventListener('click',()=>{
 
 top.append(allselectEl, allselectBtn, deleteBtn)
 bottom.append(allPriceText, allPriceEl, buyBtn)
-inner.append(top, bottom)
+inner.append(top, bottom, noItemEl)
 cartPage.append(inner)
