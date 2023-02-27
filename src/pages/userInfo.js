@@ -7,7 +7,7 @@ const userInfoPage = document.createElement("div");
 userInfoPage.classList.add("user-info-page");
 
 const mainCtn = document.createElement("div");
-mainCtn.classList.add("main");
+mainCtn.classList.add("mainCtn");
 userInfoPage.appendChild(mainCtn);
 
 const title = document.createElement("div");
@@ -131,14 +131,13 @@ function displayPicModalWindow() {
     <button class="btn-primary medium">확인</button>
     `;
   modalOverlay.appendChild(innerElement);
-  body.appendChild(modalOverlay);
+  userInfoPage.appendChild(modalOverlay);
   const closeBtn = innerElement.querySelector(".modal-close");
   closeBtn.addEventListener("click", (e) => {
     innerElement.style.display = "none";
     modalOverlay.style.display = "none";
   });
 
-  //test 2 (success!!)
   const inputFile = document.querySelector("input[class='open']");
   const confirmBtn = innerElement.querySelector(".btn-primary");
 
@@ -162,7 +161,6 @@ function displayPicModalWindow() {
       innerElement.style.display = "none";
       modalOverlay.style.display = "none";
       renderUserInfo();
-      location.reload();
     });
   });
 }
@@ -183,7 +181,7 @@ function displayNameModalWindow() {
     <button class="btn-primary medium">확인</button>
   `;
   modalOverlay.appendChild(innerElement);
-  body.appendChild(modalOverlay);
+  userInfoPage.appendChild(modalOverlay);
   const closeBtn = innerElement.querySelector(".modal-close");
   closeBtn.addEventListener("click", (e) => {
     innerElement.style.display = "none";
@@ -193,10 +191,9 @@ function displayNameModalWindow() {
   confirmBtn.addEventListener("click", async (e) => {
     const value = innerElement.querySelector("input").value;
     await changeUserInfo(accessToken, { displayName: value });
-    renderUserInfo();
-    location.reload();
     innerElement.style.display = "none";
     modalOverlay.style.display = "none";
+    renderUserInfo();
   });
 }
 
@@ -211,16 +208,14 @@ function displayPWModalWindow() {
   innerElement.innerHTML = `
     <div class="modal-close">X</div>
     <div class="innerElement-title">비밀번호 수정하기</div>
-    <span class="innerElement-span">현재 비밀번호</span>
-    <input required id="current-password" type="password"/>
     <span class="innerElement-span">새로운 비밀번호</span>
     <input required id="new-password-1" type="password"/>
     <span class="innerElement-span">비밀번호 확인</span>
-    <input required id="new-password-2 type="password"/>
+    <input required id="new-password-2" type="password"/>
     <button class="btn-primary medium">확인</button>
   `;
   modalOverlay.appendChild(innerElement);
-  body.appendChild(modalOverlay);
+  userInfoPage.appendChild(modalOverlay);
   const closeBtn = innerElement.querySelector(".modal-close");
   closeBtn.addEventListener("click", (e) => {
     innerElement.style.display = "none";
@@ -228,15 +223,13 @@ function displayPWModalWindow() {
   });
   const confirmBtn = innerElement.querySelector(".btn-primary");
   confirmBtn.addEventListener("click", async (e) => {
-    const oldPW = innerElement.querySelector("#current-password").value;
     const newPW = innerElement.querySelector("#new-password-1").value;
-    await changeUserInfo(
-      accessToken,
-      { oldPassword: oldPW },
-      { newPassword: newPW }
-    );
-    renderUserInfo();
-    innerElement.style.display = "none";
-    modalOverlay.style.display = "none";
+    const newPWCheck = innerElement.querySelector("#new-password-2").value;
+    if (newPW == newPWCheck) {
+      await changeUserInfo(accessToken, { newPassword: newPW });
+      innerElement.style.display = "none";
+      modalOverlay.style.display = "none";
+      renderUserInfo();
+    }
   });
 }
