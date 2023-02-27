@@ -1,4 +1,4 @@
-$section-margin-bottom: 70px;
+$section-margin-bottom: 50px;
 
 .movie-slider {
   margin: 20px 0 $section-margin-bottom;
@@ -59,15 +59,24 @@ $section-margin-bottom: 70px;
 .genre {
   margin-bottom: $section-margin-bottom;
 
+  .inner {
+    padding: 30px;
+    border-radius: 20px;
+    background-color: #20293f;
+  }
+
   &-header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     color: #fff;
 
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
     a {
-      // position: relative;
-      // right: 6px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -101,11 +110,22 @@ $section-margin-bottom: 70px;
 }
 
 .new {
+  .inner {
+    padding: 30px;
+    border-radius: 20px;
+    background-color: #20293f;
+  }
+
   &-header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     color: #fff;
+
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+    }
 
     a {
       // position: relative;
