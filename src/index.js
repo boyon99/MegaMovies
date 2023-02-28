@@ -11,6 +11,8 @@ import moviePage from "./pages/movie";
 import { logout, me } from "./api/auth";
 import { AppStorage } from "./util";
 import { genreDetailPage } from "./pages/genre_detail";
+import orderHistory from "./pages/order-history";
+import orderDetails from "./pages/order-details";
 
 const app = document.querySelector("#app");
 
@@ -214,14 +216,14 @@ router
       /*
         임시 요소인 document.createTextNode를 지우시고, 해당 페이지 요소로 렌더링 되도록 구현해주세요
       */
-      renderPage([header(), document.createTextNode("전체 구매내역")]);
+      renderPage([header(), orderHistory]);
     },
     "/order-details": (match) => {
       // 단일 제품 상세 거래 페이지
       /*
         임시 요소인 document.createTextNode를 지우시고, 해당 페이지 요소로 렌더링 되도록 구현해주세요
       */
-      renderPage([header(), document.createTextNode("단일 제품 상세 거래")]);
+      renderPage([header(), orderDetails]);
     },
     "/search": (match) => {
       //검색 페이지
