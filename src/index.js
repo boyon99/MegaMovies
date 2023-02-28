@@ -13,6 +13,9 @@ import { AppStorage } from "./util";
 import { genreDetailPage } from "./pages/genre_detail";
 import cart from "./pages/cart";
 import searchPage from "./pages/search"
+import userInfoPage from "./pages/user-info";
+import footer from "./pages/footer";
+import { notFoundPage } from "./pages/not_found";
 
 const app = document.querySelector("#app");
 
@@ -165,10 +168,7 @@ router
       renderPage([header({ user: match?.user }), moviePage(movieId)]);
     },
     "/user-info": (match) => {
-      renderPage([
-        header({ isContainNav: false }),
-        document.createTextNode("유저 정보 페이지"),
-      ]);
+      renderPage([header({ isContainNav: false }), userInfoPage]);
     },
     "/genre/:category": (match) => {
       // 장르, 테마 상세 페이지
@@ -241,14 +241,7 @@ router
       router.lastResolved() === null
         ? location.pathname
         : router.lastResolved()[0].url;
-
-    renderPage([
-      document.createTextNode("NotFound"),
-      document.createElement("br"),
-      document.createTextNode(
-        `요청하신 ${decodeURIComponent(prevURL)} 주소를 찾을 수 없습니다.`
-      ),
-    ]);
+    renderPage([header(), notFoundPage]);
   })
   .resolve();
 
