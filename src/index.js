@@ -11,7 +11,8 @@ import moviePage from "./pages/movie";
 import { logout, me } from "./api/auth";
 import { AppStorage } from "./util";
 import { genreDetailPage } from "./pages/genre_detail";
-import cartPage from "./pages/cart";
+import cart from "./pages/cart";
+import searchPage from "./pages/search"
 
 const app = document.querySelector("#app");
 
@@ -201,13 +202,14 @@ router
       /*
         임시 요소인 document.createTextNode를 지우시고, 해당 페이지 요소로 렌더링 되도록 구현해주세요
       */
-      renderPage([header(),cartPage]);
+      renderPage([header(),cart()]);
     },
     "/order": (match) => {
       // 결제 페이지
       /*
         임시 요소인 document.createTextNode를 지우시고, 해당 페이지 요소로 렌더링 되도록 구현해주세요
       */
+     console.log(match)
       renderPage([header(), document.createTextNode("결제")]);
     },
     "/order-history": (match) => {
@@ -224,9 +226,10 @@ router
       */
       renderPage([header(), document.createTextNode("단일 제품 상세 거래")]);
     },
-    "/search": (match) => {
+    "/search/:id": ({ data, match }) => {
       //검색 페이지
-      renderPage([header(), document.createTextNode("검색 페이지")]);
+        const movieId = data?.id;
+        renderPage([header({ user: match?.user }), searchPage(movieId)]);
     },
   })
   .notFound((match) => {
