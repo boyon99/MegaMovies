@@ -13,6 +13,8 @@ import { AppStorage } from "./util";
 import { genreDetailPage } from "./pages/genre_detail";
 import orderHistory from "./pages/order-history";
 import orderDetails from "./pages/order-details";
+import cart from "./pages/cart";
+import searchPage from "./pages/search"
 
 const app = document.querySelector("#app");
 
@@ -202,7 +204,7 @@ router
       /*
         임시 요소인 document.createTextNode를 지우시고, 해당 페이지 요소로 렌더링 되도록 구현해주세요
       */
-      renderPage([header(), document.createTextNode("장바구니")]);
+      renderPage([header(),cart()]);
     },
     "/order": (match) => {
       // 결제 페이지
@@ -225,9 +227,10 @@ router
       */
       renderPage([header(), orderDetails]);
     },
-    "/search": (match) => {
+    "/search/:id": ({ data, match }) => {
       //검색 페이지
-      renderPage([header(), document.createTextNode("검색 페이지")]);
+        const movieId = data?.id;
+        renderPage([header({ user: match?.user }), searchPage(movieId)]);
     },
   })
   .notFound((match) => {

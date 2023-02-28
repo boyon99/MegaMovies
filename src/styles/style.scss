@@ -12,6 +12,8 @@
 @import url("./pages/movie.scss");
 @import url("./pages/order-history.scss");
 @import url("./pages/order-details.scss");
+@import url("./pages/cart.scss");
+@import url("./pages/search.scss");
 
 body {
   font-family: "Pretendard", sans-serif;
@@ -198,6 +200,7 @@ body {
     width: 270px;
     padding: 6px 12px;
     border-radius: 4px;
+    border: 1px solid #000;
 
     &::placeholder {
       font-size: 12px;
@@ -206,5 +209,16 @@ body {
     &:focus {
       border-color: $color--highlight;
     }
+  }
+
+  button{
+    width: 50px;
+    height: 33px;
+    color: #000;
+    margin-left: -270px;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+    border: 1px solid #000;
+    color: #fff;
   }
 }

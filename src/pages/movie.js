@@ -1,4 +1,6 @@
 import { readItem } from '../api/movieRequest'
+import { AppStorage } from '../util'
+import { router } from '../'
 
 // random buy
 function getRandomBuy() {
@@ -25,7 +27,6 @@ function getDate(i) {
 const moviePage = (movieId) => {
   const page = document.createElement('div');
   page.classList.add('page')
-  console.log(movieId)
 
   // movie content
     ; (async () => {
@@ -69,23 +70,39 @@ const moviePage = (movieId) => {
 
       // price
       const priceEl = document.createElement('p')
-      let price = item[0].price / 1000
-      priceEl.innerText = `${price},000`
+      priceEl.innerText = `${item[0].price}`
       priceEl.classList.add('price')
 
       // price Img
       const priceImgEl = document.createElement('img')
       priceImgEl.classList.add('priceImg')
 
+      // cart btn
+      const cartBtnEl = document.createElement('button')
+      cartBtnEl.classList.add('btn-ghost', 'cart', 'medium')
+      cartBtnEl.innerText = "장바구니 담기"
+      // cart info storage
+      cartBtnEl.addEventListener('click', ()=>{
+        if(AppStorage.accessTokenKey){
+          AppStorage.setCartItem(item[0])
+        }else{
+        }
+      })
+
       // buy btn
       const buyBtnEl = document.createElement('button')
       buyBtnEl.classList.add('btn-outlined', 'buy', 'medium')
       buyBtnEl.innerText = "구매하기"
+      // cart info storage
+      buyBtnEl.addEventListener('click', ()=>{
+        // ?id='...' => 해당 아이디로 결제
+        // ?from=cart => 장바구니에서 결제로 
+        router.navigate(`order?id=${movieId}`);
+      })
+      
 
-      page.append(newImgEl, titleEl, starEl, rateEl, descriptionEl, tagsEl, priceEl, priceImgEl, buyBtnEl)
-      console.log(item)
+      page.append(newImgEl, titleEl, starEl, rateEl, descriptionEl, tagsEl, priceEl, priceImgEl, buyBtnEl, cartBtnEl)
     })()
-
   // chart
   page.innerHTML = `
   <div class="canvas">
@@ -177,7 +194,6 @@ const moviePage = (movieId) => {
   viewPoint.innerText = "감상포인트"
 
   page.append(listcontainer, monthBuy, viewPoint)
-
   return page;
 }
 
