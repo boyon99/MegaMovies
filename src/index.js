@@ -11,7 +11,7 @@ import moviePage from "./pages/movie";
 import { me } from "./api/auth";
 import { AppStorage } from "./util";
 import { genreDetailPage } from "./pages/genre_detail";
-import userInfoPage from "./pages/userInfo";
+import userInfoPage from "./pages/user-info";
 import footer from "./pages/footer";
 import { notFoundPage } from "./pages/not_found";
 

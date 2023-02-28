@@ -10,7 +10,7 @@
 @import url("./pages/login.scss");
 @import url("./pages/bank.scss");
 @import url("./pages/movie.scss");
-@import url("./pages/userInfo.scss");
+@import url("./pages/user_info.scss");
 @import url("./pages/not_found.scss");
 
 body {
@@ -214,18 +214,21 @@ body {
   width: 100%;
   text-align: center;
   margin: 40px 0px;
+  padding: 20px 0px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  border-top: 1px solid #80808086;
 }
 
-.logo-area {
+.logo-image {
   height: 20.92px;
   width: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .text-area {

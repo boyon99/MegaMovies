@@ -1,3 +1,4 @@
+import { router } from "../";
 import { me } from "../api/auth";
 import { AppStorage } from "../util";
 import logo from "../../static/logo.png";
@@ -157,10 +158,11 @@ function displayPicModalWindow() {
       const changedUserInfo = await changeUserInfo(accessToken, {
         profileImgBase64,
       });
-      console.log({ changedUserInfo });
+
       innerElement.style.display = "none";
       modalOverlay.style.display = "none";
       renderUserInfo();
+      history.go(0);
     });
   });
 }
@@ -193,7 +195,9 @@ function displayNameModalWindow() {
     await changeUserInfo(accessToken, { displayName: value });
     innerElement.style.display = "none";
     modalOverlay.style.display = "none";
+
     renderUserInfo();
+    history.go(0);
   });
 }
 
@@ -223,13 +227,17 @@ function displayPWModalWindow() {
   });
   const confirmBtn = innerElement.querySelector(".btn-primary");
   confirmBtn.addEventListener("click", async (e) => {
-    const newPW = innerElement.querySelector("#new-password-1").value;
-    const newPWCheck = innerElement.querySelector("#new-password-2").value;
-    if (newPW == newPWCheck) {
+    const newPW = innerElement.querySelector("#new-password-1");
+    const newPWCheck = innerElement.querySelector("#new-password-2");
+    if (newPW.value != newPWCheck.value) {
+      newPWCheck.setCustomValidity("비밀번호가 일치하지 않습니다.");
+      e.preventDefault();
+    } else {
       await changeUserInfo(accessToken, { newPassword: newPW });
       innerElement.style.display = "none";
       modalOverlay.style.display = "none";
       renderUserInfo();
     }
+    newPWCheck.reportValidity();
   });
 }
