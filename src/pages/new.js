@@ -2,10 +2,10 @@ import { readItem } from '../api/movieRequest'
 
 const newPage = document.createElement('div')
 export default newPage
-;(async () => {
-  const items = await readItem()
-  renderItems(items)
-})()
+  ; (async () => {
+    const items = await readItem()
+    renderItems(items)
+  })()
 
 // random
 function getRandomRate() {
@@ -50,17 +50,15 @@ function renderItems(items) {
     descriptionEl.innerText = liEl.description + ' ...'
     descriptionEl.classList.add('description')
 
-    // price
-    const priceEl = document.createElement('p')
-    let price = liEl.price / 1000
-    priceEl.innerText = price + ',000'
-    priceEl.classList.add('price')
-
-    // price Img
-    const priceImgEl = document.createElement('img')
-    priceImgEl.src = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAACwElEQVR4nO2ZS4sTQRDHg+ILUfSmqy548eon0FVBWDZJdXLIF1AQxNfNiA9y8iCi7lRFxdPKHv0Kwnpb9aCCV11Y8AMsrguaaqWl8trZbFanOz2dBKagL5NMze/f86+a7plcLossskg1zHS0ixVd0wrfsaI1rcgkHaxojQHfaBUVhwNfjo5qwE820HqrAXQ/LHxhdlIDLnmBV+1RosL4wqumpRbSh1dPj2mgr77hdUvA6tjC6/YYa3idlgBXzzNQgxXeNEATMlhRVY4FFTBIwbKiam8+ORZMwKC2MeXHhzflnKkfCiLAh+cN0MSmvPnnR1IX4KvPcz8LAd5KVYDPhxQ3i5iqwYo4VKvUaQgYBXjtKsDONvhFls+NMp40lVfbTf7ZQS5FU6zwJSvSwQWYBPBSeOb8w726iOfMpRc7tsqlITrLQCvB1kIm4cwbeLAvaU6t6jMM9MdJBOCid/j2OLPhXLGNogVW9J0BlxmwZmq1bZ3fGXDe6Q4AXbEo2ITwgJ/F6705GgovxmeaAe92BSg85SDgo6nUdv4ffmput802kEv1y+vCnxyI52KgG7HZ+9b933S039I6S7I9TTT7rQ148uS/SnQidu7rBkQX+oEy4O/ODDYnyQa+MDuZSxoa6L2NAFN5tCcmYFVsw4DXpSuJbXo8fEcKvve49gXfhrB69RG3jdjEpTh134LF5Z9FPG4F34LAH5YX63YgVnjbiwBwmPlOyAsou4vRXOdcaZViD7kT4vng8C5F3Abd8ByQkIIVzweF77wKlJ5rJ4JWNGA+1xNW7RI8wDs9yNZFSPeZZ6ifFvDmHVB4Lzh86OUzu3abURDBacKnLSIIfFoigsL7FjEUeF8ihgo/qIiRgHcVMVLwtiJGEn7DR7x/LjvwQ+Kd1FA/oxbxqlb0tvlZVPYTgIuyAU+0h80iiyxyg8RfIY4Gl/J3SzUAAAAASUVORK5CYII=`
-    priceImgEl.classList.add('priceImg')
-
+    // tags
+    const tagsEl = document.createElement('div')
+    tagsEl.classList.add('tags')
+    const tags = liEl.tags.map(i => {
+      const tag = document.createElement('p')
+      tag.innerText = i
+      tag.classList.add('tag')
+      tagsEl.append(tag)
+    })
     // append El
     contentDivEl.append(aEl)
     aEl.append(
@@ -69,8 +67,7 @@ function renderItems(items) {
       starEl,
       rateEl,
       descriptionEl,
-      priceEl,
-      priceImgEl
+      tagsEl
     )
 
     return contentDivEl

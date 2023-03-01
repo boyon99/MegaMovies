@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/KDT4-MegaMovies/KDT4-M4#readme",
   "devDependencies": {
+    "@parcel/packager-raw-url": "^2.8.3",
     "@parcel/transformer-sass": "^2.8.3",
+    "@parcel/transformer-webmanifest": "^2.8.3",
     "autoprefixer": "^10.4.13",
     "parcel": "^2.8.3",
     "parcel-plugin-static-files-copy": "^2.6.0",

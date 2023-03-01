@@ -12,24 +12,25 @@
   width: 800px;
   height: 180px;
   border-bottom: 0.1px solid #515c77;
-  &:first-child{
+  &:first-child {
     margin-top: 120px;
   }
-  a{
+  a {
     color: #fff;
     position: relative;
     cursor: pointer;
+    display: block;
   }
-  img{
-    width: 100px;
-    height: auto;
+  img {
+    width: 120px;
+    height: 160px;
     max-height: 160px;
     position: absolute;
     left: -15px;
     top: 10px;
     border-radius: 5px;
   }
-  .title{
+  .title {
     position: absolute;
     top: 0;
     width: 500px;
@@ -38,20 +39,21 @@
     font-size: 18px;
     font-weight: 600;
   }
-  .star{
+  .star {
     position: absolute;
     width: 15px;
     height: 15px;
     top: 45px;
     left: 128px;
   }
-  .rate{
+  .rate {
     position: absolute;
     top: 42px;
     left: 148px;
     font-size: 15px;
+    font-weight: 500;
   }
-  .description{
+  .description {
     position: absolute;
     width: 650px;
     top: 75px;
@@ -59,7 +61,7 @@
     font-size: 14px;
     color: #eeebeb;
   }
-  .price{
+  .price {
     position: absolute;
     width: 200px;
     top: 133px;
@@ -67,11 +69,35 @@
     font-size: 14px;
     font-weight: 700;
   }
-  .priceImg{
+  .priceImg {
     position: absolute;
-    width: 14px;
-    top: 137px;
+    width: 17px;
+    height: 17px;
+    top: 135.5px;
     left: 180px;
   }
-}
+  .tags {
+    position: absolute;
+    top: 140px;
+    display: flex;
+    left: 130px;
+    z-index: -1;
+    height: auto;
 
+    .tag {
+      margin-right: 10px;
+      width: auto;
+      height: auto;
+      background: rgb(203, 77, 127);
+      background: linear-gradient(
+        159deg,
+        rgba(203, 77, 127, 1) 0%,
+        rgba(251, 79, 147, 1) 100%
+      );
+      border-radius: 10px;
+      padding: 4px 10px;
+      font-size: 10px;
+      text-align: center;
+    }
+  }
+}
