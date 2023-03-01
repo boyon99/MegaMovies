@@ -49,6 +49,12 @@ $section-margin-bottom: 50px;
       }
     }
 
+    &-button-prev,
+    &-button-next {
+      color: #fff;
+      font-weight: 900;
+    }
+
     &-button-prev::after,
     &-button-next::after {
       font-size: 30px;
