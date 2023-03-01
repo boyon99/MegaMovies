@@ -23,6 +23,7 @@ homeRankingSlider.innerHTML = /* html */ `
           <div class="swiper-slide"></div>
           <div class="swiper-slide"></div>
           <div class="swiper-slide"></div>
+          <div class="swiper-slide"></div>
         </div>
 
         <div class="swiper-button-prev"></div>
@@ -77,7 +78,9 @@ function renderItems(items) {
   const rankingItems = items
     .map((item, index) => {
       index++
-      if (index > 9) return
+      const setIndex = index > 4 ? index -= 1 : index
+      if (index > 10) return
+      if (item.title === '변호사') return
       return /* html */ `
       <a class="swiper-slide" href="/movie/${item.id}" data-navigo>
         <div class="image-wrapper"><img src=${posterMap.get(item.title)} /></div>
@@ -119,4 +122,11 @@ function renderItems(items) {
   swiperWrapper.innerHTML = rankingItems
   genreList.innerHTML = genreItems
   newList.innerHTML = newItems
+
+  const titles = swiperWrapper.querySelectorAll('.title')
+    titles.forEach((title, index) => {
+      if (index === 9) {
+        title.style.left = '160px'
+      }
+    })
 }
