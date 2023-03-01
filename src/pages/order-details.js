@@ -3,31 +3,33 @@ import { getHistory } from '../api/getHistory'
 import posterMap from '../movieInfoList/posterList'
 import { AppStorage } from '../util'
 
-let user = null;
-
-const orderDetails = document.createElement('section')
-export default orderDetails
-;(async () => {
-  const idRegex = /(?<=\?id\=)\w+/
-  const detailId = idRegex.exec(location.search)
-
-  const item = await getHistory(detailId[0])
-  getUserInfo().then(userInfo => {
-    user = userInfo;
-    renderHistory(item)
-  })
-})()
-
-orderDetails.className = 'order-details-section'
-orderDetails.innerHTML = /* html */ `
+function orderDetails () {
+  const orderDetailsPage = document.createElement('section');
+  orderDetailsPage.className = 'order-details-section'
+  orderDetailsPage.innerHTML = /* html */ `
   <div class="inner">
     <h2>구매 내역 확인</h2>
     <div class="order-details">
   </div>
 `
+  orderDetailsPage.renderHistory = renderHistory;
+  orderDetailsPage.renderHistory();
 
-function renderHistory(item) {
-  const orderDetailsDiv = orderDetails.querySelector('.order-details')
+  return orderDetailsPage;
+}
+
+export default orderDetails
+
+async function renderHistory() {
+  const orderDetailsPage = this;
+
+  const idRegex = /(?<=\?id\=)\w+/
+  const [detailId] = idRegex.exec(location.search)
+
+  const user = await getUserInfo();
+  const item = await getHistory(detailId);
+
+  const orderDetailsDiv = orderDetailsPage.querySelector('.order-details')
 
   const tags = item.product.tags
   const tagEls = tags.map(tag => {
