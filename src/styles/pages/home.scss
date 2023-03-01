@@ -98,13 +98,20 @@ $section-margin-bottom: 50px;
   &-image {
     display: block;
     width: 180px;
-    height: 300px;
+    height: 240px;
+    border-radius: 5px;
+    overflow: hidden;
+    
+    &:hover img {
+      transform: scale(1.1);
+    }
 
     img {
       display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform 200ms ease-in-out;
     }
   }
 }
@@ -135,8 +142,8 @@ $section-margin-bottom: 50px;
       align-items: center;
       padding: 2px 8px;
       font-size: 12px;
-      color: #fff;
       border-radius: 4px;
+      color: #fff;
       background-color: #fb4f93;
     }
   }
@@ -151,13 +158,20 @@ $section-margin-bottom: 50px;
   &-image {
     display: block;
     width: 180px;
-    height: 300px;
+    height: 240px;
+    border-radius: 5px;
+    overflow: hidden;
+
+    &:hover img {
+      transform: scale(1.1);
+    }
 
     img {
       display: block;
       width: 100%;
       height: 100%;
       object-fit: cover;
+      transition: transform 200ms ease-in-out;
     }
   }
 }
