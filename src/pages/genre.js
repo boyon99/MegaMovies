@@ -61,10 +61,10 @@ async function renderPage() {
       linkEl.dataset.navigo = "";
       linkEl.innerHTML = `
    <div class="genre-list">
-   <div class="genre">
+    <div class="genre-title">
      <span>${genre}</span>
     </div>
-    </div>`;
+  </div>`;
       genreWrapper.append(linkEl);
     });
 
@@ -136,7 +136,9 @@ function createMovieItem({ imgSrc, title, id }) {
   linkEl.innerHTML = `
    <div class="wrapper">
       <span>${title}</span>
-      <img src=${imgSrc} />
+      <div class="img-wrapper">
+        <img src=${imgSrc} />
+      </div>
     </div>
   `;
 
