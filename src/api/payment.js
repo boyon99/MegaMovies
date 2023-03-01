@@ -64,13 +64,13 @@ export default class paymentAPI {
       }),
     });
 
-    if (response.status !== 200) return false;
+    if (response.status !== 200) return await response.json();
 
     return true;
   }
 
   // 제품 거래 확정
-  async confirmOrder({ accessToken, productId }) {
+  async confirmOrder({ accessToken, detailId }) {
     if (!accessToken) return false;
 
     const { url, method, headers } = this.requestData.confirmOrder({
@@ -80,7 +80,7 @@ export default class paymentAPI {
     const response = await fetch(url, {
       headers,
       method,
-      body: JSON.stringify({ detailId: productId }),
+      body: JSON.stringify({ detailId }),
     });
 
     if (response.status !== 200) return false;
@@ -89,7 +89,7 @@ export default class paymentAPI {
   }
 
   // 제품 거래 취소
-  async cancelOrder({ accessToken, productId }) {
+  async cancelOrder({ accessToken, detailId }) {
     if (!accessToken) return false;
 
     const { url, method, headers } = this.requestData.cancelOrder({
@@ -100,7 +100,7 @@ export default class paymentAPI {
       headers,
       method,
       body: JSON.stringify({
-        detailId: productId,
+        detailId,
       }),
     });
 

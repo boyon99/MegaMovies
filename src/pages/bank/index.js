@@ -61,18 +61,10 @@ function createElement(type, props) {
       const accountList = document.createElement("ul");
       accountList.className = "account-list";
 
-      return accountList;
-    case "account-item":
-      const { id, bankName, accountNumber, balance } = props.account;
-
-      const accountItem = document.createElement("li");
-      accountItem.className = "account-item";
-      accountItem.dataset.id = id;
-      accountItem.dataset.bankName = bankName;
-
-      const checkBox = document.createElement("input");
-      checkBox.type = "checkbox";
-      const handleChange = (e) => {
+      const handleSelectChange = (e) => {
+        accountList.dispatchEvent(new Event("afterAccountSelect"));
+      };
+      const handleAfterSelect = (e) => {
         const selectedAccountList = Array.from(
           document.querySelectorAll(
             '.account-item input[type="checkbox"]:checked'
@@ -92,7 +84,28 @@ function createElement(type, props) {
 
         closeAccountBtn.style.color = "#000";
       };
-      checkBox.addEventListener("click", handleChange);
+
+      bankPageEventMap.set(
+        { target: accountList, eventType: "change" },
+        handleSelectChange
+      );
+
+      bankPageEventMap.set(
+        { target: accountList, eventType: "afterAccountSelect" },
+        handleAfterSelect
+      );
+
+      return accountList;
+    case "account-item":
+      const { id, bankName, accountNumber, balance } = props.account;
+
+      const accountItem = document.createElement("li");
+      accountItem.className = "account-item";
+      accountItem.dataset.id = id;
+      accountItem.dataset.bankName = bankName;
+
+      const checkBox = document.createElement("input");
+      checkBox.type = "checkbox";
 
       const account = document.createElement("div");
       account.className = "account";
@@ -135,6 +148,7 @@ function createElement(type, props) {
       allSelectBtn.classList.add("btn-outlined", "medium");
       allSelectBtn.textContent = "전체 선택";
       const handleAllSeclectClick = (e) => {
+        const accountItemlist = document.querySelector(".account-list");
         const allAccountItemCheckbox = document.querySelectorAll(
           '.account-item input[type="checkbox"]'
         );
@@ -142,7 +156,10 @@ function createElement(type, props) {
         if (!allAccountItemCheckbox || !allAccountItemCheckbox.length) return;
 
         allAccountItemCheckbox.forEach((checkBox) => (checkBox.checked = true));
+
+        accountItemlist.dispatchEvent(new Event("afterAccountSelect"));
       };
+
       bankPageEventMap.set(
         { target: allSelectBtn, eventType: "click" },
         handleAllSeclectClick
@@ -179,7 +196,7 @@ function createElement(type, props) {
           return;
         }
 
-        closeAccountBtn.style.color = "#fff";
+        // closeAccountBtn.style.color = "#000";
         openCloseAccountModal({ closeAccountList: selectedAccountList });
       };
       bankPageEventMap.set(

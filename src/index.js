@@ -48,6 +48,8 @@ router.hooks({
     done();
   },
   after(match) {
+    window.scroll(0, 0); // 스크롤 초기화
+
     const navPaths = ["", "ranking", "genre", "new"];
 
     if (navPaths.includes(match.url)) {
@@ -202,19 +204,15 @@ router
       /*
         임시 요소인 document.createTextNode를 지우시고, 해당 페이지 요소로 렌더링 되도록 구현해주세요
       */
-      renderPage([header(),cartPage]);
+      renderPage([header(), cartPage]);
     },
     "/order": (match) => {
       // 결제 페이지
-      /*
-        임시 요소인 document.createTextNode를 지우시고, 해당 페이지 요소로 렌더링 되도록 구현해주세요
-      */
-      renderPage([
-        header(),
-        orderPage([
-          "0dNCjOjTlAdAwjOWjc3y,국제시장,10000,https://storage.googleapis.com/heropy-api/vqKixjn_oMv062239.jpg,false",
-        ]),
-      ]);
+      renderPage([header(), orderPage()]);
+    },
+    "/orders": (match) => {
+      // 장바구니 -> 결제
+      renderPage([header(), orderPage()]);
     },
     "/order-history": (match) => {
       // 전체 구매내역 페이지

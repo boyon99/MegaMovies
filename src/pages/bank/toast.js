@@ -1,26 +1,31 @@
 /**
  * @typedef {object} ToastOptions
- * @property {HTMLElement} container - toast를 삽입할 부모요소(기본값: `body`)
+ * @property { HTMLElement } container - toast를 삽입할 부모요소(기본값: `body`)
  * @property {string} message - toast에 출력할 텍스트(없을 경우 렌더링되지 않음)
  * @property {"info" | "error" | "success"} type - toast 타입(테마)
  * @property {number} [autoUnmount] - ms 단위 시간 이후 unmount
+ * @property {boolean} fixed - `position: fixed` 적용
  */
 
 /**
  * toast 요소(element)를 렌더링하는 함수
- * @param {ToastOptions} param - { `container` , `message`, `type` }
+ * @param {ToastOptions} param - { `container` , `message`, `type`, `autoUnmount`, `fixed` }
  */
 export const renderToast = ({
   container = document.body,
   message,
   type = "info",
   autoUnmount,
+  fixed = false,
 } = {}) => {
   if (!message) return;
   if (!(type === "error" || type === "success" || type === "info")) return;
 
   const toast = document.createElement("div");
   toast.className = "app__toast";
+  if (fixed) {
+    toast.classList.add("--fixed");
+  }
   switch (type) {
     case "error":
       toast.classList.add("toast--error");
@@ -58,7 +63,7 @@ export const renderToast = ({
     const afterRule = Array.from(styleSheet.cssRules).find(
       (rule) =>
         rule.selectorText ===
-        ".app__toast.timeout .content::after, .app__toast.toast--success.timeout .content::after, .app__toast.toast--error.timeout .content::after"
+        ".app__toast.timeout .content::after, .app__toast.toast--success.timeout .content::after, .app__toast.toast--error.timeout .content::after, .app__toast.--fixed.timeout .content::after"
     );
     afterRule.style.setProperty(
       "animation",
@@ -66,7 +71,10 @@ export const renderToast = ({
     );
 
     setTimeout(() => {
-      unmountToast({ container, target: toast });
+      unmountToast({
+        container,
+        target: toast,
+      });
     }, autoUnmount);
   }
 };

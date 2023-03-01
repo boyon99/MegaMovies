@@ -613,7 +613,8 @@ $bank-skeleton-pg: linear-gradient(
 .app__toast {
   &,
   &.toast--success,
-  &.toast--error {
+  &.toast--error,
+  &.--fixed {
     // 공통
     position: absolute;
     left: 0;
@@ -658,6 +659,11 @@ $bank-skeleton-pg: linear-gradient(
         margin-left: 12px;
       }
     }
+  }
+  &.--fixed {
+    position: fixed;
+    left: 0;
+    top: 30px;
   }
   &.toast--success {
     .content {
