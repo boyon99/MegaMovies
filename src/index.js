@@ -13,8 +13,13 @@ import { AppStorage } from "./util";
 import { genreDetailPage } from "./pages/genre_detail";
 import orderHistory from "./pages/order-history";
 import orderDetails from "./pages/order-details";
+import { loginPage } from "./pages/login";
+import { renderSignUpPage } from "./pages/sign_up";
 import cart from "./pages/cart";
-import searchPage from "./pages/search"
+import searchPage from "./pages/search";
+import userInfoPage from "./pages/user-info";
+import footer from "./pages/footer";
+import { notFoundPage } from "./pages/not_found";
 
 const app = document.querySelector("#app");
 
@@ -138,7 +143,10 @@ router
           renderPage의 매개변수(인자)로 로그인 페이지 요소만 전달해주세요
           예시) renderPage(loginPage)
       */
-      renderPage(document.createTextNode("로그인 페이지"));
+      renderPage([
+        header({ isContainNav: false, isContainProfileArea: false }),
+        loginPage(),
+      ]);
     },
     "/signup": () => {
       /*
@@ -147,7 +155,10 @@ router
           renderPage의 매개변수(인자)로 회원가입 페이지 요소만 전달해주세요
           예시) renderPage(signUpPage)
       */
-      renderPage(document.createTextNode("회원가입 페이지"));
+      renderPage([
+        header({ isContainNav: false, isContainProfileArea: false }),
+        renderSignUpPage(),
+      ]);
     },
     "/logout": async (match) => {
       // 로그아웃
@@ -167,10 +178,7 @@ router
       renderPage([header({ user: match?.user }), moviePage(movieId)]);
     },
     "/user-info": (match) => {
-      renderPage([
-        header({ isContainNav: false }),
-        document.createTextNode("유저 정보 페이지"),
-      ]);
+      renderPage([header({ isContainNav: false }), userInfoPage]);
     },
     "/genre/:category": (match) => {
       // 장르, 테마 상세 페이지
@@ -204,7 +212,7 @@ router
       /*
         임시 요소인 document.createTextNode를 지우시고, 해당 페이지 요소로 렌더링 되도록 구현해주세요
       */
-      renderPage([header(),cart()]);
+      renderPage([header(), cart()]);
     },
     "/order": (match) => {
       // 결제 페이지
@@ -229,8 +237,8 @@ router
     },
     "/search/:id": ({ data, match }) => {
       //검색 페이지
-        const movieId = data?.id;
-        renderPage([header({ user: match?.user }), searchPage(movieId)]);
+      const movieId = data?.id;
+      renderPage([header({ user: match?.user }), searchPage(movieId)]);
     },
   })
   .notFound((match) => {
@@ -242,14 +250,7 @@ router
       router.lastResolved() === null
         ? location.pathname
         : router.lastResolved()[0].url;
-
-    renderPage([
-      document.createTextNode("NotFound"),
-      document.createElement("br"),
-      document.createTextNode(
-        `요청하신 ${decodeURIComponent(prevURL)} 주소를 찾을 수 없습니다.`
-      ),
-    ]);
+    renderPage([header(), notFoundPage]);
   })
   .resolve();
 
