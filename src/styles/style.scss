@@ -11,6 +11,10 @@
 @import url("./pages/bank.scss");
 @import url("./pages/movie.scss");
 @import url("./pages/sign_up.scss");
+@import url("./pages/cart.scss");
+@import url("./pages/search.scss");
+@import url("./pages/user_info.scss");
+@import url("./pages/not_found.scss");
 
 body {
   font-family: "Pretendard", sans-serif;
@@ -197,6 +201,7 @@ body {
     width: 270px;
     padding: 6px 12px;
     border-radius: 4px;
+    border: 1px solid #000;
 
     &::placeholder {
       font-size: 12px;
@@ -206,4 +211,47 @@ body {
       border-color: $color--highlight;
     }
   }
+
+  button {
+    width: 50px;
+    height: 33px;
+    color: #000;
+    margin-left: -270px;
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+    border: 1px solid #000;
+    color: #fff;
+  }
+}
+
+#footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  margin: 40px 0px;
+  padding: 20px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-top: 1px solid #80808086;
+}
+
+.logo-image {
+  height: 20.92px;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.text-area {
+  height: 60px;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
