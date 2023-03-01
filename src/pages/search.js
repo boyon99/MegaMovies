@@ -11,7 +11,6 @@ const searchPage = (movieId) => {
 
   const name = document.createElement('div')
   name.classList.add('name2')
-  name.innerHTML = `<span>${movieId}</span>에 대한 검색결과입니다.`
 
   const inner = document.createElement('div')
   inner.classList.add('inner')
@@ -26,10 +25,9 @@ const searchPage = (movieId) => {
         return tags.includes(movieTitle) || title.includes(movieTitle)
       })
       if (item.length === 0) {
-        const noItemEl = document.createElement('p')
-        noItemEl.classList.add('no-item')
-        noItemEl.innerText = "검색한 내용과 일치하는 영화가 없습니다."
-        page.append(noItemEl)
+        name.innerHTML = `<span>${movieId}</span>에 대한 검색결과가 없습니다. 다시 검색해주세요.`
+      } else {
+        name.innerHTML = `<span>${movieId}</span>에 대한 검색결과입니다.`
       }
 
       item.map((i, a, b) => {
