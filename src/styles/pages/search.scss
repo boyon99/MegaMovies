@@ -1,86 +1,90 @@
 .search-page {
   margin: 120px auto 10px auto;
   width: 800px;
-  height: 700px;
+  height: auto;
   position: relative;
-  .no-item{
+  .no-item {
     position: absolute;
     font-size: 18px;
     font-weight: 400;
     color: #fff;
-    top:10px;
-
+    top: 10px;
   }
-  a{
+  a {
     color: #fff;
     position: relative;
     cursor: pointer;
     display: block;
     cursor: pointer;
     width: 100%;
-    height: 220px;
+    height: 200px;
+    border-bottom: 0.1px solid #515c77;
 
-  .poster {
-    width: 120px;
-    position: absolute;
-    top: 20px;
-    left: 0;
-    z-index: -1;
-  }
-
-  .title {
-    font-size: 22px;
-    font-weight: 500;
-    width: 500px;
-    position: absolute;
-    top: 15px;
-    left: 140px;
-    z-index: -1;
-  }
-
-  .star {
-    position: absolute;
-    top: 50px;
-    left: 140px;
-    width: 22px;
-    z-index: -1;
-  }
-
-  .rate {
-    position: absolute;
-    top: 50px;
-    left: 170px;
-    font-weight: 700;
-    font-size: 18px;
-    z-index: -1;
-  }
-
-  .description {
-    position: absolute;
-    top: 90px;
-    left: 140px;
-    width: 600px;
-    z-index: -1;
-  }
-
-  .tags {
-    position: absolute;
-    top: 170px;
-    display: flex;
-    left: 140px;
-    z-index: -1;
-    height: auto;
-
-    .tag {
-      margin-right: 10px;
-      width: auto;
-      height: auto;
-      background-color: #fb4f93;
-      border-radius: 10px;
-      padding: 4px 10px;
-      font-size: 12px;
-      text-align: center;
+    .poster {
+      width: 120px;
+      height: 160px;
+      border-radius: 5%;
+      position: absolute;
+      top: 20px;
+      left: -15px;
+      z-index: -1;
     }
-  }
+
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+      width: 500px;
+      position: absolute;
+      top: 15px;
+      left: 130px;
+      z-index: -1;
+    }
+
+    .star {
+      position: absolute;
+      top: 50px;
+      left: 130px;
+      width: 16px;
+      height: 16px;
+      z-index: -1;
+    }
+
+    .rate {
+      position: absolute;
+      top: 47px;
+      left: 150px;
+      font-weight: 500;
+      font-size: 15px;
+      z-index: -1;
+    }
+
+    .description {
+      position: absolute;
+      top: 85px;
+      left: 130px;
+      width: 650px;
+      z-index: -1;
+      font-size: 14px;
+    }
+
+    .tags {
+      position: absolute;
+      top: 150px;
+      display: flex;
+      left: 130px;
+      z-index: -1;
+      height: auto;
+
+      .tag {
+        margin-right: 10px;
+        width: auto;
+        height: auto;
+        background-color: #fb4f93;
+        border-radius: 10px;
+        padding: 4px 10px;
+        font-size: 10px;
+        text-align: center;
+      }
+    }
   }
 }
