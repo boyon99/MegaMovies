@@ -1,35 +1,37 @@
+@use "../constants/colors" as colors;
+
 .cart-page {
   .inner {
     position: relative;
     display: flex;
     flex-direction: column;
-    .top{
+    .top {
       width: 100%;
       height: 55px;
       position: absolute;
       top: 10px;
       border-bottom: 1px solid rgba($color: #fff, $alpha: 0.5);
-      p{
+      p {
         position: absolute;
         top: 9px;
         left: 0px;
         font-weight: 700;
         font-size: 18px;
       }
-      .select{
+      .select {
         position: absolute;
         top: 6px;
         left: 60px;
         font-weight: 700;
       }
-      .delete{
+      .delete {
         position: absolute;
         top: 6px;
         right: 10px;
         font-weight: 700;
       }
     }
-  
+
     .itembox {
       margin: 10px;
       width: 100%;
@@ -48,50 +50,73 @@
         top: 85px;
         left: 100px;
       }
-      .pricebox{
+      .pricebox {
         position: absolute;
         top: 120px;
         left: 100px;
         align-items: center;
         display: flex;
         vertical-align: top;
-        .priceImg{
+        .priceImg {
           width: 20px;
           height: 20px;
           margin: 0 0 0 5px;
         }
       }
-      .checkbox{
+
+      input[type="checkbox"] {
+        // 체크박스
         position: absolute;
         top: 90px;
         left: -10px;
         width: 20px;
         height: 20px;
+        appearance: none;
+        background-color: #fff;
+        border: 1px solid colors.$color--highlight;
+        border-radius: 3px;
+        transition: background-color 0.3s, border-radius 0.3s;
+        &:checked {
+          background-color: colors.$color--highlight;
+          &::after {
+            border-radius: 3px;
+            position: relative;
+            top: calc(-3.5px);
+            content: "\2713";
+            font-size: 20px;
+            color: #fff;
+          }
+        }
       }
     }
-  
-    .bottom{
+
+    .bottom {
       width: 100%;
       height: 60px;
       margin-top: 120px;
       position: relative;
-      background-color: rgba($color: #fb4f93, $alpha: 1.0);
-  
-      .allPriceText{
+      background: rgb(203, 77, 127);
+      background: linear-gradient(
+        159deg,
+        rgba(203, 77, 127, 1) 0%,
+        rgba(251, 79, 147, 1) 48%,
+        rgba(203, 77, 127, 1) 100%
+      );
+      .allPriceText {
         position: absolute;
         font-size: 14px;
         font-weight: 500;
         top: 8px;
         margin-left: 10px;
       }
-      .allprice{
+      .allprice {
         position: absolute;
         top: 21px;
         font-weight: 700;
         font-size: 24px;
         margin-left: 10px;
       }
-      .buy{
+      .buy {
         position: absolute;
         right: 10px;
         top: 10px;
@@ -101,10 +126,9 @@
       }
     }
 
-    .noItem{
+    .noItem {
       margin-top: 80px;
       font-size: 16px;
     }
   }
 }
-

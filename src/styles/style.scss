@@ -210,7 +210,7 @@ body {
       font-size: 12px;
     }
 
-    &:focus {
+    &.focus {
       border-color: $color--highlight;
     }
   }
@@ -223,7 +223,11 @@ body {
     border-bottom-left-radius: 0px;
     border-top-left-radius: 0px;
     border: 1px solid #000;
+    border-left: none;
     color: #fff;
+    &.focus {
+      border-color: $color--highlight;
+    }
   }
 }
 

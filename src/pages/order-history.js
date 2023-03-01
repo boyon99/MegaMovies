@@ -1,22 +1,10 @@
 import { getAllHistory } from '../api/getAllHistory'
 import posterMap from '../movieInfoList/posterList'
 
-const orderHistory = document.createElement('section')
-export default orderHistory
-
-;(async () => {
-  window.addEventListener('click', (e) => {
-    if(e.target.tagName !== 'BUTTON') return;
-    const target = e.target.closest('.order-history-item');
-
-    location.href = `${location.origin}/order-details?id=${target.dataset.id}`
-  })
-  const items = await getAllHistory()
-  renderAllHistory(items)
-})()
-
-orderHistory.className = 'order-history'
-orderHistory.innerHTML = /* html */ `
+function orderHistory() {
+  const orderHistoryPage = document.createElement('section')
+  orderHistoryPage.className = 'order-history'
+  orderHistoryPage.innerHTML = /* html */ `
   <div class="inner">
     <h1>전체 구매 내역</h1>
 
@@ -24,8 +12,24 @@ orderHistory.innerHTML = /* html */ `
   </div>
 `
 
-function renderAllHistory(items) {
-  const orderHistoryList = orderHistory.querySelector('.order-history-list')
+orderHistoryPage.renderAllHistory = renderAllHistory;
+orderHistoryPage.renderAllHistory();
+
+return orderHistoryPage;
+} 
+export default orderHistory
+
+;(async () => {
+  // const items = await getAllHistory()
+  // renderAllHistory(items)
+})()
+
+
+
+async function renderAllHistory() {
+  const orderHistoryPage = this;
+  const items = await getAllHistory();
+  const orderHistoryList = orderHistoryPage.querySelector('.order-history-list')
 
   const histories = items
     .map((item) => {
@@ -56,4 +60,11 @@ function renderAllHistory(items) {
     .join('')
 
   orderHistoryList.innerHTML = histories
+
+  window.addEventListener('click', (e) => {
+    if(e.target.tagName !== 'BUTTON') return;
+    const target = e.target.closest('.order-history-item');
+
+    location.href = `${location.origin}/order-details?id=${target.dataset.id}`
+  })
 }
