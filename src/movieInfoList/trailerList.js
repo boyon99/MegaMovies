@@ -1,7 +1,7 @@
 export default videoMap = new Map([
   [
     '국제시장',
-    'http://h.vod.cgv.co.kr/vodCGVa/83577/83577_181518_1200_128_960_540.mp4',
+    'http://h.vod.cgv.co.kr/vodCGVa/76955/76955_122543_1200_128_960_540.mp4',
   ],
   [
     '신과함께3 - 죄와 벌',
