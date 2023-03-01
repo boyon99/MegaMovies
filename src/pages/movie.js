@@ -28,93 +28,92 @@ function getDate(i) {
 // rendering
 const moviePage = (movieId) => {
   const page = document.createElement("div");
-  page.classList.add("page")(
-    // movie content
-    async () => {
-      const items = await readItem();
-      const item = items.filter((i) => i.id === movieId);
+  page.classList.add("page");
+  // movie content
+  (async () => {
+    const items = await readItem();
+    const item = items.filter((i) => i.id === movieId);
 
-      // img
-      const newImgEl = document.createElement("img");
-      newImgEl.src = item[0].thumbnail;
-      newImgEl.classList.add("poster");
+    // img
+    const newImgEl = document.createElement("img");
+    newImgEl.src = item[0].thumbnail;
+    newImgEl.classList.add("poster");
 
-      // title
-      const titleEl = document.createElement("p");
-      titleEl.innerText = item[0].title;
-      titleEl.classList.add("title");
+    // title
+    const titleEl = document.createElement("p");
+    titleEl.innerText = item[0].title;
+    titleEl.classList.add("title");
 
-      // star
-      const starEl = document.createElement("img");
-      starEl.src = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAABkklEQVR4nM2VzyuEYRDHl9z8yJESSS7cHOS2F2pj35ml9r/gpihlz1J4Z94zNwcncpSjC0dpSZKUInKh3Z0Hj2ZjtfZd+777o0xNvfXO9/t5Zt553zcS+U9hcb1Ts2EAAUoJ8HJDzG3M7RDgJwF+bkgXArxkkK2mXtfV3E6stgrwww+AHi2stNcNIECL3+YFCPJCHU9P9yUA7SLptYU3jKZaMgl3wDheTByaFaTd3+Y/XdCeIM9prWpU62sqyPMCtG+QzwU4V87QVMgv7bl6qWcBkJ3aGBTg22qNTSnoLgvuUPFoZrw+A3RVsznyjY7Lf/7xjV6DdFnDya8zDvX//ZAnvS6DfBYaAHRhp92eYJs0vdZtkNMhAGnVRMKEAd4KDqDNUOZ5ANJJCMBxKHObSjUL8kvwzaFX1QQG5N9k/y151/S7V3Y1fcfjeOiz3we5OI/kHG9YkHcE6aOoxvGwqm+/AT6ShBstqXHcMUE+rOofIcDbBvj0DThZsVugcV0I1QQHJGjURmxT0HqtVU1gQD3jEx6cj2SryUOkAAAAAElFTkSuQmCC`;
-      starEl.classList.add("star");
+    // star
+    const starEl = document.createElement("img");
+    starEl.src = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAABkklEQVR4nM2VzyuEYRDHl9z8yJESSS7cHOS2F2pj35ml9r/gpihlz1J4Z94zNwcncpSjC0dpSZKUInKh3Z0Hj2ZjtfZd+777o0xNvfXO9/t5Zt553zcS+U9hcb1Ts2EAAUoJ8HJDzG3M7RDgJwF+bkgXArxkkK2mXtfV3E6stgrwww+AHi2stNcNIECL3+YFCPJCHU9P9yUA7SLptYU3jKZaMgl3wDheTByaFaTd3+Y/XdCeIM9prWpU62sqyPMCtG+QzwU4V87QVMgv7bl6qWcBkJ3aGBTg22qNTSnoLgvuUPFoZrw+A3RVsznyjY7Lf/7xjV6DdFnDya8zDvX//ZAnvS6DfBYaAHRhp92eYJs0vdZtkNMhAGnVRMKEAd4KDqDNUOZ5ANJJCMBxKHObSjUL8kvwzaFX1QQG5N9k/y151/S7V3Y1fcfjeOiz3we5OI/kHG9YkHcE6aOoxvGwqm+/AT6ShBstqXHcMUE+rOofIcDbBvj0DThZsVugcV0I1QQHJGjURmxT0HqtVU1gQD3jEx6cj2SryUOkAAAAAElFTkSuQmCC`;
+    starEl.classList.add("star");
 
-      // rate
-      const rateEl = document.createElement("p");
-      rateEl.innerText = `${getRandomRate()}`;
-      rateEl.classList.add("rate");
+    // rate
+    const rateEl = document.createElement("p");
+    rateEl.innerText = `${getRandomRate()}`;
+    rateEl.classList.add("rate");
 
-      // description
-      const descriptionEl = document.createElement("p");
-      descriptionEl.innerText = item[0].description + " ...";
-      descriptionEl.classList.add("description");
+    // description
+    const descriptionEl = document.createElement("p");
+    descriptionEl.innerText = item[0].description + " ...";
+    descriptionEl.classList.add("description");
 
-      // tags
-      const tagsEl = document.createElement("div");
-      tagsEl.classList.add("tags");
-      const tags = item[0].tags.map((i) => {
-        const tag = document.createElement("p");
-        tag.innerText = i;
-        tag.classList.add("tag");
-        tagsEl.append(tag);
-      });
+    // tags
+    const tagsEl = document.createElement("div");
+    tagsEl.classList.add("tags");
+    const tags = item[0].tags.map((i) => {
+      const tag = document.createElement("p");
+      tag.innerText = i;
+      tag.classList.add("tag");
+      tagsEl.append(tag);
+    });
 
-      // price
-      const priceEl = document.createElement("p");
-      priceEl.innerText = `${item[0].price}`;
-      priceEl.classList.add("price");
+    // price
+    const priceEl = document.createElement("p");
+    priceEl.innerText = `${item[0].price}`;
+    priceEl.classList.add("price");
 
-      // price Img
-      const priceImgEl = document.createElement("img");
-      priceImgEl.classList.add("priceImg");
+    // price Img
+    const priceImgEl = document.createElement("img");
+    priceImgEl.classList.add("priceImg");
 
-      // cart btn
-      const cartBtnEl = document.createElement("button");
-      cartBtnEl.classList.add("btn-ghost", "cart", "medium");
-      cartBtnEl.innerText = "장바구니 담기";
-      // cart info storage
-      cartBtnEl.addEventListener("click", () => {
-        if (AppStorage.accessTokenKey) {
-          AppStorage.setCartItem(item[0]);
-        } else {
-        }
-      });
+    // cart btn
+    const cartBtnEl = document.createElement("button");
+    cartBtnEl.classList.add("btn-ghost", "cart", "medium");
+    cartBtnEl.innerText = "장바구니 담기";
+    // cart info storage
+    cartBtnEl.addEventListener("click", () => {
+      if (AppStorage.accessTokenKey) {
+        AppStorage.setCartItem(item[0]);
+      } else {
+      }
+    });
 
-      // buy btn
-      const buyBtnEl = document.createElement("button");
-      buyBtnEl.classList.add("btn-outlined", "buy", "medium");
-      buyBtnEl.innerText = "구매하기";
-      // cart info storage
-      buyBtnEl.addEventListener("click", () => {
-        // ?id='...' => 해당 아이디로 결제
-        // ?from=cart => 장바구니에서 결제로
-        router.navigate(`order?id=${movieId}`);
-      });
+    // buy btn
+    const buyBtnEl = document.createElement("button");
+    buyBtnEl.classList.add("btn-outlined", "buy", "medium");
+    buyBtnEl.innerText = "구매하기";
+    // cart info storage
+    buyBtnEl.addEventListener("click", () => {
+      // ?id='...' => 해당 아이디로 결제
+      // ?from=cart => 장바구니에서 결제로
+      router.navigate(`order?id=${movieId}`);
+    });
 
-      page.append(
-        newImgEl,
-        titleEl,
-        starEl,
-        rateEl,
-        descriptionEl,
-        tagsEl,
-        priceEl,
-        priceImgEl,
-        buyBtnEl,
-        cartBtnEl
-      );
-    }
-  )();
+    page.append(
+      newImgEl,
+      titleEl,
+      starEl,
+      rateEl,
+      descriptionEl,
+      tagsEl,
+      priceEl,
+      priceImgEl,
+      buyBtnEl,
+      cartBtnEl
+    );
+  })();
   // chart
   page.innerHTML = `
   <div class="canvas">

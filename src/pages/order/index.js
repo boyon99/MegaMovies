@@ -124,6 +124,8 @@ async function render() {
   const inner = page.querySelector(".inner");
 
   const orderItems = await getOrderItems();
+  console.log("renderStart: ", { orderItems });
+  // debugger;
   formData.orderItems = orderItems.map((orderItem) => orderItem.id);
 
   console.log({ formData });
@@ -263,6 +265,7 @@ async function render() {
           (productId) => productId === orderProductId
         );
         localStorage.removeItem(`cart-${targetIndex}`);
+        router.navigate("order-history");
       }
     });
     payButton.classList.remove("loading");
@@ -504,6 +507,7 @@ async function getProduct(id) {
 }
 
 function getOrderCartItems() {
+  console.log(AppStorage.getCartItem());
   const cartItems = AppStorage.getCartItem().map(
     ([id, title, price, thumbnail, checked]) => ({
       id,
