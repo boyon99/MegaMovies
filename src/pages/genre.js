@@ -61,10 +61,10 @@ async function renderPage() {
       linkEl.dataset.navigo = "";
       linkEl.innerHTML = `
    <div class="genre-list">
-   <div class="genre">
+    <div class="genre-title">
      <span>${genre}</span>
     </div>
-    </div>`;
+  </div>`;
       genreWrapper.append(linkEl);
     });
 
@@ -112,7 +112,7 @@ function createMovieItemList(movieList) {
   const movieListEl = document.createElement("ul");
   movieListEl.classList.add("movie-list");
   const movieItemList = Array.from(movieList)
-    .slice(0, 4)
+    .slice(1, 5)
     .map((movie) =>
       createMovieItem({
         imgSrc: movie.thumbnail,
@@ -136,7 +136,9 @@ function createMovieItem({ imgSrc, title, id }) {
   linkEl.innerHTML = `
    <div class="wrapper">
       <span>${title}</span>
-      <img src=${imgSrc} />
+      <div class="img-wrapper">
+        <img src=${imgSrc} />
+      </div>
     </div>
   `;
 

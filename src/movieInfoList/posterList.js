@@ -147,6 +147,28 @@ export default posterMap = new Map([
     '크루엘라',
     'https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000084/84643/84643191125_727.jpg',
   ],
+  [
+    '내부자들',
+    'https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000078/78529/78529131147_727.jpg',
+  ],
+  [
+    '범죄와의 전쟁: 나쁜놈들 전성시대',
+    'https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000055/55851/5585189885_727.jpg',
+  ],
+  [
+    '토르: 러브 앤 썬더',
+    'https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000085/85999/85999204186_727.jpg',
+  ],
+  [
+    '이웃집 토토로',
+    'https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000081/81845/81845168067_727.jpg',
+  ],
+  [
+    '변호사',
+    'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FcBKyCN%2FbtrJ3adAGm6%2FcbJBf4blqcXPYJIJ5B0Ra0%2Fimg.jpg',
+  ],
+  [
+    '마루 밑 아리에티',
+    'https://img.cgv.co.kr/Movie/Thumbnail/StillCut/000039/39258/39258111371_727.jpg',
+  ]
 ])
-
-

@@ -1,7 +1,7 @@
 export default videoMap = new Map([
   [
     '국제시장',
-    'http://h.vod.cgv.co.kr/vodCGVa/83577/83577_181518_1200_128_960_540.mp4',
+    'http://h.vod.cgv.co.kr/vodCGVa/76955/76955_122543_1200_128_960_540.mp4',
   ],
   [
     '신과함께3 - 죄와 벌',
@@ -141,5 +141,25 @@ export default videoMap = new Map([
   [
     '크루엘라',
     'http://h.vod.cgv.co.kr/vodCGVa/84643/84643_191053_1200_128_960_540.mp4',
+  ],
+  [
+    '내부자들',
+    'http://h.vod.cgv.co.kr/vodCGVa/78529/78529_131681_1200_128_960_540.mp4',
+  ],
+  [
+    '범죄와의 전쟁: 나쁜놈들 전성시대',
+    'http://h.vod.cgv.co.kr/vodCGVa/55851/55851_94455_200_96_480_320.mp4',
+  ],
+  [
+    '토르: 러브 앤 썬더',
+    'http://h.vod.cgv.co.kr/vodCGVa/85999/85999_204192_1200_128_960_540.mp4',
+  ],
+  [
+    '이웃집 토토로',
+    'http://h.vod.cgv.co.kr/vodCGVa/81845/81845_166940_1200_128_960_540.mp4',
+  ],
+  [
+    '마루 밑 아리에티',
+    'http://h.vod.cgv.co.kr/vodCGVa/39258/39258_113389_1200_128_960_540.mp4',
   ],
 ])
