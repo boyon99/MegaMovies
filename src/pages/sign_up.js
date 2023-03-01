@@ -35,7 +35,7 @@ export const renderSignUpPage = function () {
         </div>
       </div>
       <div class="img-wrapper">
-        <div>프로필 이미지를 선택하세요(선택)</div>
+        <div>프로필 이미지를 선택하세요(선택)(1MB이하)</div>
         <input id="img" type="file" accept="image/*"/>
       </div>
       <button type="submit" class="btn-primary medium sign-up-btn">회원가입</button>
