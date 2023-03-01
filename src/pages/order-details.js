@@ -1,6 +1,9 @@
+import { me } from '../api/auth';
 import { getHistory } from '../api/getHistory'
 import posterMap from '../movieInfoList/posterList'
 import { AppStorage } from '../util'
+
+let user = null;
 
 const orderDetails = document.createElement('section')
 export default orderDetails
@@ -9,7 +12,10 @@ export default orderDetails
   const detailId = idRegex.exec(location.search)
 
   const item = await getHistory(detailId[0])
-  renderHistory(item)
+  getUserInfo().then(userInfo => {
+    user = userInfo;
+    renderHistory(item)
+  })
 })()
 
 orderDetails.className = 'order-details-section'
@@ -61,7 +67,7 @@ function renderHistory(item) {
 
         <div>
           <dt>구매자 아이디</dt>
-          <dd id="userId">${AppStorage.getCurrentUser()?.email}</dd>
+          <dd id="userId">${user?.email ?? ''}</dd>
         </div>
         
         <div>
@@ -85,4 +91,10 @@ function renderHistory(item) {
   `
 
   orderDetailsDiv.innerHTML = result
+}
+
+async function getUserInfo () {
+  const user = await me(AppStorage.getAccessToken());
+  
+  return user;
 }
