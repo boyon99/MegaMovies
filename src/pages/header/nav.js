@@ -19,8 +19,22 @@ navItemList.append(...createNavItems());
 const searchInput = document.createElement("input");
 searchInput.placeholder = "작품 또는 태그를 입력하세요";
 let value = "";
-searchInput.addEventListener('input',(e)=>{
+searchInput.addEventListener('input', (e) => {
   value = searchInput.value
+})
+
+searchInput.addEventListener('focusin', (e) => {
+  searchBtn.classList.toggle("focus")
+  setTimeout(() => {
+    searchInput.classList.toggle("focus")
+  }, 120);
+})
+
+searchInput.addEventListener('focusout', (e) => {
+  searchBtn.classList.toggle("focus")
+  setTimeout(() => {
+    searchInput.classList.toggle("focus")
+  }, 120);
 })
 
 searchInput.addEventListener('keydown', event => {
@@ -34,10 +48,10 @@ searchInput.addEventListener('keydown', event => {
 const searchBtn = document.createElement("button")
 searchBtn.classList.add('search', 'btn-primary')
 searchBtn.innerText = "검색"
-searchBtn.addEventListener('click',()=>{
-  if(value.length === 0){
-    
-  }else{
+searchBtn.addEventListener('click', () => {
+  if (value.length === 0) {
+
+  } else {
     router.navigate(`/search/${value}`)
   }
 })

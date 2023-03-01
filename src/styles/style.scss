@@ -206,12 +206,12 @@ body {
       font-size: 12px;
     }
 
-    &:focus {
+    &.focus {
       border-color: $color--highlight;
     }
   }
 
-  button{
+  button {
     width: 50px;
     height: 33px;
     color: #000;
@@ -219,7 +219,11 @@ body {
     border-bottom-left-radius: 0px;
     border-top-left-radius: 0px;
     border: 1px solid #000;
+    border-left: none;
     color: #fff;
+    &.focus {
+      border-color: $color--highlight;
+    }
   }
 }
 
