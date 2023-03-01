@@ -112,7 +112,7 @@ function createMovieItemList(movieList) {
   const movieListEl = document.createElement("ul");
   movieListEl.classList.add("movie-list");
   const movieItemList = Array.from(movieList)
-    .slice(0, 4)
+    .slice(1, 5)
     .map((movie) =>
       createMovieItem({
         imgSrc: movie.thumbnail,
