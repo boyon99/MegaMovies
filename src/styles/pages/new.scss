@@ -19,6 +19,7 @@
     color: #fff;
     position: relative;
     cursor: pointer;
+    display: block;
   }
   img {
     width: 120px;
@@ -74,5 +75,29 @@
     height: 17px;
     top: 135.5px;
     left: 180px;
+  }
+  .tags {
+    position: absolute;
+    top: 140px;
+    display: flex;
+    left: 130px;
+    z-index: -1;
+    height: auto;
+
+    .tag {
+      margin-right: 10px;
+      width: auto;
+      height: auto;
+      background: rgb(203, 77, 127);
+      background: linear-gradient(
+        159deg,
+        rgba(203, 77, 127, 1) 0%,
+        rgba(251, 79, 147, 1) 100%
+      );
+      border-radius: 10px;
+      padding: 4px 10px;
+      font-size: 10px;
+      text-align: center;
+    }
   }
 }

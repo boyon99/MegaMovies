@@ -100,7 +100,12 @@
           margin-right: 10px;
           width: auto;
           height: auto;
-          background-color: #fb4f93;
+          background: rgb(203, 77, 127);
+          background: linear-gradient(
+            159deg,
+            rgba(203, 77, 127, 1) 0%,
+            rgba(251, 79, 147, 1) 100%
+          );
           border-radius: 10px;
           padding: 4px 10px;
           font-size: 10px;
