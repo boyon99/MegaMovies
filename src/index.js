@@ -120,7 +120,6 @@ router
         autoplay: {
           delay: 4000
         },
-        loop: true
       });
     },
     "/ranking": (match) => {

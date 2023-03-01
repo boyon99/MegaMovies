@@ -79,7 +79,7 @@ function renderItems(items) {
     .map((item, index) => {
       index++
       const setIndex = index > 4 ? index -= 1 : index
-      if (index > 10) return
+      if (index > 11) return
       if (item.title === '변호사') return
       return /* html */ `
       <a class="swiper-slide" href="/movie/${item.id}" data-navigo>
