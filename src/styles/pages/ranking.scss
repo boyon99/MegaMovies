@@ -37,10 +37,11 @@
         position: absolute;
         bottom: -20px;
         left: 0;
-        color: #fb4f93;
+        background: linear-gradient(to right, #fb4f93, #b9376b);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         font-size: 70px;
-        text-shadow: 5px -5px 1px #7f7d7d;
-        transition: transform 200ms ease-in-out;
+        font-weight: 900;
       }
     }
   }
