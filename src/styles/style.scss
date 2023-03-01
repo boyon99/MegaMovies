@@ -10,6 +10,7 @@
 @import url("./pages/login.scss");
 @import url("./pages/bank.scss");
 @import url("./pages/movie.scss");
+@import url("./pages/sign_up.scss");
 @import url("./pages/cart.scss");
 @import url("./pages/search.scss");
 @import url("./pages/user_info.scss");
@@ -211,7 +212,7 @@ body {
     }
   }
 
-  button{
+  button {
     width: 50px;
     height: 33px;
     color: #000;

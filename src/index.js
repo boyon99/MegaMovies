@@ -11,8 +11,10 @@ import moviePage from "./pages/movie";
 import { logout, me } from "./api/auth";
 import { AppStorage } from "./util";
 import { genreDetailPage } from "./pages/genre_detail";
+import { loginPage } from "./pages/login";
+import { renderSignUpPage } from "./pages/sign_up";
 import cart from "./pages/cart";
-import searchPage from "./pages/search"
+import searchPage from "./pages/search";
 import userInfoPage from "./pages/user-info";
 import footer from "./pages/footer";
 import { notFoundPage } from "./pages/not_found";
@@ -139,7 +141,10 @@ router
           renderPage의 매개변수(인자)로 로그인 페이지 요소만 전달해주세요
           예시) renderPage(loginPage)
       */
-      renderPage(document.createTextNode("로그인 페이지"));
+      renderPage([
+        header({ isContainNav: false, isContainProfileArea: false }),
+        loginPage(),
+      ]);
     },
     "/signup": () => {
       /*
@@ -148,7 +153,10 @@ router
           renderPage의 매개변수(인자)로 회원가입 페이지 요소만 전달해주세요
           예시) renderPage(signUpPage)
       */
-      renderPage(document.createTextNode("회원가입 페이지"));
+      renderPage([
+        header({ isContainNav: false, isContainProfileArea: false }),
+        renderSignUpPage(),
+      ]);
     },
     "/logout": async (match) => {
       // 로그아웃
@@ -202,14 +210,14 @@ router
       /*
         임시 요소인 document.createTextNode를 지우시고, 해당 페이지 요소로 렌더링 되도록 구현해주세요
       */
-      renderPage([header(),cart()]);
+      renderPage([header(), cart()]);
     },
     "/order": (match) => {
       // 결제 페이지
       /*
         임시 요소인 document.createTextNode를 지우시고, 해당 페이지 요소로 렌더링 되도록 구현해주세요
       */
-     console.log(match)
+      console.log(match);
       renderPage([header(), document.createTextNode("결제")]);
     },
     "/order-history": (match) => {
@@ -228,8 +236,8 @@ router
     },
     "/search/:id": ({ data, match }) => {
       //검색 페이지
-        const movieId = data?.id;
-        renderPage([header({ user: match?.user }), searchPage(movieId)]);
+      const movieId = data?.id;
+      renderPage([header({ user: match?.user }), searchPage(movieId)]);
     },
   })
   .notFound((match) => {
