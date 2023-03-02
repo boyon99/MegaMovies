@@ -64,6 +64,15 @@ $bg--skeleton2: #4cd71e
       margin-bottom: 40px;
       color: colors.$color--font;
     }
+    .order__empty {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      font-size: 22px;
+      font-weight: bold;
+      height: 500px;
+    }
     .user-info {
       // 결제 유저 정보
       display: flex;
@@ -101,7 +110,6 @@ $bg--skeleton2: #4cd71e
       background-color: #fff;
       padding: 8px 16px;
       box-sizing: border-box;
-      // overflow: auto;
       .order-product {
         display: flex;
         justify-content: space-between;

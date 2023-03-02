@@ -3,19 +3,8 @@ import BankAPI from "../../api/bank";
 import PaymentAPI from "../../api/payment";
 import { AppStorage } from "../../util";
 import { bankLogoImgMap } from "../bank/bankLogoMap";
-import { CustomModalOpenEvent } from "../bank/bankModal";
 import { renderToast } from "../bank/toast";
 import { openAddAccountModal } from "./orderModal";
-
-/*
- *  [TODOS]
- *  1. 주문상품 확인
- *    - 주문자 정보
- *    - 상품 정보
- *    - 결제 수단
- *    - 결제 금액
- *  2. 결제 확인
- */
 
 const formData = {
   orderItems: [],
@@ -118,25 +107,20 @@ const orderPage = () => {
 export default orderPage;
 
 async function render() {
-  console.log("[render]");
-
   const page = this;
   const inner = page.querySelector(".inner");
 
   const orderItems = await getOrderItems();
-  console.log("renderStart: ", { orderItems });
-  // debugger;
+  if (!orderItems) {
+    inner.replaceChildren(createEmptyContent());
+    return;
+  }
+
   formData.orderItems = orderItems.map((orderItem) => orderItem.id);
 
-  console.log({ formData });
   const userBankList = await bankAPI.getUserBankAccountList({
     accessToken: AppStorage.getAccessToken(),
   });
-
-  if (!orderItems) {
-    //
-    return;
-  }
 
   const totalPrice = orderItems
     .map((product) => product.price)
@@ -257,15 +241,8 @@ async function render() {
         accountId: formData.accountId,
       });
 
-      if (
-        paymentResult === true &&
-        router.getCurrentLocation().url === "orders"
-      ) {
-        const targetIndex = formData.orderItems.findIndex(
-          (productId) => productId === orderProductId
-        );
-        localStorage.removeItem(`cart-${targetIndex}`);
-        router.navigate("order-history");
+      if (paymentResult === true) {
+        clearCart();
       }
     });
     payButton.classList.remove("loading");
@@ -275,68 +252,6 @@ async function render() {
   payButton.addEventListener("click", handlePayBtnClick);
 
   inner.append(checkWrapper, payButton);
-}
-
-function openOrderConfirmModal(orderList) {
-  const modalContent = createOrderModalContent(orderList);
-
-  const modalProps = {
-    title: "결제 진행",
-    content: modalContent,
-    submitBtnText: "결제",
-    cancelBtnText: "결제 취소",
-  };
-
-  const modalEvent = {
-    onSubmit,
-    onCancel,
-    onAfter,
-  };
-
-  window.dispatchEvent(
-    CustomModalOpenEvent({
-      ...modalProps,
-      ...modalEvent,
-    })
-  );
-
-  async function onSubmit() {
-    // 결제 진행
-    console.log("[TODO] 결제 진행");
-  }
-
-  async function onCancel() {
-    // 결제 취소
-    console.log("[TODO] 결제 취소");
-  }
-
-  async function onAfter() {
-    // 결제 완료 이후
-    console.log("[TOOD] 결제 완료");
-  }
-}
-
-function createOrderModalContent(orderList) {
-  const orderModalContent = document.createElement("div");
-  orderModalContent.className = "order-modal-content";
-
-  // const orderProductMap = Array.from(orderList).map((orderProduct) => {
-  //   const [id, title, price, thumbnail, checked] = orderProduct.split(",");
-  //   return {
-  //     id,
-  //     title,
-  //     price: Number(price),
-  //     thumbnail,
-  //     checked: Boolean(checked === "true" ? true : false),
-  //   };
-  // });
-  const orderProductMap = AppStorage.getCartItem();
-
-  const productList = createProductList(orderProductMap);
-
-  orderModalContent.append(productList);
-
-  return orderModalContent;
 }
 
 // 상품 요소 생성
@@ -384,10 +299,8 @@ function createProduct({ id, title, price, thumbnail }) {
   return orderProduct;
 }
 
+// 계좌 생성
 export function createBankList(userBankList) {
-  console.log("%c[create bankList]", "background-color: #6203fc; color: #fff");
-  console.log({ userBankList });
-
   const bankListWrapper = document.createElement("div");
   bankListWrapper.className = "payment-banks";
 
@@ -444,6 +357,7 @@ export function createBankList(userBankList) {
   return bankListWrapper;
 }
 
+// 아코디언 생성
 function createAccordion({ title, content }) {
   const accordion = document.createElement("div");
   accordion.className = "page__accordion";
@@ -477,14 +391,14 @@ function createAccordion({ title, content }) {
   return accordion;
 }
 
-async function getOrderItems() {
-  switch (router.getCurrentLocation().url) {
-    case "order":
-      const product = await getProduct(router.getCurrentLocation().params?.id);
-      return !product ? null : [product.id];
-    case "orders":
-      return getOrderCartItems();
-  }
+//
+function createEmptyContent() {
+  const emptyContent = document.createElement("div");
+  emptyContent.classList = "order__empty";
+
+  emptyContent.textContent = "주문 상품을 찾을 수 없습니다.";
+
+  return emptyContent;
 }
 
 async function getProduct(id) {
@@ -506,17 +420,79 @@ async function getProduct(id) {
   return product;
 }
 
-function getOrderCartItems() {
-  console.log(AppStorage.getCartItem());
-  const cartItems = AppStorage.getCartItem().map(
-    ([id, title, price, thumbnail, checked]) => ({
-      id,
-      title,
-      price: Number(price),
-      thumbnail,
-      checked: checked === "true" ? true : false,
-    })
-  );
+// cart
+async function getOrderItems() {
+  switch (router.getCurrentLocation().url) {
+    case "order":
+      const product = await getProduct(router.getCurrentLocation().params?.id);
+      return !product ? null : [product.id];
+    case "cart":
+    case "orders":
+      return getOrderCartItems();
+  }
+}
 
-  return cartItems;
+function getOrderCartItems() {
+  const cartProductList = getCart();
+  if (!cartProductList) return null;
+
+  const selectedCartProductList = cartProductList.filter(
+    (cartProduct) => cartProduct.checked
+  );
+  if (selectedCartProductList.length === 0) return null;
+
+  return selectedCartProductList;
+}
+
+function getCart() {
+  const storageSize = localStorage.length;
+  if (localStorage.length === 0) return null;
+  const cartProductList = [];
+  Array.from({ length: storageSize }).forEach((_, index) => {
+    const key = localStorage.key(index);
+    if (key.includes("cart-")) {
+      const [id, title, price, thumbnail, checked] = localStorage
+        .getItem(key)
+        .split(",");
+      const cartProduct = {
+        cartKey: key,
+        id,
+        title,
+        price: Number(price),
+        thumbnail,
+        checked: checked === "true" ? true : false,
+      };
+
+      cartProductList.push(cartProduct);
+    }
+  });
+
+  return cartProductList;
+}
+
+export function unsetCartChecked() {
+  const cartProductList = getCart();
+  if (!cartProductList) return;
+
+  cartProductList
+    .filter((cartProduct) => cartProduct.checked)
+    .forEach((selectedCartProduct) => {
+      const unsetTargetCartStorageItem = localStorage
+        .getItem(selectedCartProduct.cartKey)
+        .split(",");
+
+      unsetTargetCartStorageItem[unsetTargetCartStorageItem.length - 1] = false;
+      const unsetedItem = unsetTargetCartStorageItem.join(",");
+
+      localStorage.setItem(selectedCartProduct.cartKey, unsetedItem);
+    });
+}
+
+function clearCart() {
+  const cartProductList = getCart();
+  if (!cartProductList) return;
+
+  cartProductList.forEach((cartProduct) => {
+    localStorage.removeItem(cartProduct.cartKey);
+  });
 }

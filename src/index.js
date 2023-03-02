@@ -8,7 +8,7 @@ import newPage from "./pages/new";
 import bankPage from "./pages/bank";
 import header from "./pages/header";
 import moviePage from "./pages/movie";
-import orderPage from "./pages/order";
+import orderPage, { unsetCartChecked } from "./pages/order";
 import { logout, me } from "./api/auth";
 import { AppStorage } from "./util";
 import { genreDetailPage } from "./pages/genre_detail";
@@ -260,6 +260,11 @@ router
     renderPage([header(), notFoundPage]);
   })
   .resolve();
+
+router.addLeaveHook("/orders", (done) => {
+  unsetCartChecked();
+  done();
+});
 
 function renderPage(page) {
   app.replaceChildren();
