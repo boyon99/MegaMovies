@@ -8,11 +8,13 @@ export const renderSignUpPage = function () {
   signUpPage.classList.add("sign-up-page");
   signUpPage.innerHTML = `
   <div class="inner">
-    <div class="greeting">메가무비스에 오신 것을 환영합니다!</div>
+    <div class="greeting">회원가입</div>
     <div class="greeting-2">회원이 되어 다양한 영화를 탐험하고 시청해 보세요.</div>
+    <div class="greeting-3"><span>*</span>필수입력사항</div>
     <form>
       <div class="container">
         <div class="id-wrapper">
+        <div class="important">*</div>
           <div class="input-err-container">
            <input placeholder="아이디" class="user-id" id="user-id"></input>
             <span class="error-message one"></span>
@@ -20,6 +22,7 @@ export const renderSignUpPage = function () {
           <button type="button" class="db-check medium btn-ghost">중복확인</button>
         </div>
         <div class="password-wrapper">
+        <div class="important">*</div>
           <div class="input-err-container">
            <input type="password" class="password" id="password" placeholder="비밀번호" autoComplete="off"></input>
            <span class="error-message"></span>
@@ -30,13 +33,14 @@ export const renderSignUpPage = function () {
           </div>
       </div>
       <div class="name-wrapper">
+      <div class="important">*</div>
         <div class="input-err-container">
           <input class="name" id="name" placeholder="이름"></input>
           <span class="error-message"></span>
         </div>
       </div>
       <div class="img-wrapper">
-        <div>프로필 이미지를 선택하세요 (선택)</div>
+        <div>프로필 이미지를 선택하세요</div>
         <span>1mb 이하의 이미지를 업로드하세요.</span>
         <input id="img" type="file" accept="image/*" />
       </div>

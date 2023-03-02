@@ -18,6 +18,19 @@ $top-position: 100px;
       color: #d4d4d4;
       margin-top: 5px;
     }
+    .greeting-3 {
+      color: #fff;
+      font-size: 12px;
+      position: absolute;
+      top: 95px;
+      left: 640px;
+
+      span {
+        font-size: 12px;
+        color: #fb4f93;
+        margin-right: 5px;
+      }
+    }
     div.container {
       position: absolute;
       top: 50%;
@@ -31,14 +44,22 @@ $top-position: 100px;
       justify-content: space-between;
       padding: 20px;
       font-size: 20px;
-      background-color: rgba(#a19e9e, 0.2);
-      border-radius: 5px;
+      border-top: 2px solid #fff;
+      .important {
+        position: absolute;
+        color: #fb4f93;
+        font-size: 12px;
+      }
       .id-wrapper {
         width: 500px;
         display: flex;
         position: absolute;
         left: $left--margin - 89px;
         justify-content: space-around;
+        .important {
+          left: 90px;
+          top: -10px;
+        }
       }
       .password-wrapper {
         position: absolute;
@@ -46,6 +67,10 @@ $top-position: 100px;
         left: $left--margin;
         display: flex;
         flex-direction: column;
+        .important {
+          top: -5px;
+          left: 1px;
+        }
         .password {
           margin: 0px 10px 10px 10px;
         }
@@ -59,6 +84,9 @@ $top-position: 100px;
         left: $left--margin;
         display: flex;
         flex-direction: column;
+        .important {
+          left: 2px;
+        }
         .name {
           margin: 10px 10px 10px 10px;
         }
@@ -102,7 +130,7 @@ $top-position: 100px;
       width: 300px;
       height: 40px;
       color: #fff;
-      background-color: transparent;
+      background-color: rgba($color: #081025, $alpha: 0.3);
       border: 1px solid rgba($color: #fff, $alpha: 0.5);
       text-indent: 10px;
       &#img {
