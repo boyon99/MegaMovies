@@ -79,7 +79,7 @@ const cart = () => {
       } else {
         inner.children[i].children[0].checked = true;
         sum += +items[inner.children[i].children[0].id][2];
-        allPriceEl.innerText = "0원";
+        allPriceEl.innerText = `${sum}` + "원";
       }
     }
   });
@@ -132,6 +132,7 @@ const cart = () => {
   let allPriceText = document.createElement("p");
   allPriceText.classList.add("allPriceText");
   allPriceText.innerText = "총 결제 금액";
+  let sum = 0
   allPriceEl.innerText = `${sum}` + "원";
 
   // checkbox event
