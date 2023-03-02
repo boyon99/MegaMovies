@@ -114,6 +114,8 @@ body {
       align-items: center;
       gap: 8px;
       color: $color--font;
+      font-size: 14px;
+      font-weight: bold;
       .user-name {
         display: inline-block;
         vertical-align: top;
@@ -123,6 +125,8 @@ body {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+        text-align: end;
+        font-weight: normal;
       }
     }
     .my-menu {
