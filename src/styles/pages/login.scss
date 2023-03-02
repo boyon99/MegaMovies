@@ -9,7 +9,7 @@
 .log-in {
   .inner {
     width: 800px;
-    height: 100vh;
+    height: 700px;
     margin: 0 auto;
     background: colors.$color--bg;
     display: flex;
@@ -17,33 +17,45 @@
     align-items: center;
     position: relative;
     .title {
-      margin: 10px;
       font-size: 36px;
+    }
+    .title-2 {
+      color: #d4d4d4;
     }
     .container {
       @include center();
       display: flex;
-      width: 450px;
+      width: 500px;
       height: 300px;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      border: 1px solid #fff;
-      border-radius: 10px;
       padding: 20px;
+      margin-top: -80px;
+      background-color: rgba(#a19e9e, 0.2);
+      border-radius: 5px;
       .id-pw-wrapper {
         label {
-          font-size: 20px;
+          font-size: 16px;
           color: #fff;
-          margin-right: 100px;
+          margin-right: 20px;
           display: flex;
+          width: 100px;
+          margin-bottom: 5px;
           align-items: center;
         }
         input {
           font-size: 14px;
           margin-bottom: 10px;
-          width: 250px;
+          width: 300px;
           height: 40px;
+          background-color: transparent;
+          border: 1px solid rgba($color: #fff, $alpha: 0.5);
+          text-indent: 10px;
+          color: #fff;
+          &:focus {
+            border: 1px solid rgba($color: #fb4f93, $alpha: 0.5);
+          }
         }
         div {
           display: flex;
@@ -51,19 +63,35 @@
         }
       }
       .btn-wrapper {
-        margin-top: 50px;
+        margin-top: 30px;
         display: flex;
         flex-direction: column;
+        height: 100px;
         button {
           width: 300px;
+          height: 50px;
           cursor: pointer;
         }
         .login-btn.btn-primary {
-          height: 50px;
+          height: 40px;
           margin-bottom: 10px;
+          margin-top: 25px;
         }
-        .signup-btn.btn-secondary {
-          height: 30px;
+        .signup-btn {
+          font-weight: 500;
+          height: 20px;
+          color: #fff;
+          cursor: pointer;
+          span {
+            color: #fb4f93;
+            margin-right: 5px;
+          }
+          &:hover {
+            font-weight: normal;
+            span {
+              font-weight: normal;
+            }
+          }
         }
       }
     }
