@@ -74,7 +74,7 @@
         appearance: none;
         background-color: #fff;
         border: 1px solid colors.$color--highlight;
-        border-radius: 3px;
+        border-radius: 50%;
         transition: background-color 0.3s, border-radius 0.3s;
         &:checked {
           background-color: colors.$color--highlight;

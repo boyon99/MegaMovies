@@ -1,4 +1,4 @@
-$left--margin: 55px;
+$left--margin: 100px;
 $top-position: 100px;
 @use "../constants/colors" as colors;
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css");
@@ -14,74 +14,159 @@ $top-position: 100px;
     .greeting {
       font-size: 36px;
     }
+    .greeting-2 {
+      color: #d4d4d4;
+      margin-top: 5px;
+    }
+    .greeting-3 {
+      color: #fff;
+      font-size: 12px;
+      position: absolute;
+      top: 95px;
+      left: 640px;
+
+      span {
+        font-size: 12px;
+        color: #fb4f93;
+        margin-right: 5px;
+      }
+    }
     div.container {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       width: 500px;
-      height: 420px;
+      height: 430px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      border: 1px solid #fff;
-      border-radius: 10px;
       padding: 20px;
       font-size: 20px;
+      border-top: 2px solid #fff;
+      .important {
+        position: absolute;
+        color: #fb4f93;
+        font-size: 12px;
+      }
       .id-wrapper {
         width: 500px;
         display: flex;
+        position: absolute;
+        left: $left--margin - 89px;
         justify-content: space-around;
+        .important {
+          left: 90px;
+          top: -10px;
+        }
       }
       .password-wrapper {
         position: absolute;
-        top: $top-position;
+        top: $top-position - 15px;
         left: $left--margin;
         display: flex;
         flex-direction: column;
+        .important {
+          top: -5px;
+          left: 1px;
+        }
         .password {
-          margin: 10px;
+          margin: 0px 10px 10px 10px;
         }
         .password-check {
-          margin: 10px;
+          margin: 0px 10px 10px 10px;
         }
       }
       .name-wrapper {
         position: absolute;
-        top: $top-position * 2.3;
+        top: $top-position * 2;
         left: $left--margin;
         display: flex;
         flex-direction: column;
+        .important {
+          left: 2px;
+        }
         .name {
-          margin: 10px;
+          margin: 10px 10px 10px 10px;
         }
       }
       .img-wrapper {
-        margin: 10px;
+        margin: 10px 10px 10px 10px;
         position: absolute;
-        top: $top-position * 3;
+        top: $top-position * 2.7;
         left: $left--margin;
         font-size: 16px;
+        span {
+          color: #d4d4d4;
+          font-size: 12px;
+          position: absolute;
+        }
       }
     }
-    .btn-primary.medium.sign-up-btn {
-      position: absolute;
-      top: $top-position * 4;
-      left: $left--margin * 4;
-    }
+
     button {
       cursor: pointer;
     }
     .error-message {
       color: colors.$color--highlight;
+      margin-top: -8px;
+      text-indent: 10px;
+      &.one {
+        text-indent: 0px;
+      }
     }
     .input-err-container {
       display: flex;
       flex-direction: column;
+      margin-left: 0px;
       .error-message {
-        font-size: 14px;
+        font-size: 12px;
       }
+    }
+    input {
+      font-size: 14px;
+      margin-bottom: 10px;
+      width: 300px;
+      height: 40px;
+      color: #fff;
+      background-color: rgba($color: #081025, $alpha: 0.3);
+      border: 1px solid rgba($color: #fff, $alpha: 0.5);
+      text-indent: 10px;
+      &#img {
+        border: none;
+        position: absolute;
+        width: 300px;
+        height: 30px;
+        left: 0px;
+        text-indent: 5px;
+        overflow: hidden;
+        border: 1px solid rgba($color: #fff, $alpha: 0.5);
+        margin-top: 25px;
+        padding-top: 6px;
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: 100;
+      }
+      &:focus {
+        border: 1px solid rgba($color: #fb4f93, $alpha: 0.5);
+      }
+    }
+    .db-check {
+      position: absolute;
+      height: 43px;
+      right: -10px;
+      border: 1px solid rgba($color: #fff, $alpha: 0.5);
+      border-radius: 0%;
+      &:hover {
+        border: none;
+      }
+    }
+    .sign-up-btn {
+      width: 303px;
+      position: absolute;
+      bottom: 30px;
+      left: $left--margin + 10px;
     }
   }
 }

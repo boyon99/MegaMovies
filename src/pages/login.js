@@ -7,21 +7,20 @@ export const loginPage = () => {
   const loginPage = document.createElement("div");
   loginPage.classList.add("log-in");
   loginPage.innerHTML = `<div class="inner">
-  <div class="title">MEGA MOVIES 로그인</div>
+  <div class="title">로그인</div>
+  <div class="title-2">지금 바로 메가무비스에서 다양한 영화를 시청해보세요.</div>
   <form class="container">
     <div class="id-pw-wrapper">
       <div>
-      <label for="id-input">아이디</label>
       <input type="email" id="id-input" placeholder="이메일 주소를 입력하세요" />
       </div>
       <div>
-      <label for="pw-input">비밀번호</label>
       <input type="password" id="pw-input" placeholder="비밀번호를 입력하세요" />
       </div>
     </div>
     <div class="btn-wrapper">
     <button class="login-btn btn-primary">로그인</button>
-    <button class="signup-btn btn-secondary">회원가입하러가기</button>
+    <button class="signup-btn"><span>아직 회원이 아닙니까?</span>회원가입하기</button>
     </div>
   </form>
 </div>`;

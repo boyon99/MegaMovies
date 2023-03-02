@@ -72,7 +72,9 @@ const moviePage = (movieId) => {
 
     // price
     const priceEl = document.createElement("p");
-    priceEl.innerText = `${item[0].price}`;
+    priceEl.innerText = `${parseInt(item[0].price / 1000)},${
+      item[0].price % 1000 === 0 ? "000" : item[0].price % 1000
+    }`;
     priceEl.classList.add("price");
 
     // price Img
