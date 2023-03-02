@@ -1,5 +1,7 @@
 import { router } from '..'
 import { AppStorage } from '../util'
+import { renderToast } from "./bank/toast";
+
 let sum = 0
 
 // cartpage 
@@ -167,7 +169,11 @@ const cart = () => {
     if (noCheck) {
       router.navigate(`/orders`)
     } else {
-      alert("선택된 항목이 없습니다.")
+      renderToast({
+        message: "선택한 상품이 없습니다. 구매하실 상품을 선택해주세요.",
+        type: "error",
+        autoUnmount: 2500,
+      });
     }
   })
 
