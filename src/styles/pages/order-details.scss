@@ -1,9 +1,17 @@
 .order-details-section {
-  margin: 140px 0 40px;
+  margin: 200px 0 40px;
 
   h2 {
-    margin-bottom: 40px;
+    position: absolute;
+    top: 130px;
+    left: 0;
+    width: 100%;
     text-align: center;
+    font-weight: 700;
+    font-size: 32px;
+    background: linear-gradient(to right, #fff, #d2cacd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .order-details {
@@ -66,7 +74,7 @@
           font-size: 10px;
           background-color: #fb4f93;
           border-radius: 4px;
-          
+
           &:last-child {
             margin-right: 0;
           }
@@ -81,7 +89,7 @@
 
     .order-details-user {
       padding-top: 18px;
-      
+
       dl {
         display: inline-block;
       }

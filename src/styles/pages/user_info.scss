@@ -16,20 +16,24 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  margin-top: 50px;
   width: 700px;
-  height: 520px;
+  height: 460px;
   border: #fb4f93 solid 1px;
   border-radius: 40px;
   box-shadow: 0px 0px 8px 1px #fb4f93;
   background-color: rgba(#fb4f93, 0.15);
   .title {
-    width: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 12px;
-    font-size: 20px;
+    position: absolute;
+    top: 100px;
+    left: 0;
+    width: 100%;
+    text-align: center;
     font-weight: 700;
+    font-size: 32px;
+    background: linear-gradient(to right, #fff, #d2cacd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 }
 
