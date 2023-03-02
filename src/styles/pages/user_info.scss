@@ -21,12 +21,15 @@
   border: #fb4f93 solid 1px;
   border-radius: 40px;
   box-shadow: 0px 0px 8px 1px #fb4f93;
+  background-color: rgba(#fb4f93, 0.15);
   .title {
     width: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 12px;
+    font-size: 20px;
+    font-weight: 700;
   }
 }
 
