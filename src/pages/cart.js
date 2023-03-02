@@ -37,6 +37,17 @@ const cart = () => {
     checkboxEl.classList.add("checkbox", `checkbox-${index}`);
     checkboxEl.id = `${index}`;
 
+
+    // checkbox event
+    checkboxEl.addEventListener("change", (e) => {
+      if (e.target.checked) {
+        sum += +items[inner.children[`${index}`].children[0].id][2];
+        allPriceEl.innerText = `${sum}` + "원";
+      } else {
+        sum -= +items[inner.children[`${index}`].children[0].id][2];
+        allPriceEl.innerText = `${sum}` + "원";
+      }
+    });
     let imgEl = document.createElement("img");
     imgEl.src = i[3];
 
@@ -135,18 +146,6 @@ const cart = () => {
   let sum = 0
   allPriceEl.innerText = `${sum}` + "원";
 
-  // checkbox event
-  for (let i = 0; i < inner.children.length; i++) {
-    inner.children[i].children[0].addEventListener("change", (e) => {
-      if (e.target.checked) {
-        sum += +items[inner.children[i].children[0].id][2];
-        allPriceEl.innerText = `${sum}` + "원";
-      } else {
-        sum -= +items[inner.children[i].children[0].id][2];
-        allPriceEl.innerText = `${sum}` + "원";
-      }
-    });
-  }
 
   // buy btn
   buyBtn = document.createElement("button");
