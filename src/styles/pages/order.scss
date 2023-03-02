@@ -1,0 +1,425 @@
+@use "../constants/colors" as colors;
+
+@keyframes order-skeleton {
+  to {
+    background-position-x: -20%;
+  }
+}
+
+$bg--skeleton: #e4e6e8
+  linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0) 60%
+  );
+$bg--skeleton2: #4cd71e
+  linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0.5) 50%,
+    rgba(255, 255, 255, 0) 60%
+  );
+
+.order-page {
+  color: #000;
+  $background-order: linear-gradient(
+    to right bottom,
+    #081229,
+    #091834,
+    #0a1c3f,
+    #0c214b,
+    #0f2657,
+    #0f265c,
+    #102761,
+    #122766,
+    #112365,
+    #121e64,
+    #131962,
+    #151360
+  );
+  .block-format {
+    display: inline-block;
+    vertical-align: top;
+    padding: 4px 8px;
+    border-radius: 8px;
+    background-color: #eee;
+    color: colors.$color--highlight;
+    font-weight: bold;
+    margin-right: 8px;
+    box-sizing: border-box;
+  }
+  // 주문 페이지
+  .inner {
+    margin-top: 150px;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #061940;
+    & > .title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 40px;
+      color: colors.$color--font;
+    }
+    .order__empty {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      font-size: 22px;
+      font-weight: bold;
+      height: 500px;
+    }
+    .user-info {
+      // 결제 유저 정보
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background-color: #fff;
+      overflow: hidden;
+      &__display {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        .profile {
+          flex-grow: 0;
+          flex-shrink: 0;
+          display: block;
+          width: 100px;
+          height: 100px;
+          margin-right: 4px;
+          border-radius: 50%;
+          overflow: hidden;
+          img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+      }
+      .name {
+        font-size: 18px;
+        font-weight: bold;
+      }
+    }
+    .order-product-list {
+      background-color: #fff;
+      padding: 8px 16px;
+      box-sizing: border-box;
+      .order-product {
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 8px;
+        margin-bottom: 16px;
+        border-bottom: 1px solid #eee;
+        .photo {
+          width: 80px;
+          height: 80px;
+          overflow: hidden;
+          img {
+            display: block;
+            width: 100%;
+            object-fit: cover;
+          }
+        }
+        .product-info {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          flex-grow: 1;
+          flex-shrink: 0;
+          margin-left: 16px;
+          box-sizing: border-box;
+          .title {
+          }
+          .price {
+            font-size: 20px;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+    .payment-banks {
+      height: 250px;
+      box-sizing: border-box;
+      padding: 20px;
+      .bank-list {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        height: 100%;
+        padding-left: 20px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        &::-webkit-scrollbar {
+          appearance: none;
+          height: 10px;
+        }
+        &::-webkit-scrollbar-track {
+          background-color: #eee;
+          border-radius: 8px;
+        }
+        &::-webkit-scrollbar-thumb {
+          background-color: #d5d5d5;
+          border-radius: 8px;
+        }
+        .add-bank {
+          flex-shrink: 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          background-color: transparent;
+          transition: background-color 0.2s;
+          border: 2px dashed rgb(103, 224, 103);
+          width: 200px;
+          height: 50%;
+          &:hover {
+            background-color: rgb(103, 224, 103);
+            color: #fff;
+            cursor: pointer;
+            & > * {
+              cursor: pointer;
+            }
+            .btn--add-bank {
+              color: rgb(103, 224, 103);
+              background-color: #fff;
+            }
+          }
+          .btn--add-bank {
+            min-width: unset;
+            width: 20px;
+            height: 20px;
+            border-radius: 100%;
+            background-color: rgb(103, 224, 103);
+            &:hover {
+              background-color: rgb(103, 224, 103);
+            }
+          }
+        }
+        .bank-input-wrapper {
+          input {
+            appearance: none;
+            display: none;
+            &:checked + .bank {
+              transform: translateY(0);
+              &::before {
+                position: absolute;
+                content: "";
+                width: 100%;
+                height: 100%;
+                padding: 10px;
+                transform: translate(-10px, -10px);
+                opacity: 0.2;
+                background-color: #aca8accc;
+                left: 0;
+                top: 0;
+              }
+            }
+          }
+          .bank {
+            flex-shrink: 0;
+            position: relative;
+            display: flex;
+            gap: 12px;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 200px;
+            aspect-ratio: 16 / 10;
+            border-radius: 8px;
+            color: rgb(197, 182, 21);
+            text-shadow: 1px 1px 2px #000;
+            transition: transform 0.3s;
+            transform: translateY(100px);
+            background-image: linear-gradient(
+              to right top,
+              #997684,
+              #7e6173,
+              #634c62,
+              #483a51,
+              #2d2840,
+              #2f2847,
+              #30284d,
+              #322854,
+              #5e3570,
+              #903e85,
+              #c64691,
+              #fb4f93
+            );
+            box-shadow: 1px 1px 4px #000;
+            box-sizing: border-box;
+            padding: 10px;
+            .bank-logo {
+              width: 60px;
+              height: 20px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              padding: 6px;
+              background-color: #fffffff2;
+              border-radius: 8px;
+              img {
+                display: block;
+                width: 100%;
+                object-fit: cover;
+              }
+            }
+            .account-info {
+              .account-num {
+                color: colors.$color--font;
+              }
+            }
+            &:hover {
+              transform: translateY(0);
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+    .confirm-form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 8px 16px;
+      background-color: #fff;
+      box-sizing: border-box;
+      position: relative;
+      &__title {
+        font-weight: bold;
+        background-color: #eee;
+        padding: 12px;
+      }
+      &__list {
+        align-self: center;
+        width: 400px;
+        height: 70px;
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 8px;
+        border-bottom: 4px solid #eee;
+        box-sizing: border-box;
+        &:empty {
+          background: $bg--skeleton;
+          background-size: 200% 100%;
+          background-position-x: 180%;
+          animation: 1.5s order-skeleton ease infinite;
+        }
+      }
+      &__total-price {
+        align-self: center;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 300px;
+        height: 70px;
+        padding: 12px;
+        border-radius: 8px;
+        box-sizing: border-box;
+        color: colors.$color--highlight;
+        font-weight: bold;
+        &-text {
+          font-size: 18px;
+        }
+        &-num {
+          font-size: 28px;
+        }
+        &:empty {
+          background: $bg--skeleton;
+          background-size: 200% 100%;
+          background-position-x: 180%;
+          animation: 1.5s order-skeleton ease infinite;
+        }
+      }
+    }
+    .check-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      color: colors.$color--font;
+      margin: 8px 0 20px;
+      input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+      }
+    }
+    .btn-pay {
+      margin: 0 auto;
+      transition: background 0.3s, filter 0.3s;
+      &:hover {
+        cursor: pointer;
+      }
+      &:disabled {
+        pointer-events: none;
+        transition: filter 0.2s;
+        filter: grayscale(45%);
+      }
+      &.loading {
+        background: $bg--skeleton2;
+        background-size: 200% 100%;
+        background-position-x: 180%;
+        animation: 2s order-skeleton ease infinite;
+        filter: grayscale(60%);
+        pointer-events: none;
+      }
+    }
+  }
+}
+
+.page__accordion {
+  background-color: #fff;
+  overflow: hidden;
+  &-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #000;
+    background-color: #eee;
+    padding: 8px 16px;
+    box-sizing: border-box;
+    button {
+      width: 30px;
+      height: 30px;
+      transition: transform 0.2s;
+      appearance: none;
+      background-color: transparent;
+      border: none;
+      outline: none;
+      background-image: url("../../../static/downArrow.svg");
+      background-size: cover;
+      transform: rotate(180deg);
+      transform-origin: center;
+      cursor: pointer;
+      &.more {
+        transform: rotate(0);
+      }
+    }
+  }
+  &-content-wrapper {
+    box-sizing: border-box;
+    &.hide {
+      height: 0 !important;
+    }
+    .content {
+      box-sizing: border-box;
+      padding: 8px 16px;
+      &:empty {
+        background: $bg--skeleton;
+        background-size: 200% 100%;
+        background-position-x: 180%;
+        animation: 1.5s order-skeleton ease infinite;
+        min-height: 250px;
+      }
+    }
+  }
+}
+
+.page__highlight-text {
+  color: colors.$color--highlight;
+  font-weight: bold;
+}

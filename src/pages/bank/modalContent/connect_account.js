@@ -9,7 +9,7 @@ const bankAPI = new BankAPI();
 const availableBankInfoMap = new Map();
 const connectAccountModalEventMap = new Map();
 
-const connectAccountForm = ({ useAbleBankList }) => {
+export const connectAccountForm = ({ useAbleBankList }) => {
   if (connectAccountModalEventMap.size > 0) {
     removeEvents();
   }
@@ -113,7 +113,7 @@ const connectAccountForm = ({ useAbleBankList }) => {
   return wrapper;
 };
 
-export const openConnectAccountModal = ({ useAbleBankList }) => {
+export const openConnectAccountModal = ({ useAbleBankList }, callback = {}) => {
   async function onSubmit() {
     const submitForm = document.querySelector("form.connect-account-form");
     const toastContainer = document.querySelector(".bank-modal__wrapper");
@@ -224,9 +224,9 @@ export const openConnectAccountModal = ({ useAbleBankList }) => {
     cancelBtnText: "취소",
   };
   const modalEvent = {
-    onSubmit,
-    onCancel,
-    onAfter,
+    onSubmit: callback?.onSubmit ?? onSubmit,
+    onCancel: callback?.onCancel ?? onCancel,
+    onAfter: callback?.onAfter ?? onAfter,
   };
 
   window.dispatchEvent(CustomModalOpenEvent({ ...modalProps, ...modalEvent }));
