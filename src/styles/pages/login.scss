@@ -21,6 +21,7 @@
     }
     .title-2 {
       color: #d4d4d4;
+      margin-top: 5px;
     }
     .container {
       @include center();
@@ -32,8 +33,6 @@
       justify-content: center;
       padding: 20px;
       margin-top: -80px;
-      background-color: rgba(#a19e9e, 0.2);
-      border-radius: 5px;
       .id-pw-wrapper {
         label {
           font-size: 16px;
@@ -49,7 +48,7 @@
           margin-bottom: 10px;
           width: 300px;
           height: 40px;
-          background-color: transparent;
+          background-color: rgba($color: #081025, $alpha: 0.3);
           border: 1px solid rgba($color: #fff, $alpha: 0.5);
           text-indent: 10px;
           color: #fff;

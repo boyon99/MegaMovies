@@ -7,7 +7,7 @@ export const loginPage = () => {
   const loginPage = document.createElement("div");
   loginPage.classList.add("log-in");
   loginPage.innerHTML = `<div class="inner">
-  <div class="title">메가무비스에 오신 것을 환영합니다!</div>
+  <div class="title">로그인</div>
   <div class="title-2">지금 바로 메가무비스에서 다양한 영화를 시청해보세요.</div>
   <form class="container">
     <div class="id-pw-wrapper">
