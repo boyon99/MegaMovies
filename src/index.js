@@ -177,7 +177,7 @@ router
         AppStorage.setCurrentUser(null);
       }
 
-      router.navigate('');
+      router.navigate("");
     },
     "/movie/:id": ({ data, match }) => {
       const movieId = data?.id;
