@@ -107,13 +107,19 @@ $bank-skeleton-pg: linear-gradient(
   }
   .inner {
     .title {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 2em;
+      position: absolute;
+      top: 125px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-weight: 700;
+      font-size: 32px;
+      background: linear-gradient(to right, #fff, #d2cacd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
     .accounts-info {
-      margin-top: 12px;
+      margin-top: 200px;
       display: flex;
       gap: 12px;
       .accounts--total {

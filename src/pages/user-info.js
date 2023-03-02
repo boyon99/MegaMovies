@@ -12,7 +12,7 @@ function infoPage() {
   mainCtn.classList.add("mainCtn");
   userInfoPage.appendChild(mainCtn);
 
-  const title = document.createElement("div");
+  const title = document.createElement("p");
   title.classList.add("title");
   title.textContent = "나의 정보";
   mainCtn.appendChild(title);
