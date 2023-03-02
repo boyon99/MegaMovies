@@ -111,9 +111,23 @@ async function render() {
   const inner = page.querySelector(".inner");
 
   const orderItems = await getOrderItems();
+  const ownProducts = await getUserHistory(AppStorage.getAccessToken());
+
   if (!orderItems) {
     inner.replaceChildren(createEmptyContent());
     return;
+  }
+
+  if (ownProducts && ownProducts.length > 0) {
+    const isContainOwnProduct = orderItems.some((orderItem) => {
+      return ownProducts.some(
+        (ownProduct) => ownProduct.product.productId === orderItem.id
+      );
+    });
+
+    if (isContainOwnProduct) {
+      inner.replaceChildren(createEmptyContent("ownProductError"));
+    }
   }
 
   formData.orderItems = orderItems.map((orderItem) => orderItem.id);
@@ -242,12 +256,14 @@ async function render() {
       });
 
       if (paymentResult === true) {
-        clearCart();
+        removeCart(orderProductId);
       }
     });
     payButton.classList.remove("loading");
     payButton.disabled = false;
     payButton.textContent = "결제하기";
+
+    router.navigate("order-history");
   };
   payButton.addEventListener("click", handlePayBtnClick);
 
@@ -392,11 +408,17 @@ function createAccordion({ title, content }) {
 }
 
 //
-function createEmptyContent() {
+function createEmptyContent(type = "order") {
   const emptyContent = document.createElement("div");
   emptyContent.classList = "order__empty";
 
-  emptyContent.textContent = "주문 상품을 찾을 수 없습니다.";
+  if (type === "order") {
+    emptyContent.textContent = "주문 상품을 찾을 수 없습니다.";
+  }
+  if (type === "ownProductError") {
+    emptyContent.textContent =
+      "주문 상품에 이미 구매한 상품이 포함되어 있어 결제를 진행할 수 없습니다.";
+  }
 
   return emptyContent;
 }
@@ -422,11 +444,37 @@ async function getProduct(id) {
 
 // cart
 async function getOrderItems() {
+  if (router.matchLocation("movie/:id")) {
+    const product = await getProduct(
+      router.getCurrentLocation().url.split("/")[1]
+    );
+    return !product
+      ? null
+      : [
+          {
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            thumbnail: product.thumbnail,
+          },
+        ];
+  }
+  if (router.matchLocation("cart")) {
+    return getOrderCartItems();
+  }
   switch (router.getCurrentLocation().url) {
     case "order":
       const product = await getProduct(router.getCurrentLocation().params?.id);
-      return !product ? null : [product.id];
-    case "cart":
+      return !product
+        ? null
+        : [
+            {
+              id: product.id,
+              title: product.title,
+              price: product.price,
+              thumbnail: product.thumbnail,
+            },
+          ];
     case "orders":
       return getOrderCartItems();
   }
@@ -488,11 +536,37 @@ export function unsetCartChecked() {
     });
 }
 
-function clearCart() {
+function removeCart(targetId) {
   const cartProductList = getCart();
+
   if (!cartProductList) return;
 
-  cartProductList.forEach((cartProduct) => {
-    localStorage.removeItem(cartProduct.cartKey);
-  });
+  const targetCartProduct = cartProductList.find(
+    (cartProduct) => cartProduct.id === targetId
+  );
+
+  localStorage.removeItem(targetCartProduct.cartKey);
+}
+
+// 유저거래내역 조회
+async function getUserHistory(accessToken) {
+  const headers = {
+    "Content-type": "application/json",
+    username: "KDT4_Team1",
+    apikey: process.env.apikey,
+    Authorization: `Bearer ${accessToken}`,
+  };
+
+  const historyResponse = await fetch(
+    "https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/transactions/details",
+    {
+      headers,
+    }
+  );
+
+  if (historyResponse.status !== 200) return null;
+
+  const userHistory = await historyResponse.json();
+
+  return userHistory;
 }
