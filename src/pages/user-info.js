@@ -1,5 +1,5 @@
 import { router } from "../";
-import { me } from "../api/auth";
+import { login, me } from "../api/auth";
 import { AppStorage } from "../util";
 import logo from "../../static/logo.png";
 
@@ -192,6 +192,14 @@ function displayNameModalWindow() {
   const confirmBtn = innerElement.querySelector(".btn-primary");
   confirmBtn.addEventListener("click", async (e) => {
     const value = innerElement.querySelector("input").value;
+    async function renameCheck({ value }) {
+      const renameCheckReg = /^[\w가-힣]{1,20}$/;
+      if (!renameCheckReg.test(value)) {
+        alert("이름은 1글자 이상, 20글자 이하로 설정해주세요.");
+        preventDefault();
+      }
+    }
+    await renameCheck({ value });
     await changeUserInfo(accessToken, { displayName: value });
     innerElement.style.display = "none";
     modalOverlay.style.display = "none";
@@ -207,11 +215,14 @@ function displayPWModalWindow() {
   const modalOverlay = document.createElement("div");
   modalOverlay.classList.add("modal");
   modalOverlay.classList.add("modal-overlay");
-  const innerElement = document.createElement("div");
+  const innerElement = document.createElement("form");
+
   innerElement.classList.add("modal-inner");
   innerElement.innerHTML = `
     <div class="modal-close">X</div>
     <div class="innerElement-title">비밀번호 수정하기</div>
+    <span class="innerElement-span">기존 비밀번호</span>
+    <input required id="old-password" type="password"/>
     <span class="innerElement-span">새로운 비밀번호</span>
     <input required id="new-password-1" type="password"/>
     <span class="innerElement-span">비밀번호 확인</span>
@@ -226,18 +237,70 @@ function displayPWModalWindow() {
     modalOverlay.style.display = "none";
   });
   const confirmBtn = innerElement.querySelector(".btn-primary");
-  confirmBtn.addEventListener("click", async (e) => {
-    const newPW = innerElement.querySelector("#new-password-1");
-    const newPWCheck = innerElement.querySelector("#new-password-2");
-    if (newPW.value != newPWCheck.value) {
-      newPWCheck.setCustomValidity("비밀번호가 일치하지 않습니다.");
-      e.preventDefault();
+
+  const newPW = innerElement.querySelector("#new-password-1");
+  const newPWCheck = innerElement.querySelector("#new-password-2");
+  confirmBtn.addEventListener("click", (e) => {
+    if (newPW.value.length < 8) {
+      newPW.setCustomValidity("비밀번호는 8자 이상이여야 합니다.");
+    } else if (newPW.value !== newPWCheck.value) {
+      newPW.setCustomValidity("비밀번호가 일치하지 않습니다.");
     } else {
-      await changeUserInfo(accessToken, { newPassword: newPW });
+      newPW.setCustomValidity("");
+    }
+  });
+  innerElement.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (innerElement.noValidate) return;
+    const oldPW = innerElement.querySelector("#old-password");
+    const user = AppStorage.getCurrentUser();
+    const loginUser = await login(user.email, oldPW.value);
+    if (!loginUser) {
+      return alert("기존 비밀번호를 재확인해주세요.");
+    }
+    if (loginUser) {
+      const accessToken = loginUser.accessToken;
+      localStorage.setItem(AppStorage.accessTokenKey, accessToken);
+
+      if (oldPW.value === newPW.value) {
+        return alert("기존 비밀번호와 다르게 설정해주세요.");
+      }
+
+      await changeUserInfo(accessToken, {
+        oldPassword: oldPW.value,
+        newPassword: newPW.value,
+      });
       innerElement.style.display = "none";
       modalOverlay.style.display = "none";
-      renderUserInfo();
+
+      alert("패스워드 변경이 완료되었습니다.");
     }
-    newPWCheck.reportValidity();
   });
+
+  // confirmBtn.addEventListener("click", async (e) => {
+  //   const oldPW = innerElement.querySelector("#old-password");
+  //   const newPW = innerElement.querySelector("#new-password-1");
+  //   const newPWCheck = innerElement.querySelector("#new-password-2");
+
+  //   const isNotEqualPW = newPW.value !== newPWCheck.value;
+  //   const isLessThanPW = newPW.value.length < 8;
+
+  //   if (isLessThanPW) {
+  //     newPW.setCustomValidity("비밀번호는 8자 이상이여야 합니다.");
+  //   } else if (isNotEqualPW) {
+  //     newPW.setCustomValidity("비밀번호가 일치하지 않습니다.");
+  //   } else {
+  //     newPW.setCustomValidity("");
+  //     console.log("valid 통과");
+  //   }
+
+  //   // const newPWValid = newPW.reportValidity();
+
+  //   // await changeUserInfo(accessToken, { newPassword: newPW });
+  //   // const loginUser = await login();
+  //   // if (!loginUser) {
+  //   //   return;
+  //   // }
+  //
+  // });
 }
