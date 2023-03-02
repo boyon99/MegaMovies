@@ -4,65 +4,68 @@ import { AppStorage } from "../util";
 import logo from "../../static/logo.png";
 
 // HTML 뼈대
-const userInfoPage = document.createElement("div");
-userInfoPage.classList.add("user-info-page");
+function infoPage() {
+  const userInfoPage = document.createElement("div");
+  userInfoPage.classList.add("user-info-page");
 
-const mainCtn = document.createElement("div");
-mainCtn.classList.add("mainCtn");
-userInfoPage.appendChild(mainCtn);
+  const mainCtn = document.createElement("div");
+  mainCtn.classList.add("mainCtn");
+  userInfoPage.appendChild(mainCtn);
 
-const title = document.createElement("div");
-title.classList.add("title");
-title.textContent = "나의 정보";
-mainCtn.appendChild(title);
+  const title = document.createElement("div");
+  title.classList.add("title");
+  title.textContent = "나의 정보";
+  mainCtn.appendChild(title);
 
-const profileArea = document.createElement("div");
-profileArea.classList.add("profile-area");
-mainCtn.appendChild(profileArea);
+  const profileArea = document.createElement("div");
+  profileArea.classList.add("profile-area");
+  mainCtn.appendChild(profileArea);
 
-const profilePic = document.createElement("img");
-profilePic.classList.add("profile-pic");
-profileArea.appendChild(profilePic);
+  const profilePic = document.createElement("img");
+  profilePic.classList.add("profile-pic");
+  profileArea.appendChild(profilePic);
 
-const profileName = document.createElement("div");
-profileName.classList.add("profile-name");
-let UserUsername = document.getElementsByClassName(".user-name").textContent;
-profileName.textContent = UserUsername;
-profileArea.appendChild(profileName);
+  const profileName = document.createElement("div");
+  profileName.classList.add("profile-name");
+  let UserUsername = document.getElementsByClassName(".user-name").textContent;
+  profileName.textContent = UserUsername;
+  profileArea.appendChild(profileName);
 
-const btnWrapper = document.createElement("div");
-btnWrapper.classList.add("btn-wrapper");
-mainCtn.appendChild(btnWrapper);
+  const btnWrapper = document.createElement("div");
+  btnWrapper.classList.add("btn-wrapper");
+  mainCtn.appendChild(btnWrapper);
 
-const profilePicBtn = document.createElement("div");
-profilePicBtn.classList.add("profile-pic-btn");
-profilePicBtn.classList.add("medium");
-profilePicBtn.classList.add("btn-secondary");
-profilePicBtn.textContent = "프로필 이미지 변경";
-btnWrapper.appendChild(profilePicBtn);
+  const profilePicBtn = document.createElement("div");
+  profilePicBtn.classList.add("profile-pic-btn");
+  profilePicBtn.classList.add("medium");
+  profilePicBtn.classList.add("btn-secondary");
+  profilePicBtn.textContent = "프로필 이미지 변경";
+  btnWrapper.appendChild(profilePicBtn);
 
-const changeNameBtn = document.createElement("div");
-changeNameBtn.classList.add("change-name-btn");
-changeNameBtn.classList.add("medium");
-changeNameBtn.classList.add("btn-secondary");
-changeNameBtn.textContent = "이름 수정하기";
-btnWrapper.appendChild(changeNameBtn);
+  const changeNameBtn = document.createElement("div");
+  changeNameBtn.classList.add("change-name-btn");
+  changeNameBtn.classList.add("medium");
+  changeNameBtn.classList.add("btn-secondary");
+  changeNameBtn.textContent = "이름 수정하기";
+  btnWrapper.appendChild(changeNameBtn);
 
-const changePasswordBtn = document.createElement("div");
-changePasswordBtn.classList.add("change-password-btn");
-changePasswordBtn.classList.add("medium");
-changePasswordBtn.classList.add("btn-secondary");
-changePasswordBtn.textContent = "비밀번호 수정하기";
-btnWrapper.appendChild(changePasswordBtn);
+  const changePasswordBtn = document.createElement("div");
+  changePasswordBtn.classList.add("change-password-btn");
+  changePasswordBtn.classList.add("medium");
+  changePasswordBtn.classList.add("btn-secondary");
+  changePasswordBtn.textContent = "비밀번호 수정하기";
+  btnWrapper.appendChild(changePasswordBtn);
 
-export default userInfoPage;
+  // event listeners
+  profilePicBtn.addEventListener("click", displayPicModalWindow);
+  changeNameBtn.addEventListener("click", displayNameModalWindow);
+  changePasswordBtn.addEventListener("click", displayPWModalWindow);
 
-renderUserInfo();
+  renderUserInfo();
+  return userInfoPage;
+}
 
-// event listeners
-profilePicBtn.addEventListener("click", displayPicModalWindow);
-changeNameBtn.addEventListener("click", displayNameModalWindow);
-changePasswordBtn.addEventListener("click", displayPWModalWindow);
+export default infoPage;
 
 //functions
 
@@ -72,6 +75,10 @@ function getAccessToken() {
 
 async function renderUserInfo() {
   const user = await me(AppStorage.getAccessToken());
+
+  const profileName = document.querySelector(".profile-name");
+  const profilePic = document.querySelector(".profile-pic");
+
   profileName.textContent = user.displayName;
   profilePic.src =
     user.profileImg ||
@@ -276,31 +283,4 @@ function displayPWModalWindow() {
       alert("패스워드 변경이 완료되었습니다.");
     }
   });
-
-  // confirmBtn.addEventListener("click", async (e) => {
-  //   const oldPW = innerElement.querySelector("#old-password");
-  //   const newPW = innerElement.querySelector("#new-password-1");
-  //   const newPWCheck = innerElement.querySelector("#new-password-2");
-
-  //   const isNotEqualPW = newPW.value !== newPWCheck.value;
-  //   const isLessThanPW = newPW.value.length < 8;
-
-  //   if (isLessThanPW) {
-  //     newPW.setCustomValidity("비밀번호는 8자 이상이여야 합니다.");
-  //   } else if (isNotEqualPW) {
-  //     newPW.setCustomValidity("비밀번호가 일치하지 않습니다.");
-  //   } else {
-  //     newPW.setCustomValidity("");
-  //     console.log("valid 통과");
-  //   }
-
-  //   // const newPWValid = newPW.reportValidity();
-
-  //   // await changeUserInfo(accessToken, { newPassword: newPW });
-  //   // const loginUser = await login();
-  //   // if (!loginUser) {
-  //   //   return;
-  //   // }
-  //
-  // });
 }
