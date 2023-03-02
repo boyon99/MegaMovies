@@ -79,25 +79,40 @@ export const renderSignUpPage = function () {
         displayName: name,
       };
       await validateSignUp({ userId, password, passwordCheck, name });
-      imgToBase64(img).then(async (profileImgBase64) => {
+
+      if (img) {
+        imgToBase64(img).then(async (profileImgBase64) => {
+          const signUpResponse = await signUp({
+            accessToken: AppStorage.getAccessToken(),
+            ...payload,
+            profileImgBase64,
+          });
+          if (!signUpResponse)
+            throw new Error(
+              "회원가입 중 오류가 발생했습니다. 다시 시도해주세요."
+            );
+          localStorage.setItem(
+            AppStorage.accessTokenKey,
+            signUpResponse.accessToken
+          );
+          router.navigate("");
+        });
+      } else {
         const signUpResponse = await signUp({
           accessToken: AppStorage.getAccessToken(),
           ...payload,
-          profileImgBase64,
         });
-        if (!signUpResponse) {
-          renderToast({
-            type: "error",
-            message: "회원가입 중 오류가 발생했습니다. 다시 시도해주세요",
-          });
-          return;
-        }
+        if (!signUpResponse)
+          throw new Error(
+            "회원가입 중 오류가 발생했습니다. 다시 시도해주세요."
+          );
         localStorage.setItem(
           AppStorage.accessTokenKey,
           signUpResponse.accessToken
         );
         router.navigate("");
-      });
+      }
+
       //
     } catch (err) {
       if (!(err instanceof Error)) {
@@ -109,7 +124,12 @@ export const renderSignUpPage = function () {
         passwordError.textContent = password ?? "";
         passwordCheckError.textContent = passwordCheck ?? "";
         nameError.textContent = name ?? "";
+        return;
       }
+      renderToast({
+        type: "error",
+        message: err.message,
+      });
     }
   });
 
@@ -135,7 +155,6 @@ async function validateSignUp({ userId, password, passwordCheck, name }) {
     errors.name = "이름은 1글자 이상 20자 이하여야 합니다";
   }
 
-  console.log({ errors });
   if (Object.keys(errors).length > 0) {
     throw errors;
   }
