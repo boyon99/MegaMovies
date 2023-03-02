@@ -2,14 +2,23 @@
   padding: 40px 0;
 
   h1 {
-    margin-bottom: 50px;
+    position: absolute;
+    top: 130px;
+    left: 0;
+    width: 100%;
     text-align: center;
+    font-weight: 700;
+    font-size: 32px;
+    background: linear-gradient(to right, #fff, #d2cacd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   &-list {
     padding: 30px 40px;
     background-color: #20293f;
     border-radius: 20px;
+    margin-top: 50px;
   }
 
   &-item {
@@ -60,7 +69,7 @@
     &-price {
       .amount {
         margin-right: 4px;
-      } 
+      }
     }
 
     button {
@@ -69,7 +78,7 @@
       padding: 3px 6px;
       font-size: 12px;
       color: #fff;
-      background-color: #FB4F93;
+      background-color: #fb4f93;
       border-radius: 6px;
       cursor: pointer;
     }

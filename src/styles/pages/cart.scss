@@ -5,11 +5,23 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    .cart {
+      position: absolute;
+      top: 10px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-weight: 700;
+      font-size: 32px;
+      background: linear-gradient(to right, #fff, #d2cacd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
     .top {
       width: 100%;
       height: 55px;
       position: absolute;
-      top: 10px;
+      top: 60px;
       border-bottom: 1px solid rgba($color: #fff, $alpha: 0.5);
       p {
         position: absolute;
@@ -37,6 +49,9 @@
       width: 100%;
       height: 100px;
       position: relative;
+      &:first-child {
+        margin-top: 50px;
+      }
       img {
         width: 60px;
         margin-top: 90px;
@@ -67,7 +82,7 @@
       input[type="checkbox"] {
         // 체크박스
         position: absolute;
-        top: 90px;
+        top: 95px;
         left: -10px;
         width: 20px;
         height: 20px;
@@ -127,7 +142,7 @@
     }
 
     .noItem {
-      margin-top: 80px;
+      margin-top: 130px;
       font-size: 16px;
     }
   }
