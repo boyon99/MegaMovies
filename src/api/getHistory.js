@@ -1,19 +1,18 @@
 import { AppStorage } from '../util'
 
-const headers = {
-  'content-type': 'application/json',
-  apikey: process.env.apikey,
-  username: 'KDT4_Team1',
-  Authorization: `Bearer ${AppStorage.getAccessToken()}`,
-}
-
-export async function getHistory(detailId) {
+export async function getHistory(accessToken, detailId) {
+  const headers = {
+    'Content-type': 'application/json',
+    apikey: process.env.apikey,
+    username: 'KDT4_Team1',
+    Authorization: `Bearer ${accessToken}`,
+  }
   
   try {
     const res = await fetch(
       'https://asia-northeast3-heropy-api.cloudfunctions.net/api/products/transactions/detail',
       {
-        method: 'POST',
+        method:"POST",
         headers,
         body: JSON.stringify({ detailId }),
       }
