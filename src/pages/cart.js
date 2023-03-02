@@ -15,6 +15,11 @@ const cart = () => {
   inner.classList.add('inner')
   inner.innerHTML = ``
 
+  // cart name
+  const cart = document.createElement('p')
+  cart.classList.add('cart')
+  cart.innerText = "장바구니"
+
   // item 
   let items = AppStorage.getCartItem()
   let itemsFilter = items.filter((i, a, b) => b.includes(i))
@@ -182,7 +187,7 @@ const cart = () => {
 
   top.append(allselectEl, allselectBtn, deleteBtn)
   bottom.append(allPriceText, allPriceEl, buyBtn)
-  inner.append(top, bottom, noItemEl)
+  inner.append(top, cart, bottom, noItemEl)
   cartPage.append(inner)
 
 
