@@ -118,7 +118,7 @@ router
           prevEl: ".swiper-button-prev",
         },
         autoplay: {
-          delay: 4000
+          delay: 4000,
         },
       });
     },
@@ -181,7 +181,7 @@ router
       renderPage([header({ user: match?.user }), moviePage(movieId)]);
     },
     "/user-info": (match) => {
-      renderPage([header({ isContainNav: false }), userInfoPage]);
+      renderPage([header({ isContainNav: false }), userInfoPage()]);
     },
     "/genre/:category": (match) => {
       // 장르, 테마 상세 페이지
