@@ -154,17 +154,21 @@ const cart = () => {
   // let orderHref = `/order`
 
   buyBtn.addEventListener('click', () => {
+    let noCheck = false
     for (let j = 0; j < localStorage.length - 1; j++) {
       if (inner.children[j].children[0].checked) {
+        noCheck = true
         let local = "" + localStorage.getItem(`cart-${inner.children[j].children[0].id}`)
         localStorage.removeItem(`cart-${inner.children[j].children[0].id}`);
         localStorage.setItem(`cart-${inner.children[j].children[0].id}`, local.replace('false', 'true'));
 
-        // orderHref += `=${items[inner.children[j].children[0].id][0]}`
-        //  orderPage()
       }
     }
-    router.navigate(`/orders`)
+    if (noCheck) {
+      router.navigate(`/orders`)
+    } else {
+      alert("선택된 항목이 없습니다.")
+    }
   })
 
 
