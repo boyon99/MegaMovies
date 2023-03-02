@@ -1,6 +1,8 @@
 import { router } from "../";
 import { login, me } from "../api/auth";
 import { AppStorage } from "../util";
+import { renderToast } from "./bank/toast";
+
 import logo from "../../static/logo.png";
 // HTML 뼈대
 function infoPage() {
@@ -76,7 +78,11 @@ function infoPage() {
     const confirmBtn = innerElement.querySelector(".btn-primary");
     inputFile.addEventListener("change", async (e) => {
       if (inputFile.files[0].size > 1048575) {
-        alert("1MB 미만의 파일만 업로드 가능합니다.");
+        renderToast({
+          message: "1MB 미만의 파일만 업로드 가능합니다.",
+          type: "error",
+          autoUnmount: 2500,
+        });
         inputFile.value = "";
       }
     });
@@ -124,7 +130,11 @@ function infoPage() {
       async function renameCheck({ value }) {
         const renameCheckReg = /^[\w가-힣]{1,20}$/;
         if (!renameCheckReg.test(value)) {
-          alert("이름은 1글자 이상, 20글자 이하로 설정해주세요.");
+          renderToast({
+            message: "이름은 1글자 이상, 20글자 이하로 설정해주세요.",
+            type: "error",
+            autoUnmount: 2500,
+          });
           preventDefault();
         }
       }
@@ -181,13 +191,21 @@ function infoPage() {
       const user = AppStorage.getCurrentUser();
       const loginUser = await login(user.email, oldPW.value);
       if (!loginUser) {
-        return alert("기존 비밀번호를 재확인해주세요.");
+        return renderToast({
+          message: "기존 비밀번호를 재확인해주세요.",
+          type: "error",
+          autoUnmount: 2500,
+        });
       }
       if (loginUser) {
         const accessToken = loginUser.accessToken;
         localStorage.setItem(AppStorage.accessTokenKey, accessToken);
         if (oldPW.value === newPW.value) {
-          return alert("기존 비밀번호와 다르게 설정해주세요.");
+          return renderToast({
+            message: "기존 비밀번호와 다르게 설정해주세요.",
+            type: "error",
+            autoUnmount: 2500,
+          });
         }
         await changeUserInfo(accessToken, {
           oldPassword: oldPW.value,
@@ -195,7 +213,11 @@ function infoPage() {
         });
         innerElement.style.display = "none";
         modalOverlay.style.display = "none";
-        alert("패스워드 변경이 완료되었습니다.");
+        renderToast({
+          message: "패스워드 변경이 완료되었습니다.",
+          type: "error",
+          autoUnmount: 2500,
+        });
       }
     });
   }
