@@ -27,7 +27,7 @@ async function renderHistory() {
   const [detailId] = idRegex.exec(location.search)
 
   const user = await getUserInfo();
-  const item = await getHistory(detailId);
+  const item = await getHistory(AppStorage.getAccessToken(),detailId);
 
   const orderDetailsDiv = orderDetailsPage.querySelector('.order-details')
 
