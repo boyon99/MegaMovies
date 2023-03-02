@@ -114,6 +114,7 @@ router.hooks({
 router
   .on({
     "/": () => {
+      // 홈(메인) 페이지
       renderPage([header(), home]);
       new Swiper(".swiper", {
         navigation: {
@@ -143,24 +144,13 @@ router
     },
     "/login": (match) => {
       // 로그인 페이지
-      /*
-        - 로그인 페이지를 구현하고 추가해주세요
-        - 헤더 필요없이 로그인 페이지 단독으로 구현하셨을 경우
-          renderPage의 매개변수(인자)로 로그인 페이지 요소만 전달해주세요
-          예시) renderPage(loginPage)
-      */
       renderPage([
         header({ isContainNav: false, isContainProfileArea: false }),
         loginPage(),
       ]);
     },
     "/signup": () => {
-      /*
-        - 회원가입 페이지를 구현하고 추가해주세요
-        - 헤더 필요없이 회원가입 페이지 단독으로 구현하셨을 경우
-          renderPage의 매개변수(인자)로 회원가입 페이지 요소만 전달해주세요
-          예시) renderPage(signUpPage)
-      */
+      // 회원가입 페이지
       renderPage([
         header({ isContainNav: false, isContainProfileArea: false }),
         renderSignUpPage(),
@@ -177,13 +167,15 @@ router
         AppStorage.setCurrentUser(null);
       }
 
-      router.navigate('');
+      router.navigate("");
     },
     "/movie/:id": ({ data, match }) => {
+      // 영화 상세 페이지
       const movieId = data?.id;
       renderPage([header({ user: match?.user }), moviePage(movieId)]);
     },
     "/user-info": (match) => {
+      // 사용자 정보 페이지(변경)
       renderPage([header({ isContainNav: false }), userInfoPage()]);
     },
     "/genre/:category": (match) => {
@@ -204,20 +196,12 @@ router
       ];
       const { category } = match?.data;
 
-      /*
-        - 이동되는 주소의 장르, 테마에 대한 정보는 category를 활용하시면 됩니다.
-        - 위에서 작성한 것 이외에 수정이 필요하신 경우 문의주시거나 로컬에서 배열 요소를 작성해서 수정해주세요
-        - 임시 요소인 document.createTextNode를 지우시고, 해당 페이지 요소로 렌더링 되도록 구현해주세요
-      */
       allowedCategory.includes(category)
         ? renderPage([header(), genreDetailPage(category)])
         : router.navigate("notfound");
     },
     "/cart": (match) => {
       // 장바구니 페이지
-      /*
-        임시 요소인 document.createTextNode를 지우시고, 해당 페이지 요소로 렌더링 되도록 구현해주세요
-      */
       renderPage([header(), cart()]);
     },
     "/order": (match) => {
@@ -230,16 +214,10 @@ router
     },
     "/order-history": (match) => {
       // 전체 구매내역 페이지
-      /*
-        임시 요소인 document.createTextNode를 지우시고, 해당 페이지 요소로 렌더링 되도록 구현해주세요
-      */
       renderPage([header(), orderHistory()]);
     },
     "/order-details": (match) => {
       // 단일 제품 상세 거래 페이지
-      /*
-        임시 요소인 document.createTextNode를 지우시고, 해당 페이지 요소로 렌더링 되도록 구현해주세요
-      */
       renderPage([header(), orderDetails()]);
     },
     "/search/:id": ({ data, match }) => {
@@ -249,10 +227,7 @@ router
     },
   })
   .notFound((match) => {
-    /*
-      notfound 페이지
-      추후 구현할 경우 해당 페이지 요소로 렌더링
-     */
+    // notFoundPage
     const prevURL =
       router.lastResolved() === null
         ? location.pathname
