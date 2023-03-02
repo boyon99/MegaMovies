@@ -18,7 +18,6 @@ async function getGenreList() {
 }
 
 async function renderPage() {
-  genrePage.textContent = "장르 페이지";
 
   const actionMovieList = await getGenreMovies("액션");
   const actionContainer = createContainer({
