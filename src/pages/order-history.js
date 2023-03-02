@@ -1,5 +1,6 @@
-import { getAllHistory } from "../api/getAllHistory";
-import posterMap from "../movieInfoList/posterList";
+import { getAllHistory } from '../api/getAllHistory'
+import posterMap from '../movieInfoList/posterList'
+import { AppStorage } from '../util'
 
 function orderHistory() {
   const orderHistoryPage = document.createElement("section");
@@ -16,19 +17,13 @@ function orderHistory() {
   orderHistoryPage.renderAllHistory();
 
   return orderHistoryPage;
-}
+} 
 export default orderHistory;
-(async () => {
-  // const items = await getAllHistory()
-  // renderAllHistory(items)
-})();
 
 async function renderAllHistory() {
   const orderHistoryPage = this;
-  const items = await getAllHistory();
-  const orderHistoryList = orderHistoryPage.querySelector(
-    ".order-history-list"
-  );
+  const items = await getAllHistory(AppStorage.getAccessToken());
+  const orderHistoryList = orderHistoryPage.querySelector('.order-history-list')
 
   const histories = items
     .map((item) => {
@@ -60,10 +55,9 @@ async function renderAllHistory() {
 
   orderHistoryList.innerHTML = histories;
 
-  window.addEventListener("click", (e) => {
-    if (e.target.tagName !== "BUTTON") return;
-    const target = e.target.closest(".order-history-item");
-
-    location.href = `${location.origin}/order-details?id=${target.dataset.id}`;
-  });
+  window.addEventListener('click', (e) => {
+    if(e.target.tagName !== 'BUTTON') return;
+    const target = e.target.closest('.order-history-item');
+    if (target) location.href = `${location.origin}/order-details?id=${target.dataset.id}`;
+  })
 }
