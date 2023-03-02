@@ -68,7 +68,7 @@ const cart = () => {
   allselectBtn.innerHTML = `전체 선택`
 
   allselectBtn.addEventListener('click', () => {
-    for (let i = 0; i < inner.children.length - 2; i++) {
+    for (let i = 0; i < inner.children.length - 3; i++) {
       if (inner.children[i].children[0].checked) {
         continue
       } else {
