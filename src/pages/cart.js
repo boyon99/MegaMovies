@@ -74,7 +74,7 @@ const cart = () => {
       } else {
         inner.children[i].children[0].checked = true
         sum += +items[inner.children[i].children[0].id][2]
-        allPriceEl.innerText = `${sum}` + "원"
+        allPriceEl.innerText = "0원"
       }
     }
   })
@@ -174,6 +174,7 @@ const cart = () => {
   bottom.append(allPriceText, allPriceEl, buyBtn)
   inner.append(top, bottom, noItemEl)
   cartPage.append(inner)
+
 
   return cartPage
 }
