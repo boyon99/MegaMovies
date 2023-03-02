@@ -19,6 +19,7 @@ $section-margin-bottom: 50px;
       .image-wrapper {
         width: 100%;
         margin: 0 auto;
+        height: 100%;
 
         img {
           display: block;
@@ -31,21 +32,25 @@ $section-margin-bottom: 50px;
 
       .rank {
         position: absolute;
-        bottom: 0;
-        left: 30px;
-        color: #fb4f93;
+        bottom: 30px;
+        left: 30px !important;
+        background: linear-gradient(to right, #fb4f93, #b9376b);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         font-size: 100px;
-        text-shadow: 5px -5px 1px #7f7d7d;
+        font-weight: 900;
       }
 
       .title {
         position: absolute;
-        bottom: 40px;
-        left: 120px;
+        bottom: 0;
+        left: 0 !important;
+        width: 100%;
         padding: 6px 32px;
         font-size: 30px;
         color: #fff;
-        background-color: rgba(#000, 0.7);
+        text-indent: 15px;
+        background-color: rgba(#000, 0.6);
       }
     }
 
@@ -107,7 +112,7 @@ $section-margin-bottom: 50px;
     height: 240px;
     border-radius: 5px;
     overflow: hidden;
-    
+
     &:hover img {
       transform: scale(1.1);
     }
