@@ -1,6 +1,6 @@
 import { me } from '../api/auth'
 import { getHistory } from '../api/getHistory'
-import posterMap from '../movieInfoList/posterList'
+import { posterMap } from '../movieInfoList/posterList'
 import { AppStorage } from '../util'
 
 function orderDetails() {

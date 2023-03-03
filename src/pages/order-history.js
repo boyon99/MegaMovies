@@ -1,5 +1,5 @@
 import { getAllHistory } from '../api/getAllHistory'
-import posterMap from '../movieInfoList/posterList'
+import { posterMap } from '../movieInfoList/posterList'
 import { AppStorage } from '../util'
 
 function orderHistory() {

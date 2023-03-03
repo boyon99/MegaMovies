@@ -149,7 +149,7 @@ const cart = () => {
   }
 
   // buy btn
-  buyBtn = document.createElement("button");
+  const buyBtn = document.createElement("button");
   buyBtn.classList.add("buy", "btn-secondary", "small");
   buyBtn.innerHTML = `총 주문하기`;
   // let orderHref = `/order`

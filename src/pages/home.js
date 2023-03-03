@@ -1,15 +1,15 @@
-import { readItem } from '../api/movieRequest'
-import posterMap from '../movieInfoList/posterList'
+import { readItem } from "../api/movieRequest";
+import { posterMap } from "../movieInfoList/posterList";
 
-const homeContainer = document.createElement('div')
-export default homeContainer
-;(async () => {
-  const items = await readItem()
-  renderItems(items)
-})()
+const homeContainer = document.createElement("div");
+export default homeContainer;
+(async () => {
+  const items = await readItem();
+  renderItems(items);
+})();
 
-const homeRankingSlider = document.createElement('section')
-homeRankingSlider.className = 'movie-slider'
+const homeRankingSlider = document.createElement("section");
+homeRankingSlider.className = "movie-slider";
 homeRankingSlider.innerHTML = /* html */ `
     <div class="inner">
       <div class="swiper">
@@ -30,10 +30,10 @@ homeRankingSlider.innerHTML = /* html */ `
         <div class="swiper-button-next"></div>
       </div>
     </div>
-`
+`;
 
-const homeGenre = document.createElement('section')
-homeGenre.className = 'genre'
+const homeGenre = document.createElement("section");
+homeGenre.className = "genre";
 homeGenre.innerHTML = /* html */ `
   <div class="inner">
     <header class="genre-header">
@@ -45,10 +45,10 @@ homeGenre.innerHTML = /* html */ `
       <ul class="genre-list"></ul>
     </div>
   </div>
-`
+`;
 
-const homeNew = document.createElement('section')
-homeNew.className = 'new'
+const homeNew = document.createElement("section");
+homeNew.className = "new";
 homeNew.innerHTML = /* html */ `
   <div class="inner">
     <header class="new-header">
@@ -60,73 +60,75 @@ homeNew.innerHTML = /* html */ `
       <ul class="new-list"></ul>
     </div>
   </div>
-`
+`;
 
-homeContainer.append(homeRankingSlider)
-homeContainer.append(homeGenre)
-homeContainer.append(homeNew)
+homeContainer.append(homeRankingSlider);
+homeContainer.append(homeGenre);
+homeContainer.append(homeNew);
 
 function renderItems(items) {
   // DOM 탐색
-  const swiperWrapper = homeRankingSlider.querySelector('.swiper-wrapper')
-  const genreList = homeGenre.querySelector('.genre-list')
-  const newList = homeNew.querySelector('.new-list')
+  const swiperWrapper = homeRankingSlider.querySelector(".swiper-wrapper");
+  const genreList = homeGenre.querySelector(".genre-list");
+  const newList = homeNew.querySelector(".new-list");
 
   // 태그별로 필터링
-  const filterNewItems = items.filter((item) => item.tags.includes('신작'))
+  const filterNewItems = items.filter((item) => item.tags.includes("신작"));
 
   const rankingItems = items
     .map((item, index) => {
-      index++
-      const setIndex = index > 4 ? index -= 1 : index
-      if (index > 11) return
-      if (item.title === '변호사') return
+      index++;
+      const setIndex = index > 4 ? (index -= 1) : index;
+      if (index > 11) return;
+      if (item.title === "변호사") return;
       return /* html */ `
       <a class="swiper-slide" href="/movie/${item.id}" data-navigo>
-        <div class="image-wrapper"><img src=${posterMap.get(item.title)} /></div>
+        <div class="image-wrapper"><img src=${posterMap.get(
+          item.title
+        )} /></div>
         <strong class="rank">${index}</strong>
         <strong class="title">${item.title}</strong>
       </a>
-    `
+    `;
     })
-    .join('')
+    .join("");
 
   const genreItems = items
     .map((item, index) => {
-      index++
-      if (index > 4) return
+      index++;
+      if (index > 4) return;
       return /* html */ `
     <li class="genre-item">
       <a class="genre-image" href="/movie/${item.id}" data-navigo>
         <img src=${item.thumbnail} alt="${item.title}" />
       </a>
     </li>
-  `
+  `;
     })
-    .join('')
+    .join("");
 
   const newItems = filterNewItems
     .map((item, index) => {
-      index++
-      if (index > 4) return
+      index++;
+      if (index > 4) return;
       return /* html */ `
         <li class="new-item">
           <a class="new-image" href="/movie/${item.id}" data-navigo>
             <img src=${item.thumbnail} alt="${item.title}" />
           </a>
         </li>
-      `
+      `;
     })
-    .join('')
+    .join("");
 
-  swiperWrapper.innerHTML = rankingItems
-  genreList.innerHTML = genreItems
-  newList.innerHTML = newItems
+  swiperWrapper.innerHTML = rankingItems;
+  genreList.innerHTML = genreItems;
+  newList.innerHTML = newItems;
 
-  const titles = swiperWrapper.querySelectorAll('.title')
-    titles.forEach((title, index) => {
-      if (index === 9) {
-        title.style.left = '160px'
-      }
-    })
+  const titles = swiperWrapper.querySelectorAll(".title");
+  titles.forEach((title, index) => {
+    if (index === 9) {
+      title.style.left = "160px";
+    }
+  });
 }
