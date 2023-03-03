@@ -51,18 +51,20 @@ $bg--skeleton2: #4cd71e
   }
   // 주문 페이지
   .inner {
-    margin-top: 150px;
+    margin-top: 200px;
     padding: 20px;
     box-sizing: border-box;
-    background-color: #061940;
     & > .title {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 40px;
-      color: colors.$color--font;
+      position: absolute;
+      top: 130px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      font-weight: 700;
+      font-size: 32px;
+      background: linear-gradient(to right, #fff, #d2cacd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
     .order__empty {
       display: flex;

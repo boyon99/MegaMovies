@@ -27,16 +27,16 @@
   border: 1px solid $color--highlight;
   &:hover {
     color: #fff;
-    background-color: $color--highlight;
+    background: linear-gradient(to right, #fb4f93, #b14570);
   }
 }
 
 .btn-secondary {
   @extend %btn-base;
   color: #3f4050;
-  background-color: #e0e2e7;
+  background-color: #ffffff;
   &:hover {
-    background-color: darken(#e0e2e7, 20%);
+    background-color: darken(#ffffff, 10%);
   }
 }
 

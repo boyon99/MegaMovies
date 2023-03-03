@@ -145,7 +145,7 @@ function createElement(type, props) {
       totalBankAccount.className = "accounts--total";
 
       const allSelectBtn = document.createElement("button");
-      allSelectBtn.classList.add("btn-outlined", "medium");
+      allSelectBtn.classList.add("btn-outlined", "small");
       allSelectBtn.textContent = "전체 선택";
       const handleAllSeclectClick = (e) => {
         const accountItemlist = document.querySelector(".account-list");

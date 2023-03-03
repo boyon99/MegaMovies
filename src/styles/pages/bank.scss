@@ -119,13 +119,17 @@ $bank-skeleton-pg: linear-gradient(
       -webkit-text-fill-color: transparent;
     }
     .accounts-info {
-      margin-top: 200px;
+      margin-top: 185px;
       display: flex;
-      gap: 12px;
+      gap: 0;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba($color: #fff, $alpha: 0.5);
       .accounts--total {
         position: relative;
         display: flex;
         width: 60px;
+        font-weight: 700;
+        font-size: 18px;
         align-items: center;
         border-radius: 8px;
         box-sizing: border-box;
@@ -144,6 +148,9 @@ $bank-skeleton-pg: linear-gradient(
             animation: bank-skeleton-small 2s infinite forwards;
           }
         }
+      }
+      button {
+        font-weight: 700;
       }
     }
     .account-list {
@@ -167,7 +174,6 @@ $bank-skeleton-pg: linear-gradient(
               ($per-item - 1)
           ) + $padding--account-list * 2
       );
-      background-color: #061940;
       &--has-not-bank-accounts {
         justify-content: center;
         gap: 12px;
@@ -208,18 +214,19 @@ $bank-skeleton-pg: linear-gradient(
           appearance: none;
           background-color: #fff;
           border: 1px solid colors.$color--highlight;
+          border-radius: 50%;
           transition: background-color 0.3s, border-radius 0.3s;
           &:checked {
             border-radius: 50%;
             background-color: colors.$color--highlight;
             position: relative;
             &::after {
-              position: absolute;
-              content: "-";
+              border-radius: 3px;
+              position: relative;
+              top: calc(-3.5px);
+              content: "\2713";
+              font-size: 20px;
               color: #fff;
-              left: 50%;
-              top: 50%;
-              transform: translate(-50%, -50%);
             }
           }
         }
@@ -269,7 +276,7 @@ $bank-skeleton-pg: linear-gradient(
       padding: 8px;
       box-sizing: border-box;
       .btn-secondary {
-        color: #a0bda8;
+        color: #5c5d92;
       }
     }
   }
