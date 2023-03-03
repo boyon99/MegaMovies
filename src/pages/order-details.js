@@ -1,51 +1,53 @@
-import { me } from "../api/auth";
-import { getHistory } from "../api/getHistory";
-import { posterMap } from "../movieInfoList/posterList";
-import { AppStorage } from "../util";
+import { me } from '../api/auth'
+import { getHistory } from '../api/getHistory'
+import { posterMap } from '../movieInfoList/posterList'
+import { AppStorage } from '../util'
 
 function orderDetails() {
-  const orderDetailsPage = document.createElement("section");
-  orderDetailsPage.className = "order-details-section";
+  const orderDetailsPage = document.createElement('section')
+  orderDetailsPage.className = 'order-details-section'
   orderDetailsPage.innerHTML = /* html */ `
   <div class="inner">
     <h2>구매 내역 확인</h2>
     <div class="order-details">
   </div>
-`;
-  orderDetailsPage.renderHistory = renderHistory;
-  orderDetailsPage.renderHistory();
+`
+  orderDetailsPage.renderHistory = renderHistory
+  orderDetailsPage.renderHistory()
 
-  return orderDetailsPage;
+  return orderDetailsPage
 }
 
-export default orderDetails;
+export default orderDetails
 
 async function renderHistory() {
-  const orderDetailsPage = this;
+  const orderDetailsPage = this
 
-  const idRegex = /(?<=\?id\=)\w+/;
-  const [detailId] = idRegex.exec(location.search);
+  const idRegex = /(?<=\?id\=)\w+/
+  const [detailId] = idRegex.exec(location.search)
 
-  const user = await getUserInfo();
-  const item = await getHistory(AppStorage.getAccessToken(), detailId);
+  const user = await getUserInfo()
+  const item = await getHistory(AppStorage.getAccessToken(), detailId)
 
-  const orderDetailsDiv = orderDetailsPage.querySelector(".order-details");
+  const orderDetailsDiv = orderDetailsPage.querySelector('.order-details')
 
-  const tags = item.product.tags;
+  const tags = item.product.tags
   const tagEls = tags
     .map((tag) => {
       return /* html */ `
       <span class="tag">${tag}</span>
-    `;
+    `
     })
-    .join("");
+    .join('')
 
   const result = /* html */ `
     <div class="order-details-movie">
       <div class="movie-image">
-        <img src=${posterMap.get(item.product.title)} alt="${
-    item.product.title
-  }" />
+        <img src=${
+          posterMap.get(item.product.title)
+            ? posterMap.get(item.product.title)
+            : item.product.thumbnail
+        } alt="${item.product.title}" />
       </div>
   
       <div class="movie-detail">
@@ -71,7 +73,7 @@ async function renderHistory() {
 
         <div>
           <dt>구매자 아이디</dt>
-          <dd id="userId">${user?.email ?? ""}</dd>
+          <dd id="userId">${user?.email ?? ''}</dd>
         </div>
         
         <div>
@@ -92,13 +94,13 @@ async function renderHistory() {
         </div>
       </dl>
     </div>
-  `;
+  `
 
-  orderDetailsDiv.innerHTML = result;
+  orderDetailsDiv.innerHTML = result
 }
 
 async function getUserInfo() {
-  const user = await me(AppStorage.getAccessToken());
+  const user = await me(AppStorage.getAccessToken())
 
-  return user;
+  return user
 }
