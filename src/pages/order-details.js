@@ -1,42 +1,44 @@
-import { me } from '../api/auth';
-import { getHistory } from '../api/getHistory'
-import posterMap from '../movieInfoList/posterList'
-import { AppStorage } from '../util'
+import { me } from "../api/auth";
+import { getHistory } from "../api/getHistory";
+import { posterMap } from "../movieInfoList/posterList";
+import { AppStorage } from "../util";
 
-function orderDetails () {
-  const orderDetailsPage = document.createElement('section');
-  orderDetailsPage.className = 'order-details-section'
+function orderDetails() {
+  const orderDetailsPage = document.createElement("section");
+  orderDetailsPage.className = "order-details-section";
   orderDetailsPage.innerHTML = /* html */ `
   <div class="inner">
     <h2>구매 내역 확인</h2>
     <div class="order-details">
   </div>
-`
+`;
   orderDetailsPage.renderHistory = renderHistory;
   orderDetailsPage.renderHistory();
 
   return orderDetailsPage;
 }
 
-export default orderDetails
+export default orderDetails;
 
 async function renderHistory() {
   const orderDetailsPage = this;
 
-  const idRegex = /(?<=\?id\=)\w+/
-  const [detailId] = idRegex.exec(location.search)
+  const idRegex = /(?<=\?id\=)\w+/;
+  const [detailId] = idRegex.exec(location.search);
 
   const user = await getUserInfo();
-  const item = await getHistory(AppStorage.getAccessToken(),detailId);
+  const item = await getHistory(AppStorage.getAccessToken(), detailId);
 
-  const orderDetailsDiv = orderDetailsPage.querySelector('.order-details')
+  const orderDetailsDiv = orderDetailsPage.querySelector(".order-details");
 
-  const tags = item.product.tags
-  const tagEls = tags.map(tag => {
-    return /* html */`
+  const tags = item.product.tags;
+  const tagEls = tags
+    .map((tag) => {
+      return /* html */ `
       <span class="tag">${tag}</span>
-    `
-  }).join('')
+    `;
+    })
+    .join("");
 
   const result = /* html */ `
     <div class="order-details-movie">
@@ -69,7 +71,7 @@ async function renderHistory() {
 
         <div>
           <dt>구매자 아이디</dt>
-          <dd id="userId">${user?.email ?? ''}</dd>
+          <dd id="userId">${user?.email ?? ""}</dd>
         </div>
         
         <div>
@@ -90,13 +92,13 @@ async function renderHistory() {
         </div>
       </dl>
     </div>
-  `
+  `;
 
-  orderDetailsDiv.innerHTML = result
+  orderDetailsDiv.innerHTML = result;
 }
 
-async function getUserInfo () {
+async function getUserInfo() {
   const user = await me(AppStorage.getAccessToken());
-  
+
   return user;
 }

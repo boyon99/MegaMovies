@@ -1,7 +1,6 @@
-import { router } from '..'
-import { AppStorage } from '../util'
+import { router } from "..";
+import { AppStorage } from "../util";
 import { renderToast } from "./bank/toast";
-
 
 // cartpage
 const cart = () => {
@@ -14,13 +13,13 @@ const cart = () => {
   inner.innerHTML = ``;
 
   // cart name
-  const cart = document.createElement('p')
-  cart.classList.add('cart')
-  cart.innerText = "장바구니"
+  const cart = document.createElement("p");
+  cart.classList.add("cart");
+  cart.innerText = "장바구니";
 
-  // item 
-  let items = AppStorage.getCartItem()
-  let itemsFilter = items.filter((i, a, b) => b.includes(i))
+  // item
+  let items = AppStorage.getCartItem();
+  let itemsFilter = items.filter((i, a, b) => b.includes(i));
 
   // checkbox
   let checkItem = {};
@@ -37,6 +36,16 @@ const cart = () => {
     checkboxEl.classList.add("checkbox", `checkbox-${index}`);
     checkboxEl.id = `${index}`;
 
+    // checkbox event
+    checkboxEl.addEventListener("change", (e) => {
+      if (e.target.checked) {
+        sum += +items[inner.children[`${index}`].children[0].id][2];
+        allPriceEl.innerText = `${sum}` + "원";
+      } else {
+        sum -= +items[inner.children[`${index}`].children[0].id][2];
+        allPriceEl.innerText = `${sum}` + "원";
+      }
+    });
     let imgEl = document.createElement("img");
     imgEl.src = i[3];
 
@@ -49,8 +58,9 @@ const cart = () => {
     let priceEl = document.createElement("p");
     priceEl.classList.add("price");
     // priceEl.innerText = `${i[2]}`
-    priceEl.innerText = `${parseInt(i[2] / 1000)},${i[2] % 1000 === 0 ? "000" : i[2] % 1000
-      }`;
+    priceEl.innerText = `${parseInt(i[2] / 1000)},${
+      i[2] % 1000 === 0 ? "000" : i[2] % 1000
+    }`;
     const priceImgEl = document.createElement("img");
     priceImgEl.src = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAADlElEQVR4nO1YSWgUURBtFVH0IK7gdhA9iAtePCoeNCCaqZpBBiHqNQcFEQRXJCdBEaNTNSZEFAUPEj2IiAqCGBA8iBfBEEVc8KC44Aom8/+YL92j8Xd1D/07TnChH/xLd9erevWrqn+352XIkCFDhgwWFPAzjWysddJLCVO8MEYhvbV5+vOl+Wl5FNJZEcvTRCONfDpkBPQoteN8eYVwbBTwtrQ8GvlpOBY+lWhUzdFm6dwAz0rlGPhwjIBraThMoTRHclShtMnBsH1mxBBpYyoByH0RAUj9prlrgitHFbklksj1nbNdA3goyqjD1XF/rrxAOh5aeW525dFIncK+z9XW8wMWxr2utgppZ10BSJ3uArhX1P8JZwFV4KLY/kFT6JjhJADolqj9oammgF64cJjmrmm+z3D9c9FZgMnzVAX8TWRwQ6Jd8egUhaytjD/WSGWbp4K8NIlHAxciCSyWpjsLCEiQ7os+oCQbf0qI7J+LXMvx3mTf3C5K736q4AMSoGNpSRRQt5xefuYUUNVKxO1k33xP7H67c+AKeXewRDB+SSmkfUP349cn0XgHa1z8xuqDqr8LdTmA9oTLMLDp/nk/OfN1J8jfsbxMAP7lO2BD57hJ1GLVFLsmhR7yPK9SOL5ENPxd+YxGLonRuFI+Y9aWxingryGuHDd5w4V/dlHIA2HC8lr5nN+UouH3RwQArRFj+VDSKVYBV0zTkYnDFlBzzD1yssQEd8d+ppIrL44ko7VrrAL+YO3Sg4gApH3CV89vBR+QArWJzIXmeGTOIz2uy4V8webqz9E8IeC6KNm21AH/6SbV2RjFf3yMaqBDcsXU5uvgOtAV0R934uxDXMDXBNfVH9dDPxMCnzH2qXsiaC7g5WFy/mw8M0rOdo3ldUlcA1BaFPe1p4GeiBG63GsUfvwmeW87MHhirn3kVkBfzKoz4134at8JQ1y9wfvG+v5QQB99n14joYAvyaOycNrtyqWRjlulMujvnCifyw0NviaAtosyuhkWxC3uAsqrZcA6zL2j4QLkecf+ZlVAyqzvmOzKVXsr00fL3noRsqkUaFnDBfhNq5BexY02hXQjLZ/8YNK/xLwzbW2jGy4gcIp0Pt5p+t+GVSxviU8GX/RGCirPrTHZH/QnUlqu6B8M/sm3dWSir/fXDfjecPk00G3JN9BMC72RhAJ6LjJ2YNhcSLtEKb70e62xEWfIkCFDhv8Z3wEKTv/wCrKPBQAAAABJRU5ErkJggg==`;
     priceImgEl.classList.add("priceImg");
@@ -126,30 +136,8 @@ const cart = () => {
     bottom.style.display = "none";
   }
 
-  // all price
-  let allPriceEl = document.createElement("p");
-  allPriceEl.classList.add("allprice");
-  let allPriceText = document.createElement("p");
-  allPriceText.classList.add("allPriceText");
-  allPriceText.innerText = "총 결제 금액";
-  let sum = 0
-  allPriceEl.innerText = `${sum}` + "원";
-
-  // checkbox event
-  for (let i = 0; i < inner.children.length; i++) {
-    inner.children[i].children[0].addEventListener("change", (e) => {
-      if (e.target.checked) {
-        sum += +items[inner.children[i].children[0].id][2];
-        allPriceEl.innerText = `${sum}` + "원";
-      } else {
-        sum -= +items[inner.children[i].children[0].id][2];
-        allPriceEl.innerText = `${sum}` + "원";
-      }
-    });
-  }
-
   // buy btn
-  buyBtn = document.createElement("button");
+  const buyBtn = document.createElement("button");
   buyBtn.classList.add("buy", "btn-secondary", "small");
   buyBtn.innerHTML = `총 주문하기`;
   // let orderHref = `/order`
@@ -179,12 +167,20 @@ const cart = () => {
     }
   });
 
-  top.append(allselectEl, allselectBtn, deleteBtn)
-  bottom.append(allPriceText, allPriceEl, buyBtn)
-  inner.append(top, cart, bottom, noItemEl)
-  cartPage.append(inner)
+  // all price
+  let allPriceEl = document.createElement("p");
+  allPriceEl.classList.add("allprice");
+  let allPriceText = document.createElement("p");
+  allPriceText.classList.add("allPriceText");
+  allPriceText.innerText = "총 결제 금액";
+  let sum = 0;
+  allPriceEl.innerText = `${sum}` + "원";
 
+  top.append(allselectEl, allselectBtn, deleteBtn);
+  bottom.append(allPriceText, allPriceEl, buyBtn);
+  inner.append(top, cart, bottom, noItemEl);
+  cartPage.append(inner);
 
-  return cartPage
-}
-export default cart
+  return cartPage;
+};
+export default cart;
