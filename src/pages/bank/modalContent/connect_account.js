@@ -139,7 +139,7 @@ export const openConnectAccountModal = ({ useAbleBankList }, callback = {}) => {
         const value = input.value;
         const digit = Number(input.dataset?.digit ?? "0");
 
-        return value.length !== digit;
+        return value.includes("*") || value.length !== digit;
       })
     ) {
       renderToast({
@@ -349,6 +349,7 @@ function createAccountNumberInput({ digits }) {
       }
     }
   };
+
   const handleInputBlur = (e) => {
     const { digit } = e.target.dataset;
     const nothasAccNumberRegexp = new RegExp(`^[*]{${digit}}$`);
@@ -372,11 +373,27 @@ function createAccountNumberInput({ digits }) {
       ""
     );
   };
+
+  const handleInputKeyDown = (e) => {
+    if (e.key === "Backspace") {
+      const maskingStartOffset = Array.from(e.target.value).findIndex(
+        (digitInput) => digitInput === "*"
+      );
+      if (maskingStartOffset >= 1) {
+        e.target.setSelectionRange(maskingStartOffset, maskingStartOffset);
+      }
+    }
+  };
+
   digitInputElements.forEach((digitInput, index) => {
     index === digitInputElements.length - 1
       ? accountInputWrapper.append(digitInput)
       : accountInputWrapper.append(digitInput, document.createTextNode("-"));
 
+    connectAccountModalEventMap.set(
+      { target: digitInput, eventType: "keydown" },
+      handleInputKeyDown
+    );
     connectAccountModalEventMap.set(
       { target: digitInput, eventType: "input" },
       handleInputChange
