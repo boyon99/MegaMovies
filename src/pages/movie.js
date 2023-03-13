@@ -72,9 +72,8 @@ const moviePage = (movieId) => {
 
     // price
     const priceEl = document.createElement("p");
-    priceEl.innerText = `${parseInt(item[0].price / 1000)},${
-      item[0].price % 1000 === 0 ? "000" : item[0].price % 1000
-    }`;
+    priceEl.innerText = `${parseInt(item[0].price / 1000)},${item[0].price % 1000 === 0 ? "000" : item[0].price % 1000
+      }`;
     priceEl.classList.add("price");
 
     // price Img
@@ -179,7 +178,7 @@ const moviePage = (movieId) => {
       window.scrollTo({ top: 0, behavior: "smooth" });
 
       // line chart data
-      var buyerData = {
+      let buyerData = {
         labels: [
           `${getDate(5)}` + "월",
           `${getDate(4)}` + "월",
@@ -206,33 +205,12 @@ const moviePage = (movieId) => {
         ],
       };
       // get line chart canvas
-      var buy = document.getElementById("buy").getContext("2d");
+      let buy = document.getElementById("buy").getContext("2d");
       // draw line chart
       new Chart(buy).Line(buyerData);
-      // pie chart data
-      var pieData = [
-        {
-          fillColor: "rgba(251,79,147,0.4)",
-          strokeColor: "#fb4f93",
-          pointColor: "#fff",
-          pointStrokeColor: "#fb4f93",
-          data: [
-            getRandomBuy(),
-            getRandomBuy(),
-            getRandomBuy(),
-            getRandomBuy(),
-            getRandomBuy(),
-            getRandomBuy(),
-          ],
-        },
-      ];
 
-      // get line chart canvas
-      var buy = document.getElementById("buy").getContext("2d");
-      // draw line chart
-      new Chart(buy).Line(buyerData);
       // pie chart data
-      var pieData = [
+      let pieData = [
         {
           value: getRandom(),
           color: "rgba(172,194,132,0.6)",
@@ -251,12 +229,12 @@ const moviePage = (movieId) => {
         },
       ];
       // pie chart options
-      var pieOptions = {
+      let pieOptions = {
         segmentShowStroke: false,
         animateScale: true,
       };
       // get pie chart canvas
-      var point = document.getElementById("point").getContext("2d");
+      let point = document.getElementById("point").getContext("2d");
       // draw pie chart
       new Chart(point).Pie(pieData, pieOptions);
     },
