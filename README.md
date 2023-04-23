@@ -35,7 +35,7 @@
 
 ### 페이지 구성
 
-<img src="./페이지 구성.jpg" width="500px">
+<img src="https://github.com/boyon99/MegaMovies/blob/main/%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8C%E1%85%B5%20%E1%84%80%E1%85%AE%E1%84%89%E1%85%A5%E1%86%BC.jpg" width="500px">
 
 ### 프로젝트 구조
 
