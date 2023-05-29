@@ -33,6 +33,10 @@
 - 배포 `netlify`
 - 코드 포멧터 `prettier` `eslint`
 
+### 페이지 구성
+
+<img src="./static/페이지 구성.jpg" width="500px">
+
 ### local에서 실행 방법
 
 ```shell
@@ -41,10 +45,6 @@
 3. .env 파일 생성 후, api key(API_KEY) 입력
 4. npm i && npm run dev
 ```
-
-### 페이지 구성
-
-<img src="./static/페이지 구성.jpg" width="500px">
 
 ### 프로젝트 구조
 
