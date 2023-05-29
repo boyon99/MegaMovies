@@ -41,60 +41,27 @@
 
 ```
 KDT4-M4_TEAM1
-├─ .gitignore
-├─ .parcelrc
 ├─ README.md
-├─ android-chrome-192x192.png
-├─ android-chrome-512x512.png
-├─ apple-touch-icon.png
-├─ browserconfig.xml
-├─ favicon-16x16.png
-├─ favicon-32x32.png
-├─ favicon.ico
 ├─ index.html
-├─ megamovie.jpg
-├─ mstile-150x150.png
 ├─ package-lock.json
 ├─ package.json
-├─ safari-pinned-tab.svg
-├─ site.webmanifest
 ├─ src
 │  ├─ api
-│  │  ├─ auth.js
-│  │  ├─ bank.js
-│  │  ├─ getAllHistory.js
-│  │  ├─ getHistory.js
-│  │  ├─ movieRequest.js
-│  │  └─ payment.js
 │  ├─ index.js
 │  ├─ movieInfoList
-│  │  ├─ posterList.js
-│  │  └─ trailerList.js
 │  ├─ pages
 │  │  ├─ bank
-│  │  │  ├─ bankLogoMap.js
-│  │  │  ├─ bankModal.js
-│  │  │  ├─ index.js
-│  │  │  ├─ modalContent
-│  │  │  │  ├─ close_account.js
-│  │  │  │  └─ connect_account.js
-│  │  │  └─ toast.js
 │  │  ├─ cart.js
 │  │  ├─ footer.js
 │  │  ├─ genre.js
 │  │  ├─ genre_detail.js
 │  │  ├─ header
-│  │  │  ├─ index.js
-│  │  │  ├─ nav.js
-│  │  │  └─ user_area.js
 │  │  ├─ home.js
 │  │  ├─ login.js
 │  │  ├─ movie.js
 │  │  ├─ new.js
 │  │  ├─ not_found.js
 │  │  ├─ order
-│  │  │  ├─ index.js
-│  │  │  └─ orderModal.js
 │  │  ├─ order-details.js
 │  │  ├─ order-history.js
 │  │  ├─ ranking.js
