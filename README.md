@@ -33,6 +33,15 @@
 - 배포 `netlify`
 - 코드 포멧터 `prettier` `eslint`
 
+## local에서 실행 방법
+
+```shell
+1. git clone https://github.com/boyon99/MegaMovies.git
+2. cd MegaMovies
+3. .env 파일 생성 후, api key(API_KEY) 입력
+4. npm i && npm run dev
+```
+
 ### 페이지 구성
 
 <img src="./static/페이지 구성.jpg" width="500px">
