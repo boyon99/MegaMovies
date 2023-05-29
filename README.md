@@ -33,7 +33,7 @@
 - 배포 `netlify`
 - 코드 포멧터 `prettier` `eslint`
 
-## local에서 실행 방법
+### local에서 실행 방법
 
 ```shell
 1. git clone https://github.com/boyon99/MegaMovies.git
