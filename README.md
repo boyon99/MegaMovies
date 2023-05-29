@@ -12,7 +12,7 @@
 
 ## MegaMovies 프로젝트를 소개합니다.
 
-<img src="./megamovie.jpg" width="500px">
+<img src="./static/megamovie.jpg" width="500px">
 바닐라 자바스크립트를 Navigo router를 이용하여 SPA처럼 동작하도록 구현한 영화 구매 사이트입니다.
 
 <br/>
@@ -35,7 +35,7 @@
 
 ### 페이지 구성
 
-<img src="./페이지 구성.jpg" width="500px">
+<img src="./static/페이지 구성.jpg" width="500px">
 
 ### 프로젝트 구조
 
